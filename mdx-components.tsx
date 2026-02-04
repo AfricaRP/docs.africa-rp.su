@@ -9,6 +9,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { Expandable } from './app/components/Expandable';
+import { Copy } from './app/components/Copy';
 
 // ==================== TOOLTIP ====================
 
@@ -24,7 +25,7 @@ function Tooltip({ text, children }: TooltipProps) {
         {children}
       </span>
       
-      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-sm text-white bg-gray-900 dark:bg-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 w-max max-w-[280px] text-center break-words">
+      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-sm text-white bg-gray-900 dark:bg-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 w-max max-w-[280px] text-center break-normal whitespace-normal">
         {text}
         <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-700" />
       </span>
@@ -102,11 +103,11 @@ function Callout({ type = 'info', title, children }: CalloutProps) {
     <div className={`my-6 rounded-lg p-4 ${config.containerClass}`}>
       <div className="flex items-start gap-3">
         <Icon className={`w-5 h-5 mt-0.5 shrink-0 ${config.iconClass}`} />
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 overflow-hidden">
           <p className={`font-bold mb-1 ${config.titleClass}`}>
             {displayTitle}
           </p>
-          <div className={`text-sm leading-relaxed ${config.textClass}`}>
+          <div className={`text-sm leading-relaxed ${config.textClass} [overflow-wrap:break-word] [word-break:normal]`}>
             {children}
           </div>
         </div>
@@ -131,7 +132,7 @@ function slugify(text: string): string {
 function Heading1({ children }: { children?: React.ReactNode }) {
   const id = slugify(String(children));
   return (
-    <h1 id={id} className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white mb-6 sm:mb-8 mt-6 sm:mt-8 first:mt-0 scroll-mt-20 leading-tight hyphens-auto">
+    <h1 id={id} className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white mb-6 sm:mb-8 mt-6 sm:mt-8 first:mt-0 scroll-mt-20 leading-tight [overflow-wrap:break-word] [word-break:normal]">
       {children}
     </h1>
   );
@@ -140,7 +141,7 @@ function Heading1({ children }: { children?: React.ReactNode }) {
 function Heading2({ children }: { children?: React.ReactNode }) {
   const id = slugify(String(children));
   return (
-    <h2 id={id} className="text-2xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 mt-8 sm:mt-12 pb-2 border-b border-gray-200 dark:border-gray-700 scroll-mt-20 hyphens-auto">
+    <h2 id={id} className="text-2xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 mt-8 sm:mt-12 pb-2 border-b border-gray-200 dark:border-gray-700 scroll-mt-20 [overflow-wrap:break-word] [word-break:normal]">
       {children}
     </h2>
   );
@@ -149,7 +150,7 @@ function Heading2({ children }: { children?: React.ReactNode }) {
 function Heading3({ children }: { children?: React.ReactNode }) {
   const id = slugify(String(children));
   return (
-    <h3 id={id} className="text-xl sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3 mt-6 sm:mt-8 scroll-mt-20 hyphens-auto">
+    <h3 id={id} className="text-xl sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3 mt-6 sm:mt-8 scroll-mt-20 [overflow-wrap:break-word] [word-break:normal]">
       {children}
     </h3>
   );
@@ -158,7 +159,7 @@ function Heading3({ children }: { children?: React.ReactNode }) {
 function Heading4({ children }: { children?: React.ReactNode }) {
   const id = slugify(String(children));
   return (
-    <h4 id={id} className="text-lg sm:text-lg lg:text-xl font-semibold text-gray-900 dark:text-white mb-2 mt-4 sm:mt-6 scroll-mt-20 hyphens-auto">
+    <h4 id={id} className="text-lg sm:text-lg lg:text-xl font-semibold text-gray-900 dark:text-white mb-2 mt-4 sm:mt-6 scroll-mt-20 [overflow-wrap:break-word] [word-break:normal]">
       {children}
     </h4>
   );
@@ -168,7 +169,7 @@ function Heading4({ children }: { children?: React.ReactNode }) {
 
 function Paragraph({ children }: { children?: React.ReactNode }) {
   return (
-    <p className="text-gray-700 dark:text-gray-300 mb-4 leading-7 break-words whitespace-pre-line text-base">
+    <p className="text-gray-700 dark:text-gray-300 mb-4 leading-7 text-base [overflow-wrap:break-word] [word-break:normal]">
       {children}
     </p>
   );
@@ -179,7 +180,7 @@ function Anchor({ href, children }: { href?: string; children?: React.ReactNode 
   return (
     <a 
       href={href} 
-      className="text-blue-600 dark:text-blue-400 hover:underline font-medium break-all"
+      className="text-blue-600 dark:text-blue-400 underline decoration-blue-600/50 dark:decoration-blue-400/50 hover:decoration-blue-600 dark:hover:decoration-blue-400 font-medium transition-colors [overflow-wrap:break-word]"
       target={isExternal ? '_blank' : undefined}
       rel={isExternal ? 'noopener noreferrer' : undefined}
     >
@@ -189,7 +190,7 @@ function Anchor({ href, children }: { href?: string; children?: React.ReactNode 
 }
 
 function Strong({ children }: { children?: React.ReactNode }) {
-  return <strong className="font-semibold text-gray-900 dark:text-white">{children}</strong>;
+  return <strong className="font-bold text-gray-900 dark:text-white">{children}</strong>;
 }
 
 function Emphasis({ children }: { children?: React.ReactNode }) {
@@ -207,12 +208,16 @@ function OrderedList({ children }: { children?: React.ReactNode }) {
 }
 
 function ListItem({ children }: { children?: React.ReactNode }) {
-  return <li className="text-gray-700 dark:text-gray-300 break-words">{children}</li>;
+  return <li className="text-gray-700 dark:text-gray-300 [overflow-wrap:break-word] [word-break:normal]">{children}</li>;
 }
 
 // ==================== CODE ====================
 
-function InlineCode({ children }: { children?: React.ReactNode }) {
+function InlineCode({ children, className }: { children?: React.ReactNode; className?: string }) {
+  if (className?.includes('language-')) {
+    return <code className={className}>{children}</code>;
+  }
+  
   return (
     <code className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 text-pink-600 dark:text-pink-400 rounded text-sm font-mono break-all">
       {children}
@@ -232,7 +237,7 @@ function CodeBlock({ children }: { children?: React.ReactNode }) {
 
 function Quote({ children }: { children?: React.ReactNode }) {
   return (
-    <div className="border-l-4 border-blue-500 pl-4 py-2 mb-4 bg-blue-50 dark:bg-blue-900/20 rounded-r-lg text-gray-700 dark:text-gray-300 break-words">
+    <div className="border-l-4 border-blue-500 pl-4 py-2 mb-4 bg-blue-50 dark:bg-blue-900/20 rounded-r-lg text-gray-700 dark:text-gray-300 [overflow-wrap:break-word] [word-break:normal]">
       {children}
     </div>
   );
@@ -267,11 +272,78 @@ function TableRow({ children }: { children?: React.ReactNode }) {
 }
 
 function TableHeader({ children }: { children?: React.ReactNode }) {
-  return <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 dark:text-slate-100 break-words border-r-2 border-slate-400 dark:border-slate-600 last:border-r-0">{children}</th>;
+  return <th className="px-4 py-4 text-left text-sm font-bold text-slate-900 dark:text-slate-100 border-r-2 border-slate-400 dark:border-slate-600 last:border-r-0 [overflow-wrap:break-word] [word-break:normal]">{children}</th>;
 }
 
 function TableCell({ children }: { children?: React.ReactNode }) {
-  return <td className="px-4 py-3 text-sm text-slate-800 dark:text-slate-200 break-words border-r-2 border-slate-300 dark:border-slate-700 last:border-r-0">{children}</td>;
+  return <td className="px-4 py-3 text-sm text-slate-800 dark:text-slate-200 border-r-2 border-slate-300 dark:border-slate-700 last:border-r-0 [overflow-wrap:break-word] [word-break:normal]">{children}</td>;
+}
+
+// ==================== STEPS (ADAPTIVE) ====================
+
+interface StepProps {
+  title: string;
+  children?: React.ReactNode;
+}
+
+interface StepsProps {
+  children: React.ReactNode;
+}
+
+function Step({ title, children }: StepProps) {
+  // Этот компонент используется только для структуры данных
+  return null;
+}
+
+function Steps({ children }: StepsProps) {
+  const childArray = Array.isArray(children) ? children : [children];
+  
+  const steps = childArray.filter(
+    (child): child is React.ReactElement<StepProps> =>
+      child !== null && 
+      typeof child === 'object' && 
+      'type' in child
+  );
+
+  return (
+    <div className="my-8 space-y-0">
+      {steps.map((step, index) => {
+        const isLast = index === steps.length - 1;
+        
+        return (
+          <div key={index} className="relative flex gap-4">
+            {/* Левая колонка: кружок + линия */}
+            <div className="flex flex-col items-center">
+              {/* Кружок с номером */}
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-md shrink-0 ring-4 ring-blue-100 dark:ring-blue-900/50">
+                {index + 1}
+              </div>
+              
+              {/* Соединительная линия */}
+              {!isLast && (
+                <div className="w-0.5 flex-1 bg-gradient-to-b from-blue-400 to-gray-300 dark:from-blue-500 dark:to-gray-600 min-h-[20px]" />
+              )}
+            </div>
+            
+            {/* Правая колонка: контент */}
+            <div className={`flex-1 ${!isLast ? 'pb-6' : ''}`}>
+              {/* Заголовок шага */}
+              <h4 className="font-semibold text-gray-900 dark:text-white text-base mb-1 pt-1">
+                {step.props.title}
+              </h4>
+              
+              {/* Описание шага */}
+              {step.props.children && (
+                <div className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed [&>p]:mb-2 [&>p:last-child]:mb-0 [&>pre]:my-3 [&>ul]:my-2 [&>ol]:my-2">
+                  {step.props.children}
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 // ==================== EXPORT ====================
@@ -302,6 +374,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Callout,
     Tooltip,
     Expandable,
+    Copy,
+    Steps,
+    Step,
     ...components,
   };
 }

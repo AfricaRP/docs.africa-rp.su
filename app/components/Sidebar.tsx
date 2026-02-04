@@ -1,40 +1,18 @@
-// app/components/Sidebar.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+// Оставляем только технические иконки для UI самого сайдбара
 import { 
   ChevronDown, 
-  BookOpen, 
-  Code, 
-  Settings, 
-  Users, 
-  FileText,
-  Home,
-  Gamepad2,
-  Shield,
-  Coins,
-  Car,
-  Building2,
   Menu,
-  X
+  X,
+  Users
 } from 'lucide-react';
 import { navigation, NavItem } from '../lib/navigation';
 
-// Иконки по названию
-const icons: Record<string, React.ReactNode> = {
-  Home: <Home className="w-4 h-4" />,
-  BookOpen: <BookOpen className="w-4 h-4" />,
-  Gamepad2: <Gamepad2 className="w-4 h-4" />,
-  Coins: <Coins className="w-4 h-4" />,
-  Car: <Car className="w-4 h-4" />,
-  Shield: <Shield className="w-4 h-4" />,
-  Building2: <Building2 className="w-4 h-4" />,
-  Code: <Code className="w-4 h-4" />,
-  FileText: <FileText className="w-4 h-4" />,
-  Settings: <Settings className="w-4 h-4" />,
-};
+// --- ВСЮ БОЛЬШУЮ ТАБЛИЦУ const icons УДАЛЯЕМ ---
 
 function normalizePath(path: string): string {
   if (path === '/') return path;
@@ -70,7 +48,8 @@ function ChildLink({ item, pathname }: { item: NavItem; pathname: string }) {
 
 function ParentLink({ item, pathname }: { item: NavItem; pathname: string }) {
   const isActive = isLinkActive(item.href, pathname);
-  const icon = item.icon ? icons[item.icon] : null;
+  // Берем компонент иконки напрямую из item
+  const Icon = item.icon;
   
   return (
     <Link
@@ -81,7 +60,8 @@ function ParentLink({ item, pathname }: { item: NavItem; pathname: string }) {
           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
       }`}
     >
-      {icon}
+      {/* Рендерим компонент, если он есть */}
+      {Icon && <Icon className="w-4 h-4" />}
       <span>{item.title}</span>
     </Link>
   );
@@ -90,7 +70,8 @@ function ParentLink({ item, pathname }: { item: NavItem; pathname: string }) {
 function NavGroup({ item, pathname }: { item: NavItem; pathname: string }) {
   const hasActive = hasActiveChild(item.children, pathname);
   const [isOpen, setIsOpen] = useState(hasActive);
-  const icon = item.icon ? icons[item.icon] : null;
+  // Берем компонент иконки
+  const Icon = item.icon;
 
   useEffect(() => {
     if (hasActive) {
@@ -109,7 +90,7 @@ function NavGroup({ item, pathname }: { item: NavItem; pathname: string }) {
         }`}
       >
         <span className="flex items-center gap-2.5">
-          {icon}
+          {Icon && <Icon className="w-4 h-4" />}
           <span>{item.title}</span>
         </span>
         <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />

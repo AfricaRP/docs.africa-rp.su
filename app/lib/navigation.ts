@@ -1,21 +1,16 @@
-// app/lib/navigation.ts
 import { 
   BookOpen, 
-  Code, 
-  Settings, 
-  FileText,
   Home,
-  Gamepad2,
-  Shield,
-  Coins,
-  Car,
-  Building2,
+  Flag,
+  Stone,
+  Pickaxe,
+  LucideIcon // Импортируем тип для TypeScript
 } from 'lucide-react';
 
 export interface NavItem {
   title: string;
   href?: string;
-  icon?: string;
+  icon?: LucideIcon; // <-- Меняем тип с string на компонент иконки
   children?: NavItem[];
 }
 
@@ -23,52 +18,56 @@ export const navigation: NavItem[] = [
   {
     title: 'Главная',
     href: '/',
-    icon: 'Home',
+    icon: Home, // <-- Передаем как компонент (без кавычек)
   },
   {
-    title: 'Руководства',
-    icon: 'BookOpen',
+    title: 'Первые шаги',
+    href: '/pages/first-steps',
+    icon: Flag, // <-- Теперь это работает сразу
+  },
+  {
+    title: 'Ресурсы',
+    icon: Stone,
     children: [
-      { title: 'Руководство 1', href: '/guides/guide-1' },
-      { title: 'Руководство 2', href: '/guides/guide-2' },
+      { title: 'Камень', href: '/pages/materials/rock' },
+      { title: 'Палки', href: '/pages/materials/stick' },
+      { title: 'Кожа', href: '/pages/materials/leather' },
+      { title: 'Трава', href: '/pages/materials/grass' },
     ],
   },
-  // Добавь остальные разделы
+  {
+    title: 'Инструменты',
+    icon: Pickaxe,
+    children: [
+      { title: 'Киянка', href: '/pages/tools/mallet' },
+    ],
+  },
 ];
 
-// Функция для поиска категории по пути
+// Функция поиска остается без изменений, так как она не использует иконки
 export function findCategoryByPath(pathname: string): string | null {
+  // ... ваш старый код функции ...
   const normalizedPathname = pathname.endsWith('/') && pathname !== '/' 
     ? pathname.slice(0, -1) 
     : pathname;
 
   for (const item of navigation) {
-    // Проверяем главные пункты
     if (item.href) {
       const normalizedHref = item.href.endsWith('/') && item.href !== '/'
         ? item.href.slice(0, -1)
         : item.href;
-      
-      if (normalizedHref === normalizedPathname) {
-        return item.title;
-      }
+      if (normalizedHref === normalizedPathname) return item.title;
     }
-    
-    // Проверяем дочерние пункты
     if (item.children) {
       for (const child of item.children) {
         if (child.href) {
           const normalizedHref = child.href.endsWith('/') && child.href !== '/'
             ? child.href.slice(0, -1)
             : child.href;
-          
-          if (normalizedHref === normalizedPathname) {
-            return item.title; // Возвращаем название родителя
-          }
+          if (normalizedHref === normalizedPathname) return item.title;
         }
       }
     }
   }
-  
   return null;
 }
