@@ -7,8 +7,7 @@ import {
   Info,
   BookAlert,
   ArrowUp01,
-  LucideIcon,
-  Diamond
+  LucideIcon
 } from 'lucide-react';
 
 export interface NavItem {
@@ -43,11 +42,6 @@ export const navigation: NavItem[] = [
     title: 'Уровни',
     href: '/pages/levels',
     icon: ArrowUp01,
-  },
-  {
-    title: 'Example',
-    href: '/pages/example',
-    icon: Diamond,
   },
   {
     title: 'Ресурсы',
