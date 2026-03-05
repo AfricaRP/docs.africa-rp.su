@@ -67,13 +67,8 @@ export const navigation: NavItem[] = [
     title: 'Шаблоны',
     icon: Archive,
     children: [
-<<<<<<< HEAD
-      { title: 'Форматирование', href: '/pages/templates/formatting' }, 
-      { title: 'Инструменты', href: '/pages/templates/tools' }, 
-=======
       { title: 'Форматирование' , href: '/pages/templates/formatting' }, 
       { title: 'Инструменты', href: '/pages/templates/tools' }
->>>>>>> e2227249af9f49458594692faec6f457bff8ac12
     ],
   },
 ];
