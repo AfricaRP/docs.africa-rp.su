@@ -12,7 +12,7 @@ interface ServerStatus {
   };
 }
 
-const SERVER_IP = 'lr1.the-ae.ovh';
+const SERVER_IP = 'play.africa-rp.su';
 const SERVER_PORT = 25516;
 
 export function MinecraftStatus() {
