@@ -25,7 +25,7 @@ export const navigation: NavItem[] = [
   },
   {
     title: 'Правила',
-    href: '/rules',
+    href: 'https://legal.africa-rp.su/',
     icon: BookAlert,
   },
   {
