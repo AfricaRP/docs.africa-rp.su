@@ -21,11 +21,11 @@ export async function Code(props: any) {
           {title}
         </div>
       )}
-      <div className="p-4 overflow-x-auto text-sm">
+      <div className="p-4 overflow-x-auto text-sm [&>pre]:!bg-transparent [&>pre]:!m-0 [&>pre]:!p-0">
         <Pre
           code={highlighted}
           handlers={[callout]}
-          className="m-0 bg-transparent!"
+          style={{ margin: 0, backgroundColor: 'transparent' }}
         />
       </div>
     </div>
