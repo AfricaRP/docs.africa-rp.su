@@ -43,9 +43,9 @@ export function getSidebarNav(): NavItem[] {
         if (entry.isDirectory()) {
           // Override title if present in meta
           if (meta[entry.name]?.title) {
-            title = meta[entry.name].title;
+            title = meta[entry.name].title as string;
           } else if (meta[nameWithoutNumber]?.title) {
-            title = meta[nameWithoutNumber].title;
+            title = meta[nameWithoutNumber].title as string;
           }
           
           return {
@@ -84,7 +84,7 @@ export function getSidebarNav(): NavItem[] {
         }
         return null;
       })
-      .filter((item): item is NavItem => item !== null);
+      .filter((item) => item !== null) as NavItem[];
   }
   
   return buildTree(contentDir);
