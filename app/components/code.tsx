@@ -1,18 +1,33 @@
-import { Pre, RawCode, highlight } from "codehike/code"
+import { Pre, highlight } from "codehike/code"
 import { callout } from "./annotations/callout"
 
 export async function Code(props: any) {
   const { codeblock } = props;
   if (!codeblock) {
-    console.error("Code component received props:", Object.keys(props));
     return <pre>{JSON.stringify(props, null, 2)}</pre>;
   }
+  
   const highlighted = await highlight(codeblock, "github-dark")
+  
+  let title = "";
+  if (codeblock.meta) {
+    title = codeblock.meta.replace(/^!\s*/, "").trim();
+  }
+
   return (
-    <Pre
-      code={highlighted}
-      handlers={[callout]}
-      className="border border-zinc-800"
-    />
+    <div className="my-6 rounded-xl overflow-hidden shadow-md border border-zinc-200 dark:border-zinc-800 bg-[#0d1117]">
+      {title && (
+        <div className="flex items-center px-4 py-2 border-b border-zinc-200 dark:border-zinc-800/50 bg-zinc-100/50 dark:bg-[#161b22] text-xs text-zinc-600 dark:text-zinc-400 font-mono">
+          {title}
+        </div>
+      )}
+      <div className="p-4 overflow-x-auto text-sm">
+        <Pre
+          code={highlighted}
+          handlers={[callout]}
+          className="m-0 bg-transparent!"
+        />
+      </div>
+    </div>
   )
 }
