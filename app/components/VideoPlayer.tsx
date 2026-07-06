@@ -4,13 +4,11 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import "plyr/dist/plyr.css";
 
-// Dynamically import plyr-react to avoid SSR issues with the plyr library
 const Plyr = dynamic(() => import("plyr-react").then((mod) => mod.Plyr), { ssr: false });
 
 export function VideoPlayer({ src, title = "Video", poster }: { src: string; title?: string; poster?: string }) {
   const [posterUrl, setPosterUrl] = useState<string | undefined>(poster);
 
-  // Automatically extract a frame to use as a cover (poster)
   useEffect(() => {
     if (posterUrl || !src) return;
 
@@ -19,11 +17,9 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
     video.src = src;
     video.muted = true;
     video.playsInline = true;
-    // Set time to extract frame from (e.g. 2.5 seconds)
     video.currentTime = 2.5;
 
     const handleLoadedData = () => {
-      // Fallback if video is shorter than 2.5s
       if (video.duration < 2.5) {
         video.currentTime = video.duration / 2;
       }

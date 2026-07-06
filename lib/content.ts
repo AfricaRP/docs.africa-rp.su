@@ -17,7 +17,6 @@ export function getSidebarNav(): NavItem[] {
   function buildTree(dir: string, basePath: string = ''): NavItem[] {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
     
-    // Read meta.json if it exists
     let meta: Record<string, { title?: string, icon?: string }> = {};
     const metaPath = path.join(dir, 'meta.json');
     if (fs.existsSync(metaPath)) {
@@ -41,7 +40,6 @@ export function getSidebarNav(): NavItem[] {
         let icon = meta[entry.name]?.icon || meta[nameWithoutNumber]?.icon;
         
         if (entry.isDirectory()) {
-          // Override title if present in meta
           if (meta[entry.name]?.title) {
             title = meta[entry.name].title as string;
           } else if (meta[nameWithoutNumber]?.title) {
@@ -55,19 +53,16 @@ export function getSidebarNav(): NavItem[] {
             items: buildTree(fullPath, href)
           };
         } else if (entry.isFile() && entry.name.endsWith('.mdx')) {
-          // Игнорируем root index.mdx в самом меню, так как он обычно просто приветствие
           if (dir === contentDir && (entry.name === 'index.mdx' || entry.name === '00-index.mdx')) {
             return null;
           }
           
-          // Parse frontmatter
           const fileContents = fs.readFileSync(fullPath, 'utf8');
           const { data, content } = matter(fileContents);
           
           if (data.title) {
             title = data.title;
           } else {
-            // Ультимативное удобство: если нет frontmatter, ищем первый заголовок # H1
             const h1Match = content.match(/^#\s+(.+)$/m);
             if (h1Match) {
               title = h1Match[1].trim();
@@ -104,9 +99,8 @@ export function getAllMdxFiles(): { slug: string[], filePath: string }[] {
         scan(path.join(dir, entry.name), [...currentSlug, slugPart]);
       } else if (entry.name.endsWith('.mdx')) {
         let finalSlug = [...currentSlug, slugPart];
-        // Если это файл index.mdx, он должен быть корнем папки
         if (entry.name === 'index.mdx' || entry.name === '00-index.mdx') {
-          finalSlug = currentSlug; // пустой массив для корня или просто родительский slug
+          finalSlug = currentSlug;
         }
         files.push({
           slug: finalSlug,

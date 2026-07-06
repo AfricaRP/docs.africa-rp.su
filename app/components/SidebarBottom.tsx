@@ -8,20 +8,18 @@ export function SidebarBottom() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Prevent hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    return <div className="h-[100px]" />; // Placeholder to avoid layout shift
+    return <div className="h-[100px]" />;
   }
 
   const isDark = resolvedTheme === "dark";
 
   return (
     <div className="mt-auto pt-6 pb-2 flex flex-col gap-3 border-t border-zinc-200 dark:border-zinc-800">
-      {/* Theme Toggle */}
       <button
         onClick={() => setTheme(isDark ? "light" : "dark")}
         className="group flex items-center gap-3 px-2 py-2 text-sm font-semibold text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 rounded-md transition-all duration-300"
@@ -32,7 +30,6 @@ export function SidebarBottom() {
         <span>{isDark ? "Светлая тема" : "Темная тема"}</span>
       </button>
 
-      {/* Discord Invite */}
       <a
         href="https://discord.gg/africarp"
         target="_blank"

@@ -9,13 +9,11 @@ const rl = readline.createInterface({
 
 const contentDir = path.join(__dirname, '../content');
 
-// Helper to ask questions
 const ask = (query) => new Promise((resolve) => rl.question(`\x1b[36m? \x1b[0m${query}`, resolve));
 
 async function main() {
   console.log('\n\x1b[32m🚀 Утилита создания новой статьи AfricaRP\x1b[0m\n');
 
-  // 1. Get Categories
   if (!fs.existsSync(contentDir)) fs.mkdirSync(contentDir);
   const items = fs.readdirSync(contentDir, { withFileTypes: true });
   const categories = items.filter(i => i.isDirectory()).map(i => i.name);
@@ -35,24 +33,20 @@ async function main() {
     } else if (!isNaN(num) && num > 0 && num <= categories.length) {
       targetDir = path.join(contentDir, categories[num - 1]);
     } else if (catChoice.trim().length > 0) {
-      // Сreate new category
       const newCatDir = path.join(contentDir, catChoice.trim().toLowerCase().replace(/\s+/g, '-'));
       if (!fs.existsSync(newCatDir)) fs.mkdirSync(newCatDir);
       targetDir = newCatDir;
     }
   }
 
-  // 2. Get Title
   const title = await ask('Введите заголовок статьи: ');
   if (!title.trim()) {
     console.log('\x1b[31mЗаголовок не может быть пустым!\x1b[0m');
     process.exit(1);
   }
 
-  // 3. Get Icon (Optional)
   const icon = await ask('Введите название иконки (Lucide) или оставьте пустым (напр. FileText): ');
 
-  // 4. Generate Filename
   const slug = title.trim().toLowerCase().replace(/[^a-z0-9а-яё]+/g, '-').replace(/^-+|-+$/g, '');
   const filename = `${slug}.mdx`;
   const fullPath = path.join(targetDir, filename);
@@ -62,7 +56,6 @@ async function main() {
     process.exit(1);
   }
 
-  // 5. Write Content
   let content = '';
   if (icon.trim()) {
     content += `---\nicon: "${icon.trim()}"\n---\n\n`;

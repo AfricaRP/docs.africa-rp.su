@@ -8,14 +8,12 @@ import { NavItem } from "../lib/content"
 
 function IconRenderer({ name }: { name?: string }) {
   if (!name) return null;
-  // @ts-ignore
-  const Icon = LucideIcons[name];
+  const Icon = (LucideIcons as any)[name];
   if (!Icon) return <LucideIcons.FileText className="w-4 h-4 mr-2" />;
   return <Icon className="w-4 h-4 mr-2" />;
 }
 
 function CollapsibleSection({ section, pathname }: { section: NavItem; pathname: string }) {
-  // Check if any child item is active to keep the section open by default
   const isActive = section.items?.some(item => pathname === item.href || pathname.startsWith(item.href + '/'))
   const [isOpen, setIsOpen] = useState(isActive || false);
 

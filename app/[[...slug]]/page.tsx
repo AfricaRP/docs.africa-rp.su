@@ -8,7 +8,6 @@ import { CopyLinkButton } from "../components/CopyLinkButton"
 export async function generateStaticParams() {
   const files = getAllMdxFiles()
   return files.map(file => ({
-    // Next.js expects slug to be an array. For the root page, an empty array.
     slug: file.slug.length === 0 ? [] : file.slug,
   }))
 }
@@ -23,7 +22,6 @@ function getFlatNav(nav: NavItem[], currentCategory: string | null = null): Flat
   let flat: FlatNavItem[] = [];
   for (const item of nav) {
     if (item.items) {
-      // Игнорируем родительские элементы как отдельные страницы, если они только для группировки
       flat = flat.concat(getFlatNav(item.items, item.title));
     } else {
       flat.push({
@@ -41,7 +39,6 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   const slug = resolvedParams.slug || []
   const files = getAllMdxFiles()
   
-  // Find matching file
   const file = files.find(f => {
     if (f.slug.length !== slug.length) return false;
     return f.slug.every((s, i) => s === slug[i]);
@@ -51,11 +48,9 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     notFound()
   }
 
-  // Get path relative to the content directory
   const contentDir = path.join(process.cwd(), 'content')
   const relativePath = path.relative(contentDir, file.filePath).replace(/\\/g, '/')
 
-  // Dynamically import the MDX file. Webpack will bundle all MDX files in content/
   let Content;
   try {
     Content = (await import(`../../content/${relativePath}`)).default
@@ -64,7 +59,6 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     notFound()
   }
 
-  // Определяем плоский список для навигации
   const nav = getSidebarNav()
   const currentPath = slug.length > 0 ? '/' + slug.join('/') : '/'
   
@@ -83,7 +77,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
             {categoryTitle}
           </div>
         ) : (
-          <div /> // Пустой блок для сохранения выравнивания кнопки
+          <div />
         )}
         <div className="self-start sm:self-auto">
           <CopyLinkButton />

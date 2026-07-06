@@ -16,7 +16,6 @@ export function TableOfContents() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Небольшая задержка, чтобы контент успел отрендериться в DOM
     const timer = setTimeout(() => {
       const elements = Array.from(document.querySelectorAll("article h1, article h2, article h3"))
         .map((elem) => ({
@@ -28,18 +27,14 @@ export function TableOfContents() {
 
       setHeadings(elements);
 
-      // Умный Scroll Spy
       const handleScroll = () => {
         const headingElements = Array.from(document.querySelectorAll("article h1, article h2, article h3"))
           .filter(elem => elem.id);
         
         if (headingElements.length === 0) return;
 
-        // Отступ сверху для триггера (например, 150px от верха экрана)
         const scrollPosition = window.scrollY + 150;
 
-        // Ищем текущий активный заголовок
-        // Мы идем с конца (снизу вверх) и берем первый заголовок, который находится выше текущей позиции скролла
         let currentActiveId = headingElements[0].id;
         for (let i = headingElements.length - 1; i >= 0; i--) {
           const elem = headingElements[i] as HTMLElement;
@@ -49,7 +44,6 @@ export function TableOfContents() {
           }
         }
 
-        // Если мы доскроллили до самого низа страницы, жестко выделяем последний элемент
         const isAtBottom = window.innerHeight + Math.round(window.scrollY) >= document.body.offsetHeight - 50;
         if (isAtBottom && headingElements.length > 0) {
           currentActiveId = headingElements[headingElements.length - 1].id;
@@ -58,7 +52,6 @@ export function TableOfContents() {
         setActiveId(currentActiveId);
       };
 
-      // Вызываем сразу, чтобы подсветить при загрузке
       handleScroll();
 
       window.addEventListener("scroll", handleScroll, { passive: true });
