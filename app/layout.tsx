@@ -31,7 +31,7 @@ export default function RootLayout({
               <Sidebar />
               <SidebarBottom />
             </MobileHeader>
-            <aside className="hidden md:flex w-56 border-r border-zinc-200 dark:border-zinc-800 p-4 shrink-0 overflow-y-auto sticky top-0 h-screen flex-col">
+            <aside className="hidden md:flex w-64 border-r border-zinc-200 dark:border-zinc-800 p-4 shrink-0 overflow-y-auto sticky top-0 h-screen flex-col">
               <a href="/" className="block mb-8 flex justify-center shrink-0">
                 <img src="/media/logo.svg" alt="AfricaRP Logo" className="w-full max-w-[160px] h-auto object-contain" />
               </a>
