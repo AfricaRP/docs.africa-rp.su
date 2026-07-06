@@ -21,14 +21,14 @@ function CollapsibleSection({ section, pathname }: { section: NavItem; pathname:
     <div>
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="group w-full font-semibold text-zinc-800 dark:text-zinc-100 mb-2 flex items-center justify-between hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+        className="group w-full font-semibold text-zinc-800 dark:text-zinc-100 mb-2 flex items-center justify-between hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-left"
       >
-        <div className="flex items-center transition-transform duration-200 group-hover:translate-x-1">
+        <div className="flex items-center transition-transform duration-200 group-hover:translate-x-1 break-words flex-1 min-w-0 pr-2">
           <IconRenderer name={section.icon} />
-          {section.title}
+          <span className="flex-1 min-w-0 break-words leading-tight">{section.title}</span>
         </div>
         <LucideIcons.ChevronDown 
-          className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`} 
+          className={`w-4 h-4 shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`} 
         />
       </button>
       
@@ -51,9 +51,9 @@ function CollapsibleSection({ section, pathname }: { section: NavItem; pathname:
                       : "text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
                   }`}
                 >
-                  <span className="flex items-center transition-transform duration-200 group-hover:translate-x-1">
+                  <span className="flex items-center transition-transform duration-200 group-hover:translate-x-1 break-words w-full">
                     <IconRenderer name={item.icon} />
-                    {item.title}
+                    <span className="flex-1 min-w-0 break-words leading-tight">{item.title}</span>
                   </span>
                 </Link>
               </li>
@@ -89,9 +89,9 @@ export function SidebarClient({ nav }: { nav: NavItem[] }) {
                   : "text-zinc-800 hover:text-blue-600 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
               }`}
             >
-              <span className="flex items-center transition-transform duration-200 group-hover:translate-x-1">
+              <span className="flex items-center transition-transform duration-200 group-hover:translate-x-1 break-words w-full">
                 <IconRenderer name={section.icon} />
-                {section.title}
+                <span className="flex-1 min-w-0 break-words leading-tight">{section.title}</span>
               </span>
             </Link>
           </div>
