@@ -9,8 +9,8 @@ import { NavItem } from "../lib/content"
 function IconRenderer({ name }: { name?: string }) {
   if (!name) return null;
   const Icon = (LucideIcons as any)[name];
-  if (!Icon) return <LucideIcons.FileText className="w-4 h-4 mr-2" />;
-  return <Icon className="w-4 h-4 mr-2" />;
+  if (!Icon) return <LucideIcons.FileText className="w-5 h-5 mr-3 shrink-0" />;
+  return <Icon className="w-5 h-5 mr-3 shrink-0" />;
 }
 
 function CollapsibleSection({ section, pathname }: { section: NavItem; pathname: string }) {
