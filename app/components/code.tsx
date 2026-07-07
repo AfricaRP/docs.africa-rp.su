@@ -40,7 +40,7 @@ export async function Code(props: any) {
           </div>
         </div>
       )}
-      <div className={`py-4 px-4 overflow-x-auto text-sm [&>pre]:!bg-transparent [&>pre]:!m-0 [&>pre]:!p-0 ${!title ? 'pt-10' : ''}`}>
+      <div className={`py-4 overflow-x-auto text-sm [&>pre]:!bg-transparent [&>pre]:!m-0 [&>pre]:!p-0 ${!title ? 'pt-10' : ''}`}>
         <Pre
           code={highlighted}
           handlers={[callout, lineEffects]}
