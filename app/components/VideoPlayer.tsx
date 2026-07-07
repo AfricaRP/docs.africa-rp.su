@@ -1,28 +1,34 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "plyr/dist/plyr.css";
 
 const Plyr = dynamic(() => import("plyr-react").then((mod) => mod.Plyr), { ssr: false });
 
 export function VideoPlayer({ src, title = "Video", poster }: { src: string; title?: string; poster?: string }) {
   const [posterUrl, setPosterUrl] = useState<string | undefined>(poster);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (posterUrl || !src) return;
 
     let isMounted = true;
     const video = document.createElement("video");
-    video.crossOrigin = "anonymous";
+    
+    // Do NOT set crossOrigin for same-origin URLs, it causes CORS failures on static servers
+    if (src.startsWith('http')) {
+      video.crossOrigin = "anonymous";
+    }
+    
     video.muted = true;
     video.playsInline = true;
     video.preload = "metadata";
 
     const handleLoadedMetadata = () => {
       if (!isMounted) return;
-      // Seek to 0.1 seconds to grab the first stable frame
-      video.currentTime = 0.1;
+      // Seek to 0.5 seconds to bypass black frames
+      video.currentTime = 0.5;
     };
 
     const handleSeeked = () => {
@@ -34,7 +40,17 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
         const ctx = canvas.getContext("2d");
         if (ctx) {
           ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          setPosterUrl(canvas.toDataURL("image/jpeg", 0.8));
+          const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+          
+          // Force apply to DOM immediately for Plyr
+          if (wrapperRef.current) {
+            const posterDiv = wrapperRef.current.querySelector('.plyr__poster');
+            if (posterDiv) {
+              (posterDiv as HTMLElement).style.backgroundImage = `url(${dataUrl})`;
+            }
+          }
+          
+          setPosterUrl(dataUrl);
         }
       } catch (e) {
         console.warn("Failed to generate video poster:", e);
@@ -43,7 +59,7 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
 
     video.addEventListener("loadedmetadata", handleLoadedMetadata);
     video.addEventListener("seeked", handleSeeked);
-    video.src = src; // Set src after listeners to avoid race conditions
+    video.src = src;
 
     return () => {
       isMounted = false;
@@ -60,7 +76,7 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
       poster: posterUrl,
       sources: [
         {
-          src: src + "#t=0.001", // Fallback for native poster loading
+          src: src, 
           type: "video/mp4",
         },
       ],
@@ -123,7 +139,7 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
   };
 
   return (
-    <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 bg-black">
+    <div ref={wrapperRef} className="my-8 rounded-xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 bg-black">
       <Plyr {...plyrProps} />
     </div>
   );
