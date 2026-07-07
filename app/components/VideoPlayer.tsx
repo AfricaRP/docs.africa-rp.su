@@ -12,36 +12,44 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
   useEffect(() => {
     if (posterUrl || !src) return;
 
+    let isMounted = true;
     const video = document.createElement("video");
     video.crossOrigin = "anonymous";
-    video.src = src;
     video.muted = true;
     video.playsInline = true;
-    video.currentTime = 2.5;
+    video.preload = "metadata";
 
-    const handleLoadedData = () => {
-      if (video.duration < 2.5) {
-        video.currentTime = video.duration / 2;
-      }
+    const handleLoadedMetadata = () => {
+      if (!isMounted) return;
+      // Seek to 0.1 seconds to grab the first stable frame
+      video.currentTime = 0.1;
     };
 
     const handleSeeked = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        setPosterUrl(canvas.toDataURL("image/jpeg", 0.8));
+      if (!isMounted) return;
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          setPosterUrl(canvas.toDataURL("image/jpeg", 0.8));
+        }
+      } catch (e) {
+        console.warn("Failed to generate video poster:", e);
       }
     };
 
-    video.addEventListener("loadeddata", handleLoadedData);
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
     video.addEventListener("seeked", handleSeeked);
+    video.src = src; // Set src after listeners to avoid race conditions
 
     return () => {
-      video.removeEventListener("loadeddata", handleLoadedData);
+      isMounted = false;
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
       video.removeEventListener("seeked", handleSeeked);
+      video.src = "";
     };
   }, [src, posterUrl]);
 
@@ -52,7 +60,7 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
       poster: posterUrl,
       sources: [
         {
-          src: src,
+          src: src + "#t=0.001", // Fallback for native poster loading
           type: "video/mp4",
         },
       ],
