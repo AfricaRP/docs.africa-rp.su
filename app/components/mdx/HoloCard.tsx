@@ -28,7 +28,7 @@ export function HoloCard({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="flex justify-center my-8 perspective-[1000px]">
+    <div className="not-in-toc flex justify-center my-8 perspective-[1000px]">
       <div
         ref={cardRef}
         onMouseMove={handleMouseMove}

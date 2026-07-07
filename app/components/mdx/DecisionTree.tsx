@@ -7,7 +7,7 @@ export function DecisionTree({ initial, children }: { initial: string; children:
   const [current, setStep] = useState(initial);
   return (
     <DecisionContext.Provider value={{ current, setStep }}>
-      <div className="border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 my-6 bg-white dark:bg-zinc-900/30 shadow-sm relative overflow-hidden">
+      <div className="not-in-toc border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 my-6 bg-white dark:bg-zinc-900/30 shadow-sm relative overflow-hidden">
         {children}
       </div>
     </DecisionContext.Provider>

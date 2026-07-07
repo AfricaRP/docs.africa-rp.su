@@ -270,14 +270,14 @@ async function init() {
 **Как писать:**
 ```mdx
 <ParallaxWindow src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" height="300px">
-  <div className="text-2xl font-bold mb-2">Глубокий Космос</div>
+  ## Глубокий Космос
   Исследование неизвестных планет начинается с первого шага.
 </ParallaxWindow>
 ```
 
 **Как выглядит:**
 <ParallaxWindow src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" height="300px">
-  <div className="text-2xl font-bold mb-2">Глубокий Космос</div>
+  ## Глубокий Космос
   Исследование неизвестных планет начинается с первого шага.
 </ParallaxWindow>
 
@@ -289,14 +289,14 @@ async function init() {
 **Как писать:**
 ```mdx
 <HoloCard>
-  <div className="text-xl font-bold mb-2">Элитный Артефакт</div>
+  ### Элитный Артефакт
   Этот предмет наделяет владельца невероятной силой.
 </HoloCard>
 ```
 
 **Как выглядит:**
 <HoloCard>
-  <div className="text-xl font-bold mb-2">Элитный Артефакт</div>
+  ### Элитный Артефакт
   Этот предмет наделяет владельца невероятной силой.
 </HoloCard>
 
@@ -898,27 +898,27 @@ app.listen(3000);
 ```mdx
 <DecisionTree initial="start">
   <DecisionStep step="start">
-    <div className="text-xl font-bold mb-4">1. Вы используете Windows или macOS?</div>
+    ### 1. Вы используете Windows или macOS?
     <DecisionButton target="windows">Windows</DecisionButton>
     <DecisionButton target="macos">macOS</DecisionButton>
   </DecisionStep>
   
   <DecisionStep step="windows">
-    <div className="text-xl font-bold mb-4">2. Загрузите файл .exe</div>
+    ### 2. Загрузите файл .exe
     Убедитесь, что у вас есть права администратора.
     <DecisionButton target="finish">Я скачал</DecisionButton>
     <DecisionButton target="start">Назад</DecisionButton>
   </DecisionStep>
 
   <DecisionStep step="macos">
-    <div className="text-xl font-bold mb-4">2. Загрузите файл .dmg</div>
+    ### 2. Загрузите файл .dmg
     Если система блокирует установку, перейдите в настройки безопасности.
     <DecisionButton target="finish">Я скачал</DecisionButton>
     <DecisionButton target="start">Назад</DecisionButton>
   </DecisionStep>
 
   <DecisionStep step="finish">
-    <div className="text-xl font-bold mb-4">3. Установка завершена!</div>
+    ### 3. Установка завершена!
     Теперь вы можете открыть приложение.
     <DecisionButton target="start">Начать заново</DecisionButton>
   </DecisionStep>
@@ -929,27 +929,27 @@ app.listen(3000);
 
 <DecisionTree initial="start">
   <DecisionStep step="start">
-    <div className="text-xl font-bold mb-4">1. Вы используете Windows или macOS?</div>
+    ### 1. Вы используете Windows или macOS?
     <DecisionButton target="windows">Windows</DecisionButton>
     <DecisionButton target="macos">macOS</DecisionButton>
   </DecisionStep>
   
   <DecisionStep step="windows">
-    <div className="text-xl font-bold mb-4">2. Загрузите файл .exe</div>
+    ### 2. Загрузите файл .exe
     Убедитесь, что у вас есть права администратора.
     <DecisionButton target="finish">Я скачал</DecisionButton>
     <DecisionButton target="start">Назад</DecisionButton>
   </DecisionStep>
 
   <DecisionStep step="macos">
-    <div className="text-xl font-bold mb-4">2. Загрузите файл .dmg</div>
+    ### 2. Загрузите файл .dmg
     Если система блокирует установку, перейдите в настройки безопасности.
     <DecisionButton target="finish">Я скачал</DecisionButton>
     <DecisionButton target="start">Назад</DecisionButton>
   </DecisionStep>
 
   <DecisionStep step="finish">
-    <div className="text-xl font-bold mb-4">3. Установка завершена!</div>
+    ### 3. Установка завершена!
     Теперь вы можете открыть приложение.
     <DecisionButton target="start">Начать заново</DecisionButton>
   </DecisionStep>

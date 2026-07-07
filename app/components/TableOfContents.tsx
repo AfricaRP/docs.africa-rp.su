@@ -18,6 +18,7 @@ export function TableOfContents() {
   useEffect(() => {
     const timer = setTimeout(() => {
       const elements = Array.from(document.querySelectorAll("article h1, article h2, article h3"))
+        .filter((elem) => !elem.closest('.not-in-toc'))
         .map((elem) => ({
           id: elem.id,
           text: elem.textContent || "",
@@ -29,7 +30,7 @@ export function TableOfContents() {
 
       const handleScroll = () => {
         const headingElements = Array.from(document.querySelectorAll("article h1, article h2, article h3"))
-          .filter(elem => elem.id);
+          .filter((elem) => !elem.closest('.not-in-toc') && elem.id);
         
         if (headingElements.length === 0) return;
 

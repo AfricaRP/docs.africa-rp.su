@@ -60,22 +60,38 @@ function getAllMdxFiles(dir, currentSlug = []) {
       
       const sections = [currentSection];
 
-      // Exclude frontmatter lines and Code Hike lines
-      let inCodeBlock = false;
+      let codeBlockDelimiter = null;
+      let ignoredBlockDepth = 0;
+      const ignoredTags = ['ParallaxWindow', 'HoloCard', 'DecisionTree', 'MarginNote', 'GlowCard', 'DecisionStep', 'Accordion', 'Steps'];
 
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
 
-        if (line.startsWith('```')) {
-          inCodeBlock = !inCodeBlock;
-          continue;
+        const cbMatch = line.trim().match(/^(`{3,})/);
+        if (cbMatch) {
+          if (!codeBlockDelimiter) {
+            codeBlockDelimiter = cbMatch[1];
+            continue;
+          } else if (cbMatch[1].length >= codeBlockDelimiter.length) {
+            codeBlockDelimiter = null;
+            continue;
+          }
         }
 
-        if (inCodeBlock) continue;
+        if (codeBlockDelimiter) continue;
+
+        // Check for ignored MDX component tags
+        for (const tag of ignoredTags) {
+          if (line.match(new RegExp("^\\\\s*<" + tag, "i")) && !line.match(new RegExp("<\\\\s*/\\\\s*" + tag + "\\\\s*>", "i"))) {
+            ignoredBlockDepth++;
+          } else if (line.match(new RegExp("^\\\\s*<\\\\s*/\\\\s*" + tag + "\\\\s*>", "i"))) {
+            ignoredBlockDepth = Math.max(0, ignoredBlockDepth - 1);
+          }
+        }
 
         // Match headings ## Title
         const headingMatch = line.match(/^(#{2,6})\s+(.+)$/);
-        if (headingMatch) {
+        if (headingMatch && ignoredBlockDepth === 0) {
           const headingText = headingMatch[2].trim();
           // Create new section
           currentSection = {
