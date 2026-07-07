@@ -12,7 +12,7 @@ export async function Code(props: any) {
   
   let title = "";
   if (codeblock.meta) {
-    title = codeblock.meta.replace(/^!\s*/, "").trim();
+    title = codeblock.meta.trim();
   }
 
   return (
