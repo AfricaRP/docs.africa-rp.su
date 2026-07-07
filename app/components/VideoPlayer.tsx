@@ -16,16 +16,21 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
     let isMounted = true;
     const video = document.createElement("video");
     
-    // Do NOT set crossOrigin for same-origin URLs, it causes CORS failures on static servers
+    // Some browsers require the video to be in the DOM to load metadata/data
+    video.style.display = "none";
+    video.style.position = "absolute";
+    video.style.opacity = "0";
+    document.body.appendChild(video);
+
     if (src.startsWith('http')) {
       video.crossOrigin = "anonymous";
     }
     
     video.muted = true;
     video.playsInline = true;
-    video.preload = "metadata";
+    video.preload = "auto";
 
-    const handleLoadedMetadata = () => {
+    const handleLoadedData = () => {
       if (!isMounted) return;
       // Seek to 0.5 seconds to bypass black frames
       video.currentTime = 0.5;
@@ -47,6 +52,10 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
             const posterDiv = wrapperRef.current.querySelector('.plyr__poster');
             if (posterDiv) {
               (posterDiv as HTMLElement).style.backgroundImage = `url(${dataUrl})`;
+              // Plyr might hide the poster div if poster was initially undefined
+              (posterDiv as HTMLElement).style.opacity = "1";
+              (posterDiv as HTMLElement).style.visibility = "visible";
+              (posterDiv as HTMLElement).style.display = "block";
             }
           }
           
@@ -54,17 +63,20 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
         }
       } catch (e) {
         console.warn("Failed to generate video poster:", e);
+      } finally {
+        if (video.parentNode) video.parentNode.removeChild(video);
       }
     };
 
-    video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("loadeddata", handleLoadedData);
     video.addEventListener("seeked", handleSeeked);
     video.src = src;
 
     return () => {
       isMounted = false;
-      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("loadeddata", handleLoadedData);
       video.removeEventListener("seeked", handleSeeked);
+      if (video.parentNode) video.parentNode.removeChild(video);
       video.src = "";
     };
   }, [src, posterUrl]);
@@ -76,7 +88,7 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
       poster: posterUrl,
       sources: [
         {
-          src: src, 
+          src: `${src}#t=0.5`, // Fallback for native poster loading
           type: "video/mp4",
         },
       ],
@@ -139,8 +151,13 @@ export function VideoPlayer({ src, title = "Video", poster }: { src: string; tit
   };
 
   return (
-    <div ref={wrapperRef} className="my-8 rounded-xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 bg-black">
-      <Plyr {...plyrProps} />
+    <div ref={wrapperRef} className="my-8 rounded-xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 bg-black relative">
+      {!posterUrl && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-zinc-900 pointer-events-none animate-pulse">
+          <div className="w-16 h-16 border-4 border-zinc-700 border-t-blue-500 rounded-full animate-spin"></div>
+        </div>
+      )}
+      <Plyr key={posterUrl || 'loading'} {...plyrProps} />
     </div>
   );
 }
