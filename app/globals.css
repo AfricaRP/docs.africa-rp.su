@@ -133,3 +133,9 @@
   background-color: #27272a;
   color: #a1a1aa;
 }
+
+/* Убираем автоматические кавычки Tailwind Typography в цитатах */
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: none !important;
+}
