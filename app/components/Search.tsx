@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Search as SearchIcon, X, FileText } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { createPortal } from "react-dom";
 
 interface SearchResult {
   title: string;
@@ -17,6 +18,11 @@ export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
   const [docs, setDocs] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -57,10 +63,10 @@ export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-24 sm:pt-32 px-4 animate-in fade-in duration-200">
+  const modalContent = (
+    <div className="fixed inset-0 z-[9999] flex items-start justify-center pt-24 sm:pt-32 px-4 animate-in fade-in duration-200">
       <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
       <div className="relative w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden animate-in slide-in-from-bottom-4 duration-200">
         <div className="flex items-center px-4 py-3 border-b border-zinc-200 dark:border-zinc-800">
@@ -111,4 +117,6 @@ export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
