@@ -33,6 +33,12 @@ import { DepthSection, DepthLevel } from "./app/components/mdx/DepthSlider"
 import { CodeWalkthrough, WalkthroughText, WalkthroughCode } from "./app/components/mdx/CodeWalkthrough"
 import { FlowMap } from "./app/components/mdx/FlowMap"
 import { CompareMatrix } from "./app/components/mdx/CompareMatrix"
+import { ParallaxWindow } from "./app/components/mdx/ParallaxWindow"
+import { HoloCard } from "./app/components/mdx/HoloCard"
+import { MarginNote } from "./app/components/mdx/MarginNote"
+import { Magnifier } from "./app/components/mdx/Magnifier"
+import { GlowGrid, GlowCard } from "./app/components/mdx/GlowGrid"
+import { MarkerDraw } from "./app/components/mdx/MarkerDraw"
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -82,5 +88,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     WalkthroughCode,
     FlowMap,
     CompareMatrix,
+    ParallaxWindow,
+    HoloCard,
+    MarginNote,
+    Magnifier,
+    GlowGrid,
+    GlowCard,
+    MarkerDraw,
   }
 }
