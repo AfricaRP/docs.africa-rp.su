@@ -434,15 +434,15 @@ app.listen(3000);
 ```mdx
 <DoDontGrid>
   <DoDont type="do">
-    Полное определение тензора кривизны Римана через символы Кристоффеля (с учетом нелинейных членов):
+    Интегральная формула Коши для $n$-й производной аналитической функции в ТФКП (с учетом факториала и правильной степени):
     $$
-    R^\rho_{\sigma\mu\nu} = \partial_\mu \Gamma^\rho_{\nu\sigma} - \partial_\nu \Gamma^\rho_{\mu\sigma} + \Gamma^\rho_{\mu\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\rho_{\nu\lambda}\Gamma^\lambda_{\mu\sigma}
+    f^{(n)}(z_0) = \frac{n!}{2\pi i} \oint_{\gamma} \frac{f(z)}{(z - z_0)^{n+1}} \, dz
     $$
   </DoDont>
   <DoDont type="dont">
-    Грубая ошибка неопытных физиков — игнорирование коммутатора связности:
+    Грубая ошибка студентов на экзамене по Вышмату — потеря факториала и смещение степени в знаменателе:
     $$
-    R^\rho_{\sigma\mu\nu} = \partial_\mu \Gamma^\rho_{\nu\sigma} + \partial_\nu \Gamma^\rho_{\mu\sigma}
+    f^{(n)}(z_0) = \frac{1}{2\pi i} \oint_{\gamma} \frac{f(z)}{(z - z_0)^n} \, dz
     $$
   </DoDont>
 </DoDontGrid>
@@ -452,15 +452,15 @@ app.listen(3000);
 
 <DoDontGrid>
   <DoDont type="do">
-    Полное определение тензора кривизны Римана через символы Кристоффеля (с учетом нелинейных членов):
+    Интегральная формула Коши для $n$-й производной аналитической функции в ТФКП (с учетом факториала и правильной степени):
     $$
-    R^\rho_{\sigma\mu\nu} = \partial_\mu \Gamma^\rho_{\nu\sigma} - \partial_\nu \Gamma^\rho_{\mu\sigma} + \Gamma^\rho_{\mu\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\rho_{\nu\lambda}\Gamma^\lambda_{\mu\sigma}
+    f^{(n)}(z_0) = \frac{n!}{2\pi i} \oint_{\gamma} \frac{f(z)}{(z - z_0)^{n+1}} \, dz
     $$
   </DoDont>
   <DoDont type="dont">
-    Грубая ошибка неопытных физиков — игнорирование коммутатора связности:
+    Грубая ошибка студентов на экзамене по Вышмату — потеря факториала и смещение степени в знаменателе:
     $$
-    R^\rho_{\sigma\mu\nu} = \partial_\mu \Gamma^\rho_{\nu\sigma} + \partial_\nu \Gamma^\rho_{\mu\sigma}
+    f^{(n)}(z_0) = \frac{1}{2\pi i} \oint_{\gamma} \frac{f(z)}{(z - z_0)^n} \, dz
     $$
   </DoDont>
 </DoDontGrid>
@@ -474,6 +474,8 @@ app.listen(3000);
 <ImageGrid columns={2}>
   ![Картинка 1](/media/tutorial/image.jpg)
   ![Картинка 2](/media/tutorial/image2.jpg)
+  ![Картинка 3](/media/tutorial/image3.jpg)
+  ![Картинка 4](/media/tutorial/image4.jpg)
 </ImageGrid>
 ```
 
@@ -482,6 +484,8 @@ app.listen(3000);
 <ImageGrid columns={2}>
   ![Картинка 1](/media/tutorial/image.jpg)
   ![Картинка 2](/media/tutorial/image2.jpg)
+  ![Картинка 3](/media/tutorial/image3.jpg)
+  ![Картинка 4](/media/tutorial/image4.jpg)
 </ImageGrid>
 
 ## Список параметров (Properties)
