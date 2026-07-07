@@ -74,8 +74,8 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   const currentItem = currentIndex !== -1 ? flatNav[currentIndex] : null;
   const breadcrumbItems = [];
   
-  if (currentItem && currentItem.category && currentItem.categoryHref) {
-    breadcrumbItems.push({ title: currentItem.category, href: currentItem.categoryHref });
+  if (currentItem && currentItem.category) {
+    breadcrumbItems.push({ title: currentItem.category });
   }
   if (currentItem) {
     breadcrumbItems.push({ title: currentItem.title, href: currentItem.href });

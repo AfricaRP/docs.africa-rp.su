@@ -23,7 +23,7 @@ export function Card({ title, href, icon, children }: CardProps) {
   return (
     <Link 
       href={href}
-      className="block group relative p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#0d1117] hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-lg transition-all duration-300 overflow-hidden"
+      className="block group relative p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#0d1117] hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-lg transition-all duration-300 overflow-hidden !no-underline"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       

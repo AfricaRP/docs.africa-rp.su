@@ -68,7 +68,7 @@ export function ImageCompare({
           alt={afterLabel} 
           className="absolute inset-0 w-full h-full object-cover !m-0 pointer-events-none"
         />
-        <div className="absolute top-4 right-4 bg-black/50 text-white px-2 py-1 rounded text-xs backdrop-blur-sm pointer-events-none">
+        <div className="absolute top-4 right-4 bg-black/50 text-white px-2 py-1 rounded text-xs backdrop-blur-sm pointer-events-none whitespace-nowrap">
           {afterLabel}
         </div>
 
@@ -82,7 +82,7 @@ export function ImageCompare({
             className="absolute inset-0 w-[100vw] h-full object-cover !m-0"
             style={{ maxWidth: 'none', width: containerRef.current ? containerRef.current.offsetWidth : '100%' }}
           />
-          <div className="absolute top-4 left-4 bg-black/50 text-white px-2 py-1 rounded text-xs backdrop-blur-sm">
+          <div className="absolute top-4 left-4 bg-black/50 text-white px-2 py-1 rounded text-xs backdrop-blur-sm whitespace-nowrap">
             {beforeLabel}
           </div>
         </div>

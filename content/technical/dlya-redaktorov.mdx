@@ -85,9 +85,9 @@ icon: "PenTool"
 
 <ImageCompare 
   before="/media/tutorial/image.jpg" 
-  after="/media/tutorial/image.jpg" 
-  beforeLabel="Без модов"
-  afterLabel="С редуксом"
+  after="/media/tutorial/image2.jpg" 
+  beforeLabel="Первый вариант"
+  afterLabel="Второй вариант"
 />
 ```
 
@@ -97,9 +97,9 @@ icon: "PenTool"
 
 <ImageCompare 
   before="/media/tutorial/image.jpg" 
-  after="/media/tutorial/image.jpg" 
-  beforeLabel="Без модов"
-  afterLabel="С редуксом"
+  after="/media/tutorial/image2.jpg" 
+  beforeLabel="Первый вариант"
+  afterLabel="Второй вариант"
 />
 
 ## Видео
@@ -192,12 +192,12 @@ icon: "PenTool"
 
 **Как писать:**
 ```mdx
-На сервере запрещен <Tooltip text="Random Deathmatch — убийство без причины">RDM</Tooltip>.
+Главное в физике — это <Tooltip text="Ускоритель заряженных частиц">синхрофазотрон</Tooltip>.
 ```
 
 **Как выглядит:**
 
-На сервере запрещен <Tooltip text="Random Deathmatch — убийство без причины">RDM</Tooltip>.
+Главное в физике — это <Tooltip text="Ускоритель заряженных частиц">синхрофазотрон</Tooltip>.
 
 ## Блоки внимания (Callouts)
 
@@ -271,13 +271,13 @@ console.log("Привет, AfricaRP!");
 
 ## Подсветка и фокус строк кода
 
-Вы можете выделять строки (`// !mark`) или фокусировать внимание только на нужных строках, затемняя остальные (`// !focus`).
+Вы можете выделять строки (`// !mark`) или фокусировать внимание только на нужных строках, затемняя остальные (`// !focus`). Обратите внимание: в примере мы добавили пробелы после знака восклицания, чтобы код отобразился как текст. В реальном использовании пишите слитно: `// !mark` и `// !focus`.
 
 **Как писать:**
 ````markdown
 ```javascript server.js
-const express = require('express'); // !focus
-const app = express(); // !mark
+const express = require('express'); // ! focus
+const app = express(); // ! mark
 
 app.listen(3000);
 ```

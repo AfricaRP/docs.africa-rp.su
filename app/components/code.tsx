@@ -19,7 +19,7 @@ export async function Code(props: any) {
 
   return (
     <div className="my-6 rounded-xl overflow-hidden shadow-md border border-zinc-200 dark:border-zinc-800 bg-zinc-800 dark:bg-[#0d1117] group relative">
-      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+      <div className="absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 transition-opacity z-10">
         <CopyCodeButton text={codeblock.value} />
       </div>
       {title && (
