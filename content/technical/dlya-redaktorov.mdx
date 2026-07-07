@@ -102,26 +102,231 @@ icon: "PenTool"
   afterLabel="Второй вариант"
 />
 
-## Видео, YouTube и RuTube
+## Интерактивные элементы документации
 
-В документации можно использовать как локальные видео файлы (`<VideoPlayer>`), так и видео с YouTube (`<YouTube>`) или RuTube (`<Rutube>`).
+Мы создали набор уникальных компонентов, которые делают чтение объемных текстов и изучение технологий удобнее.
+
+### Переключатель перспективы
+
+Компонент `<Perspective>` позволяет переключать контекст чтения прямо внутри страницы (например, между операционными системами или пакетными менеджерами).
+
+**Как писать:**
+````mdx
+<Perspective tabs={['npm', 'yarn', 'pnpm']}>
+<PerspectiveItem tab="npm">
+
+```bash
+npm install express
+```
+
+</PerspectiveItem>
+<PerspectiveItem tab="yarn">
+
+```bash
+yarn add express
+```
+
+</PerspectiveItem>
+<PerspectiveItem tab="pnpm">
+
+```bash
+pnpm add express
+```
+
+</PerspectiveItem>
+</Perspective>
+````
+
+**Как выглядит:**
+<Perspective tabs={['npm', 'yarn', 'pnpm']}>
+<PerspectiveItem tab="npm">
+
+```bash
+npm install express
+```
+
+</PerspectiveItem>
+<PerspectiveItem tab="yarn">
+
+```bash
+yarn add express
+```
+
+</PerspectiveItem>
+<PerspectiveItem tab="pnpm">
+
+```bash
+pnpm add express
+```
+
+</PerspectiveItem>
+</Perspective>
+
+---
+
+### Слайдер глубины погружения
+
+Если тема сложная, дайте читателю выбрать уровень детализации с помощью `<DepthSection>`. Слайдер имеет три уровня: TL;DR (кратко), Стандарт и Deep Dive (глубокое погружение).
 
 **Как писать:**
 ```mdx
-<VideoPlayer src="/media/tutorial/video.mp4" title="Тестовое видео" />
-
-<YouTube id="fKABMFgUYXE" title="Официальный трейлер" />
-
-<Rutube id="c0b30bb7e8e88c159eda91ac01fa9e14" title="Тестовое видео Rutube" />
+<DepthSection>
+  <DepthLevel showAt="tldr">
+    **TL;DR:** База данных хранит информацию пользователей.
+  </DepthLevel>
+  <DepthLevel showAt="standard">
+    Мы используем реляционную базу данных PostgreSQL. Она позволяет связывать таблицы пользователей, платежей и сессий через внешние ключи.
+  </DepthLevel>
+  <DepthLevel showAt="deep">
+    На уровне движка мы настроили кастомные индексы B-Tree для ускорения поиска по UUID, а также партицирование логов по месяцам, что снизило нагрузку на диск на 30%.
+  </DepthLevel>
+</DepthSection>
 ```
 
 **Как выглядит:**
+<DepthSection>
+  <DepthLevel showAt="tldr">
+    **TL;DR:** База данных хранит информацию пользователей.
+  </DepthLevel>
+  <DepthLevel showAt="standard">
+    Мы используем реляционную базу данных PostgreSQL. Она позволяет связывать таблицы пользователей, платежей и сессий через внешние ключи.
+  </DepthLevel>
+  <DepthLevel showAt="deep">
+    На уровне движка мы настроили кастомные индексы B-Tree для ускорения поиска по UUID, а также партицирование логов по месяцам, что снизило нагрузку на диск на 30%.
+  </DepthLevel>
+</DepthSection>
 
-<VideoPlayer src="/media/tutorial/video.mp4" title="Тестовое видео" />
+---
 
-<YouTube id="fKABMFgUYXE" title="Официальный трейлер" />
+### Умная матрица сравнения
 
-<Rutube id="c0b30bb7e8e88c159eda91ac01fa9e14" title="Тестовое видео Rutube" />
+Компонент `<CompareMatrix>` оборачивает обычную Markdown-таблицу. Он закрепляет первую колонку при скролле на мобильных устройствах и автоматически заменяет плюсы, минусы, "Да" и "Нет" на красивые иконки.
+
+**Как писать:**
+```mdx
+<CompareMatrix>
+| Фича | SQL | NoSQL |
+| --- | --- | --- |
+| Жесткая схема | + | - |
+| Масштабирование | Вертикальное | Горизонтальное |
+| Транзакции (ACID) | Да | Нет |
+</CompareMatrix>
+```
+
+**Как выглядит:**
+<CompareMatrix>
+| Фича | SQL | NoSQL |
+| --- | --- | --- |
+| Жесткая схема | + | - |
+| Масштабирование | Вертикальное | Горизонтальное |
+| Транзакции (ACID) | Да | Нет |
+</CompareMatrix>
+
+---
+
+### Радар-диаграмма (StatsRadar)
+
+Визуализируйте сильные и слабые стороны любой технологии или концепта с помощью паутинообразной диаграммы. Значения задаются от 0 до 100.
+
+**Как писать:**
+```mdx
+<StatsRadar data={{ 
+  'Скорость': 95, 
+  'Надежность': 80, 
+  'Сложность': 40, 
+  'Гибкость': 70 
+}} />
+```
+
+**Как выглядит:**
+<StatsRadar data={{ 
+  'Скорость': 95, 
+  'Надежность': 80, 
+  'Сложность': 40, 
+  'Гибкость': 70 
+}} />
+
+---
+
+### Интерактивная архитектура (FlowMap)
+
+Показывайте цепочки вызовов или архитектурные компоненты с помощью кликабельной блок-схемы.
+
+**Как писать:**
+```mdx
+<FlowMap nodes={[
+  { id: '1', title: 'Клиент', desc: 'Браузер отправляет HTTP-запрос с JWT токеном.' },
+  { id: '2', title: 'API Gateway', desc: 'Шлюз валидирует токен и применяет Rate Limiting.' },
+  { id: '3', title: 'Микросервис', desc: 'Сервис выполняет бизнес-логику и сохраняет данные в БД.' }
+]} />
+```
+
+**Как выглядит:**
+<FlowMap nodes={[
+  { id: '1', title: 'Клиент', desc: 'Браузер отправляет HTTP-запрос с JWT токеном.' },
+  { id: '2', title: 'API Gateway', desc: 'Шлюз валидирует токен и применяет Rate Limiting.' },
+  { id: '3', title: 'Микросервис', desc: 'Сервис выполняет бизнес-логику и сохраняет данные в БД.' }
+]} />
+
+---
+
+### Объяснение кода (CodeWalkthrough)
+
+Компонент `<CodeWalkthrough>` создает layout, где левая колонка предназначена для текста, а правая — для блока кода. Код прилипает к верху экрана при скролле.
+
+**Как писать:**
+````mdx
+<CodeWalkthrough>
+  <WalkthroughText>
+    Сначала мы импортируем необходимые модули.
+    
+    Затем создаем функцию `init()`, которая устанавливает соединение.
+    
+    В конце не забываем обработать ошибки с помощью блока `catch`.
+  </WalkthroughText>
+  <WalkthroughCode>
+
+```javascript
+import { db } from './database';
+
+async function init() {
+  try {
+    await db.connect();
+  } catch (e) {
+    console.error(e);
+  }
+}
+```
+
+  </WalkthroughCode>
+</CodeWalkthrough>
+````
+
+**Как выглядит:**
+<CodeWalkthrough>
+  <WalkthroughText>
+    Сначала мы импортируем необходимые модули.
+    
+    Затем создаем функцию `init()`, которая устанавливает соединение.
+    
+    В конце не забываем обработать ошибки с помощью блока `catch`.
+  </WalkthroughText>
+  <WalkthroughCode>
+
+```javascript
+import { db } from './database';
+
+async function init() {
+  try {
+    await db.connect();
+  } catch (e) {
+    console.error(e);
+  }
+}
+```
+
+  </WalkthroughCode>
+</CodeWalkthrough>
 
 ## Спойлеры
 

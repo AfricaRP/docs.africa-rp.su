@@ -28,6 +28,12 @@ import { DecisionTree, DecisionStep, DecisionButton } from "./app/components/mdx
 import { VoiceBox } from "./app/components/mdx/VoiceBox"
 import { YouTube } from "./app/components/mdx/YouTube"
 import { Rutube } from "./app/components/mdx/Rutube"
+import { Perspective, PerspectiveItem } from "./app/components/mdx/Perspective"
+import { StatsRadar } from "./app/components/mdx/StatsRadar"
+import { DepthSection, DepthLevel } from "./app/components/mdx/DepthSlider"
+import { CodeWalkthrough, WalkthroughText, WalkthroughCode } from "./app/components/mdx/CodeWalkthrough"
+import { FlowMap } from "./app/components/mdx/FlowMap"
+import { CompareMatrix } from "./app/components/mdx/CompareMatrix"
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -69,5 +75,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     VoiceBox,
     YouTube,
     Rutube,
+    Perspective,
+    PerspectiveItem,
+    StatsRadar,
+    DepthSection,
+    DepthLevel,
+    CodeWalkthrough,
+    WalkthroughText,
+    WalkthroughCode,
+    FlowMap,
+    CompareMatrix,
   }
 }
