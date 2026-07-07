@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Search as SearchIcon, X, FileText } from "lucide-react";
+import { Search as SearchIcon, X, FileText, Hash } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
@@ -131,26 +131,34 @@ export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
 
         <div className="max-h-[60vh] overflow-y-auto p-2">
           {results.length > 0 ? (
-            results.map((res) => (
-              <Link
-                key={res.href}
-                href={res.href}
-                onClick={onClose}
-                className="flex items-start gap-3 p-3 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors group"
-              >
-                <div className="mt-0.5 bg-blue-100 dark:bg-blue-900/30 p-2 rounded-md text-blue-600 dark:text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors shrink-0">
-                  <FileText className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="font-medium text-zinc-900 dark:text-zinc-100">
-                    <HighlightedText text={res.title} query={query} />
+            results.map((res: any) => {
+              const isSection = !!res.pageTitle;
+              return (
+                <Link
+                  key={res.href}
+                  href={res.href}
+                  onClick={onClose}
+                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors group"
+                >
+                  <div className="mt-0.5 bg-blue-100 dark:bg-blue-900/30 p-2 rounded-md text-blue-600 dark:text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors shrink-0">
+                    {isSection ? <Hash className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
                   </div>
-                  <div className="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-1 mt-0.5">
-                    <HighlightedText text={res.content} query={query} isContent={true} />
+                  <div>
+                    <div className="font-medium text-zinc-900 dark:text-zinc-100">
+                      <HighlightedText text={res.title} query={query} />
+                    </div>
+                    {isSection && (
+                      <div className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-0.5">
+                        {res.pageTitle}
+                      </div>
+                    )}
+                    <div className="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-1 mt-0.5">
+                      <HighlightedText text={res.content} query={query} isContent={true} />
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))
+                </Link>
+              );
+            })
           ) : query.trim().length > 1 ? (
             <div className="p-8 text-center text-zinc-500 dark:text-zinc-400">
               По запросу «{query}» ничего не найдено.
