@@ -12,6 +12,51 @@ interface SearchResult {
   content: string;
 }
 
+function HighlightedText({ text, query, isContent = false }: { text: string; query: string; isContent?: boolean }) {
+  if (!query.trim()) return <>{isContent ? text.substring(0, 100) + '...' : text}</>;
+
+  const lowerText = text.toLowerCase();
+  const lowerQuery = query.toLowerCase();
+  const index = lowerText.indexOf(lowerQuery);
+
+  if (index === -1) {
+    return <>{isContent ? text.substring(0, 100) + '...' : text}</>;
+  }
+
+  let start = 0;
+  let end = text.length;
+
+  if (isContent) {
+    const windowSize = 50;
+    start = Math.max(0, index - windowSize);
+    end = Math.min(text.length, index + query.length + windowSize);
+    
+    // Adjust start to not cut a word in half if possible
+    if (start > 0) {
+      const nextSpace = text.indexOf(' ', start);
+      if (nextSpace !== -1 && nextSpace < index) {
+        start = nextSpace + 1;
+      }
+    }
+  }
+
+  const before = text.substring(start, index);
+  const match = text.substring(index, index + query.length);
+  const after = text.substring(index + query.length, end);
+
+  return (
+    <>
+      {isContent && start > 0 && "..."}
+      {before}
+      <mark className="bg-blue-500/20 text-blue-700 dark:text-blue-300 font-semibold rounded-sm px-0.5">
+        {match}
+      </mark>
+      {after}
+      {isContent && end < text.length && "..."}
+    </>
+  );
+}
+
 export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -97,9 +142,11 @@ export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                   <FileText className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="font-medium text-zinc-900 dark:text-zinc-100">{res.title}</div>
+                  <div className="font-medium text-zinc-900 dark:text-zinc-100">
+                    <HighlightedText text={res.title} query={query} />
+                  </div>
                   <div className="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-1 mt-0.5">
-                    {res.content.substring(0, 100)}...
+                    <HighlightedText text={res.content} query={query} isContent={true} />
                   </div>
                 </div>
               </Link>
