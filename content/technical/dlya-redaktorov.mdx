@@ -426,3 +426,109 @@ app.listen(3000);
   Каждый ваш шаг меняет судьбу сервера.
 </Quote>
 
+## Правильно / Неправильно (Do/Dont)
+
+Используйте сетку `<DoDontGrid>` и блоки `<DoDont>` для наглядного сравнения правильного и ошибочного подходов. Отлично сочетается с математическими формулами в формате LaTeX (`$$`).
+
+**Как писать:**
+```mdx
+<DoDontGrid>
+  <DoDont type="do">
+    Производная от $x^2$ вычисляется так:
+    $$
+    \frac{d}{dx}(x^2) = 2x
+    $$
+  </DoDont>
+  <DoDont type="dont">
+    Частая ошибка при взятии производной:
+    $$
+    \frac{d}{dx}(x^2) = x
+    $$
+  </DoDont>
+</DoDontGrid>
+```
+
+**Как выглядит:**
+
+<DoDontGrid>
+  <DoDont type="do">
+    Производная от $x^2$ вычисляется так:
+    $$
+    \frac{d}{dx}(x^2) = 2x
+    $$
+  </DoDont>
+  <DoDont type="dont">
+    Частая ошибка при взятии производной:
+    $$
+    \frac{d}{dx}(x^2) = x
+    $$
+  </DoDont>
+</DoDontGrid>
+
+## Галерея скриншотов (ImageGrid)
+
+Компонент `<ImageGrid>` позволяет выстраивать обычные картинки в аккуратную сетку. Поддерживает параметр `columns` (2, 3 или 4).
+
+**Как писать:**
+```mdx
+<ImageGrid columns={2}>
+  ![Картинка 1](/media/tutorial/image.jpg)
+  ![Картинка 2](/media/tutorial/image2.jpg)
+</ImageGrid>
+```
+
+**Как выглядит:**
+
+<ImageGrid columns={2}>
+  ![Картинка 1](/media/tutorial/image.jpg)
+  ![Картинка 2](/media/tutorial/image2.jpg)
+</ImageGrid>
+
+## Список параметров (Properties)
+
+Используйте `<Properties>` и `<Property>` для красивого описания API параметров, настроек или конфигов.
+
+**Как писать:**
+```mdx
+<Properties>
+  <Property name="apiKey" type="string" required={true}>
+    Ваш секретный ключ для доступа к API системы.
+  </Property>
+  <Property name="timeout" type="number">
+    Время ожидания ответа в миллисекундах (по умолчанию 5000).
+  </Property>
+</Properties>
+```
+
+**Как выглядит:**
+
+<Properties>
+  <Property name="apiKey" type="string" required={true}>
+    Ваш секретный ключ для доступа к API системы.
+  </Property>
+  <Property name="timeout" type="number">
+    Время ожидания ответа в миллисекундах (по умолчанию 5000).
+  </Property>
+</Properties>
+
+## Интерактивные Чек-листы (Checklist)
+
+Создавайте списки с красивыми кликабельными чекбоксами при помощи `<Checklist>` и `<ChecklistItem>`.
+
+**Как писать:**
+```mdx
+<Checklist>
+  <ChecklistItem>Убедитесь, что установлен Node.js версии 18+</ChecklistItem>
+  <ChecklistItem>Склонируйте репозиторий с помощью `git clone`</ChecklistItem>
+  <ChecklistItem>Выполните команду `npm install` для установки зависимостей</ChecklistItem>
+</Checklist>
+```
+
+**Как выглядит:**
+
+<Checklist>
+  <ChecklistItem>Убедитесь, что установлен Node.js версии 18+</ChecklistItem>
+  <ChecklistItem>Склонируйте репозиторий с помощью `git clone`</ChecklistItem>
+  <ChecklistItem>Выполните команду `npm install` для установки зависимостей</ChecklistItem>
+</Checklist>
+

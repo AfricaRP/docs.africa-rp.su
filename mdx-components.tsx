@@ -15,6 +15,10 @@ import { Badge } from "./app/components/mdx/Badge"
 import { Snippet } from "./app/components/mdx/Snippet"
 import { Quote } from "./app/components/mdx/Quote"
 import { DropCap } from "./app/components/mdx/DropCap"
+import { DoDont, DoDontGrid } from "./app/components/mdx/DoDont"
+import { ImageGrid } from "./app/components/mdx/ImageGrid"
+import { Properties, Property } from "./app/components/mdx/Properties"
+import { Checklist, ChecklistItem } from "./app/components/mdx/Checklist"
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -37,5 +41,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Snippet,
     Quote,
     DropCap,
+    DoDont,
+    DoDontGrid,
+    ImageGrid,
+    Properties,
+    Property,
+    Checklist,
+    ChecklistItem,
   }
 }

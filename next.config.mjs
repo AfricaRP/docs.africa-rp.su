@@ -3,6 +3,8 @@ import createMDX from "@next/mdx"
 import remarkGfm from "remark-gfm"
 import remarkFrontmatter from "remark-frontmatter"
 import rehypeSlug from "rehype-slug"
+import remarkMath from "remark-math"
+import rehypeKatex from "rehype-katex"
 
 const nextConfig = {
   output: "export",
@@ -26,8 +28,8 @@ const chConfig = {
 const withMDX = createMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkFrontmatter, remarkGfm, [remarkCodeHike, chConfig]],
-    rehypePlugins: [rehypeSlug],
+    remarkPlugins: [remarkFrontmatter, remarkGfm, [remarkCodeHike, chConfig], remarkMath],
+    rehypePlugins: [rehypeSlug, rehypeKatex],
     recmaPlugins: [[recmaCodeHike, chConfig]],
     jsx: true,
   },
