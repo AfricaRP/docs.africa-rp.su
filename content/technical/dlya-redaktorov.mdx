@@ -102,16 +102,22 @@ icon: "PenTool"
   afterLabel="Второй вариант"
 />
 
-## Видео
+## Видео и YouTube
+
+В документации можно использовать как локальные видео файлы (`<VideoPlayer>`), так и видео с YouTube (`<YouTube>`).
 
 **Как писать:**
-```tsx
+```mdx
 <VideoPlayer src="/media/tutorial/video.mp4" title="Тестовое видео" />
+
+<YouTube id="dQw4w9WgXcQ" title="Официальный трейлер" />
 ```
 
 **Как выглядит:**
 
 <VideoPlayer src="/media/tutorial/video.mp4" title="Тестовое видео" />
+
+<YouTube id="dQw4w9WgXcQ" title="Официальный трейлер" />
 
 ## Спойлеры
 
@@ -610,12 +616,12 @@ app.listen(3000);
 
 **Как писать:**
 ```mdx
-Млечный Путь — это <HoverCard title="Галактика" description="Гравитационно-связанная система из звёзд, звёздных скоплений, межзвёздного газа и пыли, тёмной материи, планет." image="/media/tutorial/image.jpg">гигантская звездная система</HoverCard>, в которой находится Земля.
+Млечный Путь — это <HoverCard title="Галактика" description="Гравитационно-связанная система из звёзд, звёздных скоплений, межзвёздного газа и пыли, тёмной материи, планет." image="/media/tutorial/galactic.jpg">гигантская звездная система</HoverCard>, в которой находится Земля.
 ```
 
 **Как выглядит:**
 
-Млечный Путь — это <HoverCard title="Галактика" description="Гравитационно-связанная система из звёзд, звёздных скоплений, межзвёздного газа и пыли, тёмной материи, планет." image="/media/tutorial/image.jpg">гигантская звездная система</HoverCard>, в которой находится Земля.
+Млечный Путь — это <HoverCard title="Галактика" description="Гравитационно-связанная система из звёзд, звёздных скоплений, межзвёздного газа и пыли, тёмной материи, планет." image="/media/tutorial/galactic.jpg">гигантская звездная система</HoverCard>, в которой находится Земля.
 
 ## Секретный текст (Secret)
 
@@ -638,19 +644,29 @@ app.listen(3000);
 ```mdx
 <DecisionTree initial="start">
   <DecisionStep step="start">
-    ### Ваш компьютер включен?
-    <DecisionButton target="yes">Да</DecisionButton>
-    <DecisionButton target="no">Нет</DecisionButton>
+    ### 1. Вы используете Windows или macOS?
+    <DecisionButton target="windows">Windows</DecisionButton>
+    <DecisionButton target="macos">macOS</DecisionButton>
   </DecisionStep>
   
-  <DecisionStep step="yes">
-    ### Отлично! Подключен ли интернет?
-    <DecisionButton target="start">Начать заново</DecisionButton>
+  <DecisionStep step="windows">
+    ### 2. Загрузите файл .exe
+    Убедитесь, что у вас есть права администратора.
+    <DecisionButton target="finish">Я скачал</DecisionButton>
+    <DecisionButton target="start">Назад</DecisionButton>
   </DecisionStep>
 
-  <DecisionStep step="no">
-    ### Нажмите кнопку питания на системном блоке.
-    <DecisionButton target="start">Я нажал</DecisionButton>
+  <DecisionStep step="macos">
+    ### 2. Загрузите файл .dmg
+    Если система блокирует установку, перейдите в настройки безопасности.
+    <DecisionButton target="finish">Я скачал</DecisionButton>
+    <DecisionButton target="start">Назад</DecisionButton>
+  </DecisionStep>
+
+  <DecisionStep step="finish">
+    ### 3. Установка завершена!
+    Теперь вы можете открыть приложение.
+    <DecisionButton target="start">Начать заново</DecisionButton>
   </DecisionStep>
 </DecisionTree>
 ```
@@ -659,19 +675,29 @@ app.listen(3000);
 
 <DecisionTree initial="start">
   <DecisionStep step="start">
-    ### Ваш компьютер включен?
-    <DecisionButton target="yes">Да</DecisionButton>
-    <DecisionButton target="no">Нет</DecisionButton>
+    ### 1. Вы используете Windows или macOS?
+    <DecisionButton target="windows">Windows</DecisionButton>
+    <DecisionButton target="macos">macOS</DecisionButton>
   </DecisionStep>
   
-  <DecisionStep step="yes">
-    ### Отлично! Подключен ли интернет?
-    <DecisionButton target="start">Начать заново</DecisionButton>
+  <DecisionStep step="windows">
+    ### 2. Загрузите файл .exe
+    Убедитесь, что у вас есть права администратора.
+    <DecisionButton target="finish">Я скачал</DecisionButton>
+    <DecisionButton target="start">Назад</DecisionButton>
   </DecisionStep>
 
-  <DecisionStep step="no">
-    ### Нажмите кнопку питания на системном блоке.
-    <DecisionButton target="start">Я нажал</DecisionButton>
+  <DecisionStep step="macos">
+    ### 2. Загрузите файл .dmg
+    Если система блокирует установку, перейдите в настройки безопасности.
+    <DecisionButton target="finish">Я скачал</DecisionButton>
+    <DecisionButton target="start">Назад</DecisionButton>
+  </DecisionStep>
+
+  <DecisionStep step="finish">
+    ### 3. Установка завершена!
+    Теперь вы можете открыть приложение.
+    <DecisionButton target="start">Начать заново</DecisionButton>
   </DecisionStep>
 </DecisionTree>
 
@@ -681,10 +707,10 @@ app.listen(3000);
 
 **Как писать:**
 ```mdx
-<VoiceBox src="/media/tutorial/sound.mp3" title="Сигнал из космоса (Запись 1977 года)" />
+<VoiceBox src="/media/tutorial/sound.mp3" title="Шеф выдал базу" />
 ```
 
 **Как выглядит:**
 
-<VoiceBox src="/media/tutorial/sound.mp3" title="Сигнал из космоса (Запись 1977 года)" />
+<VoiceBox src="/media/tutorial/sound.mp3" title="Шеф выдал базу" />
 
