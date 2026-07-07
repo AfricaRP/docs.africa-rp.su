@@ -18,22 +18,26 @@ export async function Code(props: any) {
   }
 
   const hasFocus = highlighted.annotations.some(a => a.name === "focus");
-  const activeHandlers = [callout, mark, focus];
 
   return (
     <div className={`my-6 rounded-xl overflow-hidden shadow-md border border-zinc-200 dark:border-zinc-800 bg-zinc-800 dark:bg-[#0d1117] group relative ${hasFocus ? 'has-focus-block' : ''}`}>
-      <div className="absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-        <CopyCodeButton text={codeblock.value} />
-      </div>
-      {title && (
-        <div className="flex items-center px-4 py-2 pr-12 border-b border-zinc-700 dark:border-zinc-800/50 bg-zinc-900/50 dark:bg-[#161b22] text-xs text-zinc-300 dark:text-zinc-400 font-mono">
-          {title}
+      {!title && (
+        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+          <CopyCodeButton text={codeblock.value} />
         </div>
       )}
-      <div className={`py-4 overflow-x-auto text-sm [&>pre]:!bg-transparent [&>pre]:!m-0 [&>pre]:!p-0 ${!title ? 'pt-8' : ''}`}>
+      {title && (
+        <div className="flex items-center justify-between px-4 py-2 border-b border-zinc-700 dark:border-zinc-800/50 bg-zinc-900/50 dark:bg-[#161b22] text-xs text-zinc-300 dark:text-zinc-400 font-mono">
+          <span>{title}</span>
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center -my-1 -mr-1">
+            <CopyCodeButton text={codeblock.value} />
+          </div>
+        </div>
+      )}
+      <div className={`py-4 overflow-x-auto text-sm [&>pre]:!bg-transparent [&>pre]:!m-0 [&>pre]:!p-0 ${!title ? 'pt-10' : ''}`}>
         <Pre
           code={highlighted}
-          handlers={activeHandlers}
+          handlers={[callout, focus, mark]}
           style={{ margin: 0, backgroundColor: 'transparent' }}
         />
       </div>
