@@ -106,64 +106,6 @@ icon: "PenTool"
 
 Мы создали набор уникальных компонентов, которые делают чтение объемных текстов и изучение технологий удобнее.
 
-### Переключатель перспективы
-
-Компонент `<Perspective>` позволяет переключать контекст чтения прямо внутри страницы (например, между операционными системами или пакетными менеджерами).
-
-**Как писать:**
-````mdx
-<Perspective tabs={['npm', 'yarn', 'pnpm']}>
-<PerspectiveItem tab="npm">
-
-```bash
-npm install express
-```
-
-</PerspectiveItem>
-<PerspectiveItem tab="yarn">
-
-```bash
-yarn add express
-```
-
-</PerspectiveItem>
-<PerspectiveItem tab="pnpm">
-
-```bash
-pnpm add express
-```
-
-</PerspectiveItem>
-</Perspective>
-````
-
-**Как выглядит:**
-<Perspective tabs={['npm', 'yarn', 'pnpm']}>
-<PerspectiveItem tab="npm">
-
-```bash
-npm install express
-```
-
-</PerspectiveItem>
-<PerspectiveItem tab="yarn">
-
-```bash
-yarn add express
-```
-
-</PerspectiveItem>
-<PerspectiveItem tab="pnpm">
-
-```bash
-pnpm add express
-```
-
-</PerspectiveItem>
-</Perspective>
-
----
-
 ### Слайдер глубины погружения
 
 Если тема сложная, дайте читателю выбрать уровень детализации с помощью `<DepthSection>`. Слайдер имеет три уровня: TL;DR (кратко), Стандарт и Deep Dive (глубокое погружение).

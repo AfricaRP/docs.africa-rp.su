@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 export function StatsRadar({ data, color = "#3B82F6" }: { data: Record<string, number>; color?: string }) {
   const keys = Object.keys(data);
   const max = 100;
-  const size = 300;
+  const size = 350;
   const center = size / 2;
-  const radius = (size / 2) * 0.65; // Leave room for labels
+  const radius = (size / 2) * 0.55; // Leave room for labels
 
   const points = keys.map((key, i) => {
     const angle = (Math.PI * 2 * i) / keys.length - Math.PI / 2;
@@ -16,8 +16,8 @@ export function StatsRadar({ data, color = "#3B82F6" }: { data: Record<string, n
     return { 
       x: center + r * Math.cos(angle), 
       y: center + r * Math.sin(angle), 
-      labelX: center + (radius + 25) * Math.cos(angle), 
-      labelY: center + (radius + 20) * Math.sin(angle), 
+      labelX: center + (radius + 40) * Math.cos(angle), 
+      labelY: center + (radius + 30) * Math.sin(angle), 
       label: key, 
       value: val 
     };

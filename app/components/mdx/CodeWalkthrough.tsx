@@ -20,7 +20,7 @@ export function WalkthroughText({ children }: { children: ReactNode }) {
 
 export function WalkthroughCode({ children }: { children: ReactNode }) {
   return (
-    <div className="flex-1 w-full xl:sticky xl:top-24 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm">
+    <div className="flex-1 w-full xl:sticky xl:top-24 [&_figure]:!m-0">
       {children}
     </div>
   );
