@@ -269,14 +269,15 @@ console.log("Привет, AfricaRP!");
 console.log("Привет, AfricaRP!");
 ```
 
-## Подсветка и фокус строк кода
+## Подсветка строк кода (!mark)
 
-Вы можете выделять строки (`// !mark`) или фокусировать внимание только на нужных строках, затемняя остальные (`// !focus`). Обратите внимание: в примере мы добавили пробелы после знака восклицания, чтобы код отобразился как текст. В реальном использовании пишите слитно: `// !mark` и `// !focus`.
+Используйте комментарий `// !mark` в конце строки, чтобы подсветить её синим фоном и выделить на фоне остального кода.
+*(Обратите внимание: в блоке "Как писать" мы добавили пробел после знака восклицания, чтобы код отобразился как текст. В реальном использовании пишите слитно: `// !mark`)*
 
 **Как писать:**
 ````markdown
 ```javascript server.js
-const express = require('express'); // ! focus
+const express = require('express');
 const app = express(); // ! mark
 
 app.listen(3000);
@@ -286,8 +287,31 @@ app.listen(3000);
 **Как выглядит:**
 
 ```javascript server.js
-const express = require('express'); // !focus
+const express = require('express');
 const app = express(); // !mark
+
+app.listen(3000);
+```
+
+## Фокус на строках (!focus)
+
+Если кода много, вы можете сфокусировать внимание зрителя только на нужной строке с помощью комментария `// !focus`. Эта строка будет выделена серым фоном, а все остальные строки в блоке будут размыты и затемнены.
+
+**Как писать:**
+````markdown
+```javascript server.js
+const express = require('express'); // ! focus
+const app = express();
+
+app.listen(3000);
+```
+````
+
+**Как выглядит:**
+
+```javascript server.js
+const express = require('express'); // !focus
+const app = express();
 
 app.listen(3000);
 ```
