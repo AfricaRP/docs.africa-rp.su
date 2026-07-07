@@ -9,6 +9,12 @@ import { CardGrid, Card } from "./app/components/mdx/Cards"
 import { Tabs, Tab } from "./app/components/mdx/Tabs"
 import { FileTree } from "./app/components/mdx/FileTree"
 import { ImageCompare } from "./app/components/mdx/ImageCompare"
+import { Steps } from "./app/components/mdx/Steps"
+import { Accordion } from "./app/components/mdx/Accordion"
+import { Badge } from "./app/components/mdx/Badge"
+import { Snippet } from "./app/components/mdx/Snippet"
+import { Quote } from "./app/components/mdx/Quote"
+import { DropCap } from "./app/components/mdx/DropCap"
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -25,5 +31,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Tab,
     FileTree,
     ImageCompare,
+    Steps,
+    Accordion,
+    Badge,
+    Snippet,
+    Quote,
+    DropCap,
   }
 }
