@@ -148,3 +148,13 @@
 .prose blockquote p:last-of-type::after {
   content: none !important;
 }
+
+/* Очищаем обтекание для заголовков, чтобы MarginNote не наезжал на них */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  clear: both;
+}
