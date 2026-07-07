@@ -1,7 +1,6 @@
 import { Pre, highlight } from "codehike/code"
 import { callout } from "./annotations/callout"
-import { mark } from "./annotations/mark"
-import { focus } from "./annotations/focus"
+import { lineEffects } from "./annotations/lineEffects"
 import { CopyCodeButton } from "./CopyCodeButton"
 
 export async function Code(props: any) {
@@ -18,6 +17,13 @@ export async function Code(props: any) {
   }
 
   const hasFocus = highlighted.annotations.some(a => a.name === "focus");
+  
+  highlighted.annotations.forEach(a => {
+    if (a.name === "focus" || a.name === "mark") {
+      a.data = { ...a.data, originalName: a.name };
+      a.name = "lineEffects";
+    }
+  });
 
   return (
     <div className={`my-6 rounded-xl overflow-hidden shadow-md border border-zinc-200 dark:border-zinc-800 bg-zinc-800 dark:bg-[#0d1117] group relative ${hasFocus ? 'has-focus-block' : ''}`}>
@@ -34,10 +40,10 @@ export async function Code(props: any) {
           </div>
         </div>
       )}
-      <div className={`py-4 overflow-x-auto text-sm [&>pre]:!bg-transparent [&>pre]:!m-0 [&>pre]:!p-0 ${!title ? 'pt-10' : ''}`}>
+      <div className={`py-4 px-4 overflow-x-auto text-sm [&>pre]:!bg-transparent [&>pre]:!m-0 [&>pre]:!p-0 ${!title ? 'pt-10' : ''}`}>
         <Pre
           code={highlighted}
-          handlers={[callout, focus, mark]}
+          handlers={[callout, lineEffects]}
           style={{ margin: 0, backgroundColor: 'transparent' }}
         />
       </div>
