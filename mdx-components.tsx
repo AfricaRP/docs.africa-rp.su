@@ -27,6 +27,7 @@ import { Secret } from "./app/components/mdx/Secret"
 import { DecisionTree, DecisionStep, DecisionButton } from "./app/components/mdx/DecisionTree"
 import { VoiceBox } from "./app/components/mdx/VoiceBox"
 import { YouTube } from "./app/components/mdx/YouTube"
+import { Rutube } from "./app/components/mdx/Rutube"
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -67,5 +68,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     DecisionButton,
     VoiceBox,
     YouTube,
+    Rutube,
   }
 }
