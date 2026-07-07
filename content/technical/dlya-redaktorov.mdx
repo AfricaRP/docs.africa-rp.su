@@ -147,13 +147,13 @@ console.log("Привет, AfricaRP!");
 
 ## Подсветка строк кода
 
-Вы можете добавлять красивые всплывающие пояснения к строкам кода. Для этого добавьте специальный комментарий: `// !callout[/слово/] ваш текст`.
+Вы можете добавлять красивые всплывающие пояснения к строкам кода. Для этого добавьте специальный комментарий (удалите пробел после восклицательного знака): `// ! callout[/слово/] ваш текст`.
 
 **Как писать:**
 ````markdown
 ```javascript ! server.js
 const express = require('express');
-const app = express(); // !callout[/express()/] Инициализация приложения
+const app = express(); // ! callout[/express/] Инициализация приложения
 
 app.listen(3000);
 ```
@@ -163,7 +163,7 @@ app.listen(3000);
 
 ```javascript ! server.js
 const express = require('express');
-const app = express(); // !callout[/express()/] Инициализация приложения
+const app = express(); // !callout[/express/] Инициализация приложения
 
 app.listen(3000);
 ```
