@@ -17,8 +17,11 @@ export async function Code(props: any) {
     title = codeblock.meta.trim();
   }
 
+  const hasFocus = highlighted.annotations.some(a => a.name === "focus");
+  const activeHandlers = [callout, mark, focus];
+
   return (
-    <div className="my-6 rounded-xl overflow-hidden shadow-md border border-zinc-200 dark:border-zinc-800 bg-zinc-800 dark:bg-[#0d1117] group relative">
+    <div className={`my-6 rounded-xl overflow-hidden shadow-md border border-zinc-200 dark:border-zinc-800 bg-zinc-800 dark:bg-[#0d1117] group relative ${hasFocus ? 'has-focus-block' : ''}`}>
       <div className="absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 transition-opacity z-10">
         <CopyCodeButton text={codeblock.value} />
       </div>
@@ -30,7 +33,7 @@ export async function Code(props: any) {
       <div className={`py-4 overflow-x-auto text-sm [&>pre]:!bg-transparent [&>pre]:!m-0 [&>pre]:!p-0 ${!title ? 'pt-8' : ''}`}>
         <Pre
           code={highlighted}
-          handlers={[callout, mark, focus]}
+          handlers={activeHandlers}
           style={{ margin: 0, backgroundColor: 'transparent' }}
         />
       </div>

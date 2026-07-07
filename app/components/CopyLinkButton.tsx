@@ -19,15 +19,14 @@ export function CopyLinkButton() {
   return (
     <button
       onClick={handleCopy}
-      className="group flex items-center gap-2 text-xs sm:text-sm font-medium text-zinc-500 hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-400 transition-colors duration-200 bg-zinc-100/50 hover:bg-blue-50 dark:bg-zinc-800/50 dark:hover:bg-blue-900/20 py-1.5 px-3 rounded-full border border-zinc-200 dark:border-zinc-700/50"
-      title="Скопировать ссылку на эту страницу"
+      className="p-1.5 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
+      title="Скопировать ссылку на страницу"
     >
       {copied ? (
-        <Check className="w-3.5 h-3.5 text-green-500" />
+        <Check className="w-4 h-4 text-green-500" />
       ) : (
-        <Link2 className="w-3.5 h-3.5 transition-transform duration-300 group-hover:-rotate-45" />
+        <Link2 className="w-4 h-4" />
       )}
-      <span>{copied ? "Скопировано!" : "Копировать ссылку"}</span>
     </button>
   );
 }

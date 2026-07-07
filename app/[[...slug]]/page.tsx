@@ -83,13 +83,13 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 
   return (
     <article className="max-w-none pb-16 animate-fade-in-up relative">
-      <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-4 mb-2">
+      <div className="flex items-center justify-between mb-2">
         {breadcrumbItems.length > 0 ? (
           <Breadcrumbs items={breadcrumbItems} />
         ) : (
           <div />
         )}
-        <div className="self-start sm:self-auto mb-6 sm:mb-0">
+        <div className="flex items-center mb-6">
           <CopyLinkButton />
         </div>
       </div>
