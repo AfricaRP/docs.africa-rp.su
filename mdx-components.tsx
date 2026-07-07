@@ -22,6 +22,10 @@ import { Checklist, ChecklistItem } from "./app/components/mdx/Checklist"
 import { Icon } from "./app/components/mdx/Icon"
 import { Mention } from "./app/components/mdx/Mention"
 import { Timeline, TimelineItem } from "./app/components/mdx/Timeline"
+import { HoverCard } from "./app/components/mdx/HoverCard"
+import { Secret } from "./app/components/mdx/Secret"
+import { DecisionTree, DecisionStep, DecisionButton } from "./app/components/mdx/DecisionTree"
+import { VoiceBox } from "./app/components/mdx/VoiceBox"
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -55,5 +59,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Mention,
     Timeline,
     TimelineItem,
+    HoverCard,
+    Secret,
+    DecisionTree,
+    DecisionStep,
+    DecisionButton,
+    VoiceBox,
   }
 }
