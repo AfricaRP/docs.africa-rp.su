@@ -434,15 +434,15 @@ app.listen(3000);
 ```mdx
 <DoDontGrid>
   <DoDont type="do">
-    Производная от $x^2$ вычисляется так:
+    Полное определение тензора кривизны Римана через символы Кристоффеля (с учетом нелинейных членов):
     $$
-    \frac{d}{dx}(x^2) = 2x
+    R^\rho_{\sigma\mu\nu} = \partial_\mu \Gamma^\rho_{\nu\sigma} - \partial_\nu \Gamma^\rho_{\mu\sigma} + \Gamma^\rho_{\mu\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\rho_{\nu\lambda}\Gamma^\lambda_{\mu\sigma}
     $$
   </DoDont>
   <DoDont type="dont">
-    Частая ошибка при взятии производной:
+    Грубая ошибка неопытных физиков — игнорирование коммутатора связности:
     $$
-    \frac{d}{dx}(x^2) = x
+    R^\rho_{\sigma\mu\nu} = \partial_\mu \Gamma^\rho_{\nu\sigma} + \partial_\nu \Gamma^\rho_{\mu\sigma}
     $$
   </DoDont>
 </DoDontGrid>
@@ -452,15 +452,15 @@ app.listen(3000);
 
 <DoDontGrid>
   <DoDont type="do">
-    Производная от $x^2$ вычисляется так:
+    Полное определение тензора кривизны Римана через символы Кристоффеля (с учетом нелинейных членов):
     $$
-    \frac{d}{dx}(x^2) = 2x
+    R^\rho_{\sigma\mu\nu} = \partial_\mu \Gamma^\rho_{\nu\sigma} - \partial_\nu \Gamma^\rho_{\mu\sigma} + \Gamma^\rho_{\mu\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\rho_{\nu\lambda}\Gamma^\lambda_{\mu\sigma}
     $$
   </DoDont>
   <DoDont type="dont">
-    Частая ошибка при взятии производной:
+    Грубая ошибка неопытных физиков — игнорирование коммутатора связности:
     $$
-    \frac{d}{dx}(x^2) = x
+    R^\rho_{\sigma\mu\nu} = \partial_\mu \Gamma^\rho_{\nu\sigma} + \partial_\nu \Gamma^\rho_{\mu\sigma}
     $$
   </DoDont>
 </DoDontGrid>
@@ -513,22 +513,35 @@ app.listen(3000);
 
 ## Интерактивные Чек-листы (Checklist)
 
-Создавайте списки с красивыми кликабельными чекбоксами при помощи `<Checklist>` и `<ChecklistItem>`.
+Создавайте списки с красивыми кликабельными чекбоксами при помощи `<Checklist>` и `<ChecklistItem>`. 
+Вы можете использовать параметры `defaultChecked={true}`, чтобы пункт был уже выполнен изначально, и `disabled={true}`, чтобы заблокировать его изменение.
 
 **Как писать:**
 ```mdx
 <Checklist>
-  <ChecklistItem>Убедитесь, что установлен Node.js версии 18+</ChecklistItem>
-  <ChecklistItem>Склонируйте репозиторий с помощью `git clone`</ChecklistItem>
-  <ChecklistItem>Выполните команду `npm install` для установки зависимостей</ChecklistItem>
+  <ChecklistItem defaultChecked={true} disabled={true}>
+    Ознакомиться с правилами проекта (Обязательно, нельзя отменить)
+  </ChecklistItem>
+  <ChecklistItem>
+    Настроить микрофон и программу записи экрана
+  </ChecklistItem>
+  <ChecklistItem disabled={true}>
+    Получить одобрение от старшей администрации (Заблокировано до прохождения обзвона)
+  </ChecklistItem>
 </Checklist>
 ```
 
 **Как выглядит:**
 
 <Checklist>
-  <ChecklistItem>Убедитесь, что установлен Node.js версии 18+</ChecklistItem>
-  <ChecklistItem>Склонируйте репозиторий с помощью `git clone`</ChecklistItem>
-  <ChecklistItem>Выполните команду `npm install` для установки зависимостей</ChecklistItem>
+  <ChecklistItem defaultChecked={true} disabled={true}>
+    Ознакомиться с правилами проекта (Обязательно, нельзя отменить)
+  </ChecklistItem>
+  <ChecklistItem>
+    Настроить микрофон и программу записи экрана
+  </ChecklistItem>
+  <ChecklistItem disabled={true}>
+    Получить одобрение от старшей администрации (Заблокировано до прохождения обзвона)
+  </ChecklistItem>
 </Checklist>
 
