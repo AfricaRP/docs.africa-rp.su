@@ -19,6 +19,9 @@ import { DoDont, DoDontGrid } from "./app/components/mdx/DoDont"
 import { ImageGrid } from "./app/components/mdx/ImageGrid"
 import { Properties, Property } from "./app/components/mdx/Properties"
 import { Checklist, ChecklistItem } from "./app/components/mdx/Checklist"
+import { Icon } from "./app/components/mdx/Icon"
+import { Mention } from "./app/components/mdx/Mention"
+import { Timeline, TimelineItem } from "./app/components/mdx/Timeline"
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -48,5 +51,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Property,
     Checklist,
     ChecklistItem,
+    Icon,
+    Mention,
+    Timeline,
+    TimelineItem,
   }
 }

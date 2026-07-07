@@ -6,7 +6,7 @@ export function ImageGrid({ columns = 2, children }: { columns?: 2 | 3 | 4, chil
   }[columns] || 'sm:grid-cols-2';
 
   return (
-    <div className={`grid grid-cols-1 ${colClass} gap-4 my-6 items-start [&_img]:m-0 [&_img]:w-full [&_img]:h-auto [&_img]:rounded-xl`}>
+    <div className={`grid grid-cols-1 ${colClass} gap-6 my-6 items-start [&>p]:contents [&_figure]:contents`}>
       {children}
     </div>
   );

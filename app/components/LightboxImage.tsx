@@ -11,7 +11,7 @@ export function LightboxImage({ src, alt }: { src: string; alt?: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
+    <div className="flex flex-col m-0 p-0">
       <span 
         className="relative group block w-full cursor-pointer shadow-md hover:shadow-xl rounded-xl overflow-hidden transition-shadow duration-500" 
         onClick={() => setOpen(true)}
@@ -56,6 +56,6 @@ export function LightboxImage({ src, alt }: { src: string; alt?: string }) {
           "Exit Fullscreen": "Обычный экран"
         }}
       />
-    </>
+    </div>
   );
 }
