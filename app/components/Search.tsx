@@ -1,0 +1,114 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { Search as SearchIcon, X, FileText } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+interface SearchResult {
+  title: string;
+  href: string;
+  content: string;
+}
+
+export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [docs, setDocs] = useState<SearchResult[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 100);
+      if (docs.length === 0) {
+        fetch("/search.json")
+          .then((res) => res.json())
+          .then((data) => setDocs(data))
+          .catch(console.error);
+      }
+    } else {
+      setQuery("");
+      setResults([]);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (query.trim().length < 2) {
+      setResults([]);
+      return;
+    }
+    const lowerQuery = query.toLowerCase();
+    const filtered = docs
+      .filter(
+        (doc) =>
+          doc.title.toLowerCase().includes(lowerQuery) ||
+          doc.content.toLowerCase().includes(lowerQuery)
+      )
+      .slice(0, 5);
+    setResults(filtered);
+  }, [query, docs]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-24 sm:pt-32 px-4 animate-in fade-in duration-200">
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden animate-in slide-in-from-bottom-4 duration-200">
+        <div className="flex items-center px-4 py-3 border-b border-zinc-200 dark:border-zinc-800">
+          <SearchIcon className="w-5 h-5 text-zinc-400 shrink-0" />
+          <input
+            ref={inputRef}
+            type="text"
+            className="flex-1 bg-transparent border-none outline-none px-4 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400"
+            placeholder="Поиск по документации..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <button onClick={onClose} className="p-1 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-400 transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="max-h-[60vh] overflow-y-auto p-2">
+          {results.length > 0 ? (
+            results.map((res) => (
+              <Link
+                key={res.href}
+                href={res.href}
+                onClick={onClose}
+                className="flex items-start gap-3 p-3 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors group"
+              >
+                <div className="mt-0.5 bg-blue-100 dark:bg-blue-900/30 p-2 rounded-md text-blue-600 dark:text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors shrink-0">
+                  <FileText className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="font-medium text-zinc-900 dark:text-zinc-100">{res.title}</div>
+                  <div className="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-1 mt-0.5">
+                    {res.content.substring(0, 100)}...
+                  </div>
+                </div>
+              </Link>
+            ))
+          ) : query.trim().length > 1 ? (
+            <div className="p-8 text-center text-zinc-500 dark:text-zinc-400">
+              По запросу «{query}» ничего не найдено.
+            </div>
+          ) : (
+            <div className="p-8 text-center text-zinc-500 dark:text-zinc-400 text-sm">
+              Начните вводить текст для поиска...
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

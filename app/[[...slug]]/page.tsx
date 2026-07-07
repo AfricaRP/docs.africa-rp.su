@@ -4,6 +4,7 @@ import { getAllMdxFiles, getSidebarNav, NavItem } from "../../lib/content"
 import path from "path"
 import { PageNavigation } from "../components/PageNavigation"
 import { CopyLinkButton } from "../components/CopyLinkButton"
+import { Breadcrumbs } from "../components/Breadcrumbs"
 
 export async function generateStaticParams() {
   const files = getAllMdxFiles()
@@ -16,18 +17,20 @@ interface FlatNavItem {
   title: string;
   href: string;
   category: string | null;
+  categoryHref: string | null;
 }
 
-function getFlatNav(nav: NavItem[], currentCategory: string | null = null): FlatNavItem[] {
+function getFlatNav(nav: NavItem[], currentCategory: string | null = null, currentCategoryHref: string | null = null): FlatNavItem[] {
   let flat: FlatNavItem[] = [];
   for (const item of nav) {
     if (item.items) {
-      flat = flat.concat(getFlatNav(item.items, item.title));
+      flat = flat.concat(getFlatNav(item.items, item.title, item.href));
     } else {
       flat.push({
         title: item.title,
         href: item.href,
         category: currentCategory,
+        categoryHref: currentCategoryHref,
       });
     }
   }
@@ -67,19 +70,26 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   
   const prevPage = currentIndex > 0 ? flatNav[currentIndex - 1] : null
   const nextPage = currentIndex !== -1 && currentIndex < flatNav.length - 1 ? flatNav[currentIndex + 1] : null
-  const categoryTitle = currentIndex !== -1 ? flatNav[currentIndex].category : null
+  
+  const currentItem = currentIndex !== -1 ? flatNav[currentIndex] : null;
+  const breadcrumbItems = [];
+  
+  if (currentItem && currentItem.category && currentItem.categoryHref) {
+    breadcrumbItems.push({ title: currentItem.category, href: currentItem.categoryHref });
+  }
+  if (currentItem) {
+    breadcrumbItems.push({ title: currentItem.title, href: currentItem.href });
+  }
 
   return (
-    <article className="max-w-none pb-16 animate-fade-in-up">
-      <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        {categoryTitle ? (
-          <div className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-            {categoryTitle}
-          </div>
+    <article className="max-w-none pb-16 animate-fade-in-up relative">
+      <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-4 mb-2">
+        {breadcrumbItems.length > 0 ? (
+          <Breadcrumbs items={breadcrumbItems} />
         ) : (
           <div />
         )}
-        <div className="self-start sm:self-auto">
+        <div className="self-start sm:self-auto mb-6 sm:mb-0">
           <CopyLinkButton />
         </div>
       </div>

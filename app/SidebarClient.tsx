@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 import * as LucideIcons from "lucide-react"
 import { NavItem } from "../lib/content"
+import { SearchModal } from "./components/Search"
 
 function IconRenderer({ name }: { name?: string }) {
   if (!name) return null;
@@ -67,36 +68,51 @@ function CollapsibleSection({ section, pathname }: { section: NavItem; pathname:
 
 export function SidebarClient({ nav }: { nav: NavItem[] }) {
   const pathname = usePathname();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <nav className="flex flex-col gap-2">
-      {nav.map((section, i) => {
-        if (section.items) {
-          return <CollapsibleSection key={i} section={section} pathname={pathname} />;
-        }
+    <>
+      <button 
+        onClick={() => setIsSearchOpen(true)}
+        className="flex items-center gap-2 w-full mb-6 px-3 py-2 text-sm text-zinc-500 dark:text-zinc-400 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors shadow-sm"
+      >
+        <LucideIcons.Search className="w-4 h-4 shrink-0" />
+        <span className="flex-1 text-left">Поиск...</span>
+        <kbd className="hidden sm:inline-block px-2 py-0.5 text-xs font-sans font-medium text-zinc-400 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-md">
+          Esc
+        </kbd>
+      </button>
 
-        const isItemActive = pathname === section.href;
-        return (
-          <div key={i} className="mb-1 relative">
-            {isItemActive && (
-              <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-blue-600 dark:bg-blue-500 rounded-r-full z-10" />
-            )}
-            <Link 
-              href={section.href}
-              className={`group relative font-semibold flex items-center py-2 px-2 rounded-r-md transition-all duration-200 ${
-                isItemActive
-                  ? "text-blue-600 dark:text-blue-400 bg-blue-500/10 dark:bg-blue-500/20"
-                  : "text-zinc-800 hover:text-blue-600 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
-              }`}
-            >
-              <span className="flex items-center transition-transform duration-200 group-hover:translate-x-1 w-full">
-                <IconRenderer name={section.icon} />
-                <span className="flex-1 min-w-0 leading-tight">{section.title}</span>
-              </span>
-            </Link>
-          </div>
-        );
-      })}
-    </nav>
+      <nav className="flex flex-col gap-2">
+        {nav.map((section, i) => {
+          if (section.items) {
+            return <CollapsibleSection key={i} section={section} pathname={pathname} />;
+          }
+
+          const isItemActive = pathname === section.href;
+          return (
+            <div key={i} className="mb-1 relative">
+              {isItemActive && (
+                <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-blue-600 dark:bg-blue-500 rounded-r-full z-10" />
+              )}
+              <Link 
+                href={section.href}
+                className={`group relative font-semibold flex items-center py-2 px-2 rounded-r-md transition-all duration-200 ${
+                  isItemActive
+                    ? "text-blue-600 dark:text-blue-400 bg-blue-500/10 dark:bg-blue-500/20"
+                    : "text-zinc-800 hover:text-blue-600 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
+                }`}
+              >
+                <span className="flex items-center transition-transform duration-200 group-hover:translate-x-1 w-full">
+                  <IconRenderer name={section.icon} />
+                  <span className="flex-1 min-w-0 leading-tight">{section.title}</span>
+                </span>
+              </Link>
+            </div>
+          );
+        })}
+      </nav>
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+    </>
   );
 }
