@@ -102,11 +102,7 @@ icon: "PenTool"
   afterLabel="Второй вариант"
 />
 
-## Интерактивные элементы документации
-
-Мы создали набор уникальных компонентов, которые делают чтение объемных текстов и изучение технологий удобнее.
-
-### Слайдер глубины погружения
+## Слайдер глубины погружения
 
 Если тема сложная, дайте читателю выбрать уровень детализации с помощью `<DepthSection>`. Слайдер имеет три уровня: TL;DR (кратко), Стандарт и Deep Dive (глубокое погружение).
 
@@ -138,9 +134,8 @@ icon: "PenTool"
   </DepthLevel>
 </DepthSection>
 
----
 
-### Умная матрица сравнения
+## Умная матрица сравнения
 
 Компонент `<CompareMatrix>` оборачивает обычную Markdown-таблицу. Он закрепляет первую колонку при скролле на мобильных устройствах и автоматически заменяет плюсы, минусы, "Да" и "Нет" на красивые иконки.
 
@@ -164,9 +159,8 @@ icon: "PenTool"
 | Транзакции (ACID) | Да | Нет |
 </CompareMatrix>
 
----
 
-### Радар-диаграмма (StatsRadar)
+## Радар-диаграмма (StatsRadar)
 
 Визуализируйте сильные и слабые стороны любой технологии или концепта с помощью паутинообразной диаграммы. Значения задаются от 0 до 100.
 
@@ -188,9 +182,8 @@ icon: "PenTool"
   'Гибкость': 70 
 }} />
 
----
 
-### Интерактивная архитектура (FlowMap)
+## Интерактивная архитектура (FlowMap)
 
 Показывайте цепочки вызовов или архитектурные компоненты с помощью кликабельной блок-схемы.
 
@@ -210,9 +203,8 @@ icon: "PenTool"
   { id: '3', title: 'Микросервис', desc: 'Сервис выполняет бизнес-логику и сохраняет данные в БД.' }
 ]} />
 
----
 
-### Объяснение кода (CodeWalkthrough)
+## Объяснение кода (CodeWalkthrough)
 
 Компонент `<CodeWalkthrough>` создает layout, где левая колонка предназначена для текста, а правая — для блока кода. Код прилипает к верху экрана при скролле.
 
@@ -270,49 +262,46 @@ async function init() {
   </WalkthroughCode>
 </CodeWalkthrough>
 
----
 
-### Окно с Параллаксом (ParallaxWindow)
+## Окно с Параллаксом (ParallaxWindow)
 
 Блок на всю ширину с зафиксированной на фоне картинкой для визуальной паузы.
 
 **Как писать:**
 ```mdx
 <ParallaxWindow src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" height="300px">
-  ## Глубокий Космос
+  <div className="text-2xl font-bold mb-2">Глубокий Космос</div>
   Исследование неизвестных планет начинается с первого шага.
 </ParallaxWindow>
 ```
 
 **Как выглядит:**
 <ParallaxWindow src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" height="300px">
-  ## Глубокий Космос
+  <div className="text-2xl font-bold mb-2">Глубокий Космос</div>
   Исследование неизвестных планет начинается с первого шага.
 </ParallaxWindow>
 
----
 
-### 3D Голографическая Карточка (HoloCard)
+## 3D Голографическая Карточка (HoloCard)
 
 Карточка, которая наклоняется за мышью и переливается внутренним светом.
 
 **Как писать:**
 ```mdx
 <HoloCard>
-  ### Элитный Артефакт
+  <div className="text-xl font-bold mb-2">Элитный Артефакт</div>
   Этот предмет наделяет владельца невероятной силой.
 </HoloCard>
 ```
 
 **Как выглядит:**
 <HoloCard>
-  ### Элитный Артефакт
+  <div className="text-xl font-bold mb-2">Элитный Артефакт</div>
   Этот предмет наделяет владельца невероятной силой.
 </HoloCard>
 
----
 
-### Маргинальные Заметки (MarginNote)
+## Маргинальные Заметки (MarginNote)
 
 Позволяет вынести пояснительный текст на широкие поля справа от основного контента.
 
@@ -332,9 +321,8 @@ async function init() {
 
 Когда вы готовите выпечку, всегда обращайте внимание на то, как ведут себя ингредиенты при нагреве. Изучение химических реакций — ключ к идеальному рецепту!
 
----
 
-### Лупа (Magnifier)
+## Лупа (Magnifier)
 
 Если картинка мелкая, пользователь может навести на неё курсор и увидеть детали в лупе (зум `x2` по умолчанию).
 
@@ -346,9 +334,8 @@ async function init() {
 **Как выглядит:**
 <Magnifier src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800" zoom={2.5} />
 
----
 
-### Неоновая Сетка (GlowGrid)
+## Неоновая Сетка (GlowGrid)
 
 Карточки, границы которых подсвечиваются, плавно следуя за курсором мыши.
 
@@ -374,9 +361,8 @@ async function init() {
   </GlowCard>
 </GlowGrid>
 
----
 
-### Живой Маркер (MarkerDraw)
+## Живой Маркер (MarkerDraw)
 
 Эффект, когда важный текст закрашивается маркером прямо у вас на глазах при скролле. Цвет задается в HEX (например, `#3b82f6` для синего).
 
@@ -602,7 +588,6 @@ app.listen(3000);
 
 **Как выглядит:**
 
----
 
 ## Пошаговый процесс (Steps)
 
@@ -913,27 +898,27 @@ app.listen(3000);
 ```mdx
 <DecisionTree initial="start">
   <DecisionStep step="start">
-    ### 1. Вы используете Windows или macOS?
+    <div className="text-xl font-bold mb-4">1. Вы используете Windows или macOS?</div>
     <DecisionButton target="windows">Windows</DecisionButton>
     <DecisionButton target="macos">macOS</DecisionButton>
   </DecisionStep>
   
   <DecisionStep step="windows">
-    ### 2. Загрузите файл .exe
+    <div className="text-xl font-bold mb-4">2. Загрузите файл .exe</div>
     Убедитесь, что у вас есть права администратора.
     <DecisionButton target="finish">Я скачал</DecisionButton>
     <DecisionButton target="start">Назад</DecisionButton>
   </DecisionStep>
 
   <DecisionStep step="macos">
-    ### 2. Загрузите файл .dmg
+    <div className="text-xl font-bold mb-4">2. Загрузите файл .dmg</div>
     Если система блокирует установку, перейдите в настройки безопасности.
     <DecisionButton target="finish">Я скачал</DecisionButton>
     <DecisionButton target="start">Назад</DecisionButton>
   </DecisionStep>
 
   <DecisionStep step="finish">
-    ### 3. Установка завершена!
+    <div className="text-xl font-bold mb-4">3. Установка завершена!</div>
     Теперь вы можете открыть приложение.
     <DecisionButton target="start">Начать заново</DecisionButton>
   </DecisionStep>
@@ -944,27 +929,27 @@ app.listen(3000);
 
 <DecisionTree initial="start">
   <DecisionStep step="start">
-    ### 1. Вы используете Windows или macOS?
+    <div className="text-xl font-bold mb-4">1. Вы используете Windows или macOS?</div>
     <DecisionButton target="windows">Windows</DecisionButton>
     <DecisionButton target="macos">macOS</DecisionButton>
   </DecisionStep>
   
   <DecisionStep step="windows">
-    ### 2. Загрузите файл .exe
+    <div className="text-xl font-bold mb-4">2. Загрузите файл .exe</div>
     Убедитесь, что у вас есть права администратора.
     <DecisionButton target="finish">Я скачал</DecisionButton>
     <DecisionButton target="start">Назад</DecisionButton>
   </DecisionStep>
 
   <DecisionStep step="macos">
-    ### 2. Загрузите файл .dmg
+    <div className="text-xl font-bold mb-4">2. Загрузите файл .dmg</div>
     Если система блокирует установку, перейдите в настройки безопасности.
     <DecisionButton target="finish">Я скачал</DecisionButton>
     <DecisionButton target="start">Назад</DecisionButton>
   </DecisionStep>
 
   <DecisionStep step="finish">
-    ### 3. Установка завершена!
+    <div className="text-xl font-bold mb-4">3. Установка завершена!</div>
     Теперь вы можете открыть приложение.
     <DecisionButton target="start">Начать заново</DecisionButton>
   </DecisionStep>
@@ -983,3 +968,25 @@ app.listen(3000);
 
 <VoiceBox src="/media/tutorial/sound.mp3" title="Шеф выдал базу" />
 
+
+
+## Видео, YouTube и RuTube
+
+В документации можно использовать как локальные видео файлы (`<VideoPlayer>`), так и видео с YouTube (`<YouTube>`) или RuTube (`<Rutube>`).
+
+**Как писать:**
+```mdx
+<VideoPlayer src="/media/tutorial/video.mp4" title="Тестовое видео" />
+
+<YouTube id="fKABMFgUYXE" title="Официальный трейлер" />
+
+<Rutube id="c0b30bb7e8e88c159eda91ac01fa9e14" title="Тестовое видео Rutube" />
+```
+
+**Как выглядит:**
+
+<VideoPlayer src="/media/tutorial/video.mp4" title="Тестовое видео" />
+
+<YouTube id="fKABMFgUYXE" title="Официальный трейлер" />
+
+<Rutube id="c0b30bb7e8e88c159eda91ac01fa9e14" title="Тестовое видео Rutube" />

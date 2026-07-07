@@ -36,10 +36,6 @@ export function DepthSection({ children }: { children: ReactNode }) {
 export function DepthLevel({ showAt, children }: { showAt: "tldr" | "standard" | "deep"; children: ReactNode }) {
   const { level } = useContext(DepthContext);
   
-  // Logic: 
-  // tldr: shows only at level 0
-  // standard: shows at level 1 and 2
-  // deep: shows only at level 2
   const isVisible = 
     showAt === "tldr" ? level === 0 : 
     showAt === "standard" ? level >= 1 : 

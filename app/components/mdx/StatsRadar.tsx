@@ -7,22 +7,20 @@ export function StatsRadar({ data, color = "#3B82F6" }: { data: Record<string, n
   const max = 100;
   const size = 450;
   const center = size / 2;
-  const radius = 130; // Фиксированный радиус для паутинки
-  const labelRadius = radius + 20; // Отступ для текста, чтобы он был строго снаружи
+  const radius = 130;
+  const labelRadius = radius + 20;
 
   const points = keys.map((key, i) => {
     const angle = (Math.PI * 2 * i) / keys.length - Math.PI / 2;
     const val = data[key];
     const r = (val / max) * radius;
 
-    // Определяем положение текста, чтобы он "рос" от центра наружу
     const isTop = Math.sin(angle) < -0.1;
     const isBottom = Math.sin(angle) > 0.1;
     const isLeft = Math.cos(angle) < -0.1;
     const isRight = Math.cos(angle) > 0.1;
 
     const textAnchor = isRight ? "start" : isLeft ? "end" : "middle";
-    // Для верхнего текста используем auto (пишется над координатой), для нижнего hanging (под координатой)
     const baseline = isBottom ? "hanging" : isTop ? "auto" : "middle";
 
     return { 
@@ -39,12 +37,10 @@ export function StatsRadar({ data, color = "#3B82F6" }: { data: Record<string, n
 
   const polygonPoints = points.map((p) => `${p.x},${p.y}`).join(" ");
 
-  // Grid circles
   const circles = [0.25, 0.5, 0.75, 1].map((scale) => (
     <circle key={scale} cx={center} cy={center} r={radius * scale} fill="none" stroke="currentColor" className="text-zinc-200 dark:text-zinc-800" strokeWidth="1" />
   ));
 
-  // Axes
   const axes = points.map((p, i) => {
     const angle = (Math.PI * 2 * i) / keys.length - Math.PI / 2;
     return (
