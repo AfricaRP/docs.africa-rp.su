@@ -102,6 +102,28 @@ icon: "PenTool"
   afterLabel="Второй вариант"
 />
 
+## Видео, YouTube и RuTube
+
+В документации можно использовать как локальные видео файлы (`<VideoPlayer>`), так и видео с YouTube (`<YouTube>`) или RuTube (`<Rutube>`).
+
+**Как писать:**
+```mdx
+<VideoPlayer src="/media/tutorial/video.mp4" title="Тестовое видео" />
+
+<YouTube id="fKABMFgUYXE" title="Тестовое видео YouTube" />
+
+<Rutube id="c0b30bb7e8e88c159eda91ac01fa9e14" title="Тестовое видео Rutube" />
+```
+
+**Как выглядит:**
+
+<VideoPlayer src="/media/tutorial/video.mp4" title="Тестовое видео" />
+
+<YouTube id="fKABMFgUYXE" title="Тестовое видео YouTube" />
+
+<Rutube id="c0b30bb7e8e88c159eda91ac01fa9e14" title="Тестовое видео Rutube" />
+
+
 ## Слайдер глубины погружения
 
 Если тема сложная, дайте читателю выбрать уровень детализации с помощью `<DepthSection>`. Слайдер имеет три уровня: TL;DR (кратко), Стандарт и Deep Dive (глубокое погружение).
@@ -967,26 +989,3 @@ app.listen(3000);
 **Как выглядит:**
 
 <VoiceBox src="/media/tutorial/sound.mp3" title="Шеф выдал базу" />
-
-
-
-## Видео, YouTube и RuTube
-
-В документации можно использовать как локальные видео файлы (`<VideoPlayer>`), так и видео с YouTube (`<YouTube>`) или RuTube (`<Rutube>`).
-
-**Как писать:**
-```mdx
-<VideoPlayer src="/media/tutorial/video.mp4" title="Тестовое видео" />
-
-<YouTube id="fKABMFgUYXE" title="Официальный трейлер" />
-
-<Rutube id="c0b30bb7e8e88c159eda91ac01fa9e14" title="Тестовое видео Rutube" />
-```
-
-**Как выглядит:**
-
-<VideoPlayer src="/media/tutorial/video.mp4" title="Тестовое видео" />
-
-<YouTube id="fKABMFgUYXE" title="Официальный трейлер" />
-
-<Rutube id="c0b30bb7e8e88c159eda91ac01fa9e14" title="Тестовое видео Rutube" />
