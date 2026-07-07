@@ -137,8 +137,60 @@ export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                 <Link
                   key={res.href}
                   href={res.href}
-                  onClick={onClose}
-                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors group"
+                  onClick={(e) => {
+                    onClose();
+                    
+                    // Custom scroll logic to handle both exact hash and text matching
+                    const hashIndex = res.href.indexOf('#');
+                    if (hashIndex !== -1) {
+                      const hash = res.href.substring(hashIndex + 1);
+                      const pathname = res.href.substring(0, hashIndex);
+                      
+                      // If we are already on the target page, scroll manually
+                      if (window.location.pathname === pathname) {
+                        e.preventDefault();
+                        
+                        setTimeout(() => {
+                          let target = document.getElementById(hash);
+                          
+                          // Fallback: if hash not found, try to find heading by text
+                          if (!target && res.title) {
+                            const headings = Array.from(document.querySelectorAll('article h1, article h2, article h3, article h4'));
+                            target = headings.find(h => h.textContent?.trim().toLowerCase() === res.title.toLowerCase()) as HTMLElement;
+                          }
+                          
+                          if (target) {
+                            // Add a small highlight animation class to the target
+                            target.classList.add('bg-blue-500/20', 'transition-colors', 'duration-1000', 'rounded', 'px-1');
+                            setTimeout(() => {
+                              target?.classList.remove('bg-blue-500/20');
+                            }, 2000);
+                            
+                            const offset = 100; // Account for mobile header / sticky elements
+                            const bodyRect = document.body.getBoundingClientRect().top;
+                            const elementRect = target.getBoundingClientRect().top;
+                            const elementPosition = elementRect - bodyRect;
+                            const offsetPosition = elementPosition - offset;
+
+                            window.scrollTo({
+                              top: offsetPosition,
+                              behavior: 'smooth'
+                            });
+                            
+                            // Update URL without full navigation
+                            window.history.pushState(null, '', res.href);
+                          } else {
+                            // If still not found, just navigate normally
+                            router.push(res.href);
+                          }
+                        }, 100);
+                      } else {
+                        // Different page, store the target title in sessionStorage as a fallback
+                        sessionStorage.setItem('search-target-title', res.title);
+                      }
+                    }
+                  }}
+                  className="flex items-start gap-3 p-3 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors group"
                 >
                   <div className="mt-0.5 bg-blue-100 dark:bg-blue-900/30 p-2 rounded-md text-blue-600 dark:text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors shrink-0">
                     {isSection ? <Hash className="w-4 h-4" /> : <FileText className="w-4 h-4" />}

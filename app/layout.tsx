@@ -7,6 +7,7 @@ import { TableOfContents } from "./components/TableOfContents"
 import { SidebarBottom } from "./components/SidebarBottom"
 import { MobileHeader } from "./components/MobileHeader"
 import { ScrollProgress } from "./components/ScrollProgress"
+import { ScrollHandler } from "./components/ScrollHandler"
 
 const minecraftFont = localFont({
   src: "./fonts/minecraft.ttf",
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body className={`${minecraftFont.className} bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ScrollProgress />
+          <ScrollHandler />
           <div className="flex flex-col md:flex-row min-h-screen">
             <MobileHeader>
               <Sidebar />
