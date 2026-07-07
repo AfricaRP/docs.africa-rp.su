@@ -1,5 +1,6 @@
 import { Pre, highlight } from "codehike/code"
 import { callout } from "./annotations/callout"
+import { mark } from "./annotations/mark"
 
 export async function Code(props: any) {
   const { codeblock } = props;
@@ -24,7 +25,7 @@ export async function Code(props: any) {
       <div className="p-4 overflow-x-auto text-sm [&>pre]:!bg-transparent [&>pre]:!m-0 [&>pre]:!p-0">
         <Pre
           code={highlighted}
-          handlers={[callout]}
+          handlers={[callout, mark]}
           style={{ margin: 0, backgroundColor: 'transparent' }}
         />
       </div>
