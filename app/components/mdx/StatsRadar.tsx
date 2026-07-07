@@ -5,21 +5,35 @@ import { motion } from "framer-motion";
 export function StatsRadar({ data, color = "#3B82F6" }: { data: Record<string, number>; color?: string }) {
   const keys = Object.keys(data);
   const max = 100;
-  const size = 350;
+  const size = 450;
   const center = size / 2;
-  const radius = (size / 2) * 0.55; // Leave room for labels
+  const radius = 130; // Фиксированный радиус для паутинки
+  const labelRadius = radius + 20; // Отступ для текста, чтобы он был строго снаружи
 
   const points = keys.map((key, i) => {
     const angle = (Math.PI * 2 * i) / keys.length - Math.PI / 2;
     const val = data[key];
     const r = (val / max) * radius;
+
+    // Определяем положение текста, чтобы он "рос" от центра наружу
+    const isTop = Math.sin(angle) < -0.1;
+    const isBottom = Math.sin(angle) > 0.1;
+    const isLeft = Math.cos(angle) < -0.1;
+    const isRight = Math.cos(angle) > 0.1;
+
+    const textAnchor = isRight ? "start" : isLeft ? "end" : "middle";
+    // Для верхнего текста используем auto (пишется над координатой), для нижнего hanging (под координатой)
+    const baseline = isBottom ? "hanging" : isTop ? "auto" : "middle";
+
     return { 
       x: center + r * Math.cos(angle), 
       y: center + r * Math.sin(angle), 
-      labelX: center + (radius + 40) * Math.cos(angle), 
-      labelY: center + (radius + 30) * Math.sin(angle), 
+      labelX: center + labelRadius * Math.cos(angle), 
+      labelY: center + labelRadius * Math.sin(angle), 
       label: key, 
-      value: val 
+      value: val,
+      textAnchor,
+      baseline
     };
   });
 
@@ -39,8 +53,8 @@ export function StatsRadar({ data, color = "#3B82F6" }: { data: Record<string, n
   });
 
   return (
-    <div className="flex justify-center items-center my-8 p-6 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-sm">
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="overflow-visible">
+    <div className="flex justify-center items-center my-8 p-6 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-sm w-full overflow-hidden">
+      <svg width="100%" height="100%" viewBox={`0 0 ${size} ${size}`} className="overflow-visible max-w-[450px] mx-auto">
         {circles}
         {axes}
         <motion.polygon
@@ -58,7 +72,14 @@ export function StatsRadar({ data, color = "#3B82F6" }: { data: Record<string, n
           <motion.circle key={`dot-${i}`} initial={{ r: 0 }} whileInView={{ r: 4 }} viewport={{ once: true }} transition={{ delay: 0.2 + i * 0.05 }} cx={p.x} cy={p.y} fill={color} />
         ))}
         {points.map((p, i) => (
-          <text key={`label-${i}`} x={p.labelX} y={p.labelY} textAnchor="middle" dominantBaseline="middle" className="text-[11px] font-semibold fill-zinc-600 dark:fill-zinc-400">
+          <text 
+            key={`label-${i}`} 
+            x={p.labelX} 
+            y={p.labelY} 
+            textAnchor={p.textAnchor as "start" | "middle" | "end"} 
+            dominantBaseline={p.baseline} 
+            className="text-[12px] font-semibold fill-zinc-600 dark:fill-zinc-400"
+          >
             {p.label} ({p.value})
           </text>
         ))}
