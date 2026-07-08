@@ -23,13 +23,13 @@ title: "Картинки, видео и медиа"
 
 **Как писать:**
 ```mdx
-![Аппетитные панкейки](https://images.unsplash.com/photo-1554520735-0a1452ce45ca?q=80&w=800)
+![Аппетитные панкейки](https://i.pinimg.com/1200x/03/33/f9/0333f9e4f0179908dd9a21d0b5c6ff43.jpg)
 
 ![Тестовая гифка](/media/tutorial/test.gif)
 ```
 
 **Как выглядит:**
-![Аппетитные панкейки](https://images.unsplash.com/photo-1554520735-0a1452ce45ca?q=80&w=800)
+![Аппетитные панкейки](https://i.pinimg.com/1200x/03/33/f9/0333f9e4f0179908dd9a21d0b5c6ff43.jpg)
 
 ![Тестовая гифка](/media/tutorial/test.gif)
 
@@ -37,24 +37,25 @@ title: "Картинки, видео и медиа"
 
 ## Галерея скриншотов
 
-Если у вас много скриншотов (например, 4 штуки), не стоит вставлять их друг за другом — это займет слишком много места. Используйте тег `<ImageGrid>`, чтобы выстроить их в красивую сетку. Укажите в `columns` количество колонок (от 2 до 4).
+Если у вас много скриншотов (например, 4 штуки), не стоит вставлять их друг за другом — это займет слишком много места. Используйте тег `<ImageGrid>`, чтобы выстроить их в красивую сетку. Укажите в `columns` количество колонок (от 2 до 4). 
+Здесь мы покажем пример загрузки картинок напрямую из нашей локальной папки.
 
 **Как писать:**
 ```mdx
 <ImageGrid columns={2}>
-  ![Фото 1](https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=400)
-  ![Фото 2](https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=400)
-  ![Фото 3](https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=400)
-  ![Фото 4](https://images.unsplash.com/photo-1554520735-0a1452ce45ca?q=80&w=400)
+  ![Фото 1](/media/tutorial/image.jpg)
+  ![Фото 2](/media/tutorial/image2.jpg)
+  ![Фото 3](/media/tutorial/image3.jpg)
+  ![Фото 4](/media/tutorial/image4.jpg)
 </ImageGrid>
 ```
 
 **Как выглядит:**
 <ImageGrid columns={2}>
-  ![Фото 1](https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=400)
-  ![Фото 2](https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=400)
-  ![Фото 3](https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=400)
-  ![Фото 4](https://images.unsplash.com/photo-1554520735-0a1452ce45ca?q=80&w=400)
+  ![Фото 1](/media/tutorial/image.jpg)
+  ![Фото 2](/media/tutorial/image2.jpg)
+  ![Фото 3](/media/tutorial/image3.jpg)
+  ![Фото 4](/media/tutorial/image4.jpg)
 </ImageGrid>
 
 ---
@@ -65,11 +66,11 @@ title: "Картинки, видео и медиа"
 
 **Как писать:**
 ```mdx
-<Magnifier src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800" zoom={2.5} />
+<Magnifier src="/media/tutorial/galactic.jpg" zoom={2.5} />
 ```
 
 **Как выглядит:**
-<Magnifier src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800" zoom={2.5} />
+<Magnifier src="/media/tutorial/galactic.jpg" zoom={2.5} />
 
 ---
 
@@ -80,19 +81,19 @@ title: "Картинки, видео и медиа"
 **Как писать:**
 ```mdx
 <ImageCompare 
-  before="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&grayscale" 
-  after="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800" 
-  beforeLabel="До (Черно-белое)"
-  afterLabel="После (В цвете)"
+  before="/media/tutorial/image.jpg" 
+  after="/media/tutorial/image2.jpg" 
+  beforeLabel="Первый вариант"
+  afterLabel="Второй вариант"
 />
 ```
 
 **Как выглядит:**
 <ImageCompare 
-  before="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&grayscale" 
-  after="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800" 
-  beforeLabel="До (Черно-белое)"
-  afterLabel="После (В цвете)"
+  before="/media/tutorial/image.jpg" 
+  after="/media/tutorial/image2.jpg" 
+  beforeLabel="Первый вариант"
+  afterLabel="Второй вариант"
 />
 
 ---
