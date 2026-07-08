@@ -9,8 +9,14 @@ export function YandexMetrika() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (typeof window !== "undefined" && (window as any).ym) {
-      (window as any).ym(110510350, "hit", window.location.href);
+    if (typeof window !== "undefined") {
+      const w = window as any;
+      if (!w.ym) {
+        w.ym = function () {
+          (w.ym.a = w.ym.a || []).push(arguments);
+        };
+      }
+      w.ym(110510350, "hit", window.location.href);
     }
   }, [pathname, searchParams]);
 
