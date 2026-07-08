@@ -20,23 +20,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          if [ -f "${{ github.workspace }}/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
-            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "Unable to determine package manager"
-            exit 1
-          fi
-      - name: Setup Node
-        uses: actions/setup-node@v4
         with:
-          node-version: "22"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          fetch-depth: 2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Restore cache
@@ -44,17 +31,28 @@ jobs:
         with:
           path: |
             .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lock') }}-
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lock') }}-
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: bun install --frozen-lockfile
+      - name: Check for content changes
+        id: check_content
+        run: |
+          if git diff --name-only HEAD^ HEAD 2>/dev/null | grep -q "^content/"; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
       - name: Generate AI Summaries
-        run: node scripts/generate-summaries.mjs
+        if: steps.check_content.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        run: bun run generate-summaries
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.manager }} run build
+        run: bun run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

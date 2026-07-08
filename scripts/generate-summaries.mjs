@@ -39,6 +39,9 @@ async function attemptGeneration(ai, model, config, contents, retries = 3) {
   }
 }
 
+let generatedCount = 0;
+let skippedCount = 0;
+
 async function generateSummaryForFile(filePath, slug) {
   const content = fs.readFileSync(filePath, "utf-8");
   const hash = crypto.createHash("sha256").update(content).digest("hex");
@@ -48,14 +51,20 @@ async function generateSummaryForFile(filePath, slug) {
     try {
       const existingData = JSON.parse(fs.readFileSync(outPath, "utf-8"));
       if (existingData.hash === hash) {
+        skippedCount++;
+        console.log(`Пропущено: ${slug} (не изменился)`);
         return;
       }
     } catch (e) {}
   }
 
   const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return;
+  if (!apiKey) {
+    console.log("ОШИБКА: GEMINI_API_KEY не установлен.");
+    return;
+  }
 
+  console.log(`Генерация: ${slug}...`);
   const ai = new GoogleGenAI({ apiKey });
   const config = { temperature: 0.7, systemInstruction: [{ text: summaryPrompt }] };
   const contents = [{ role: "user", parts: [{ text: content }] }];
@@ -74,8 +83,12 @@ async function generateSummaryForFile(filePath, slug) {
         JSON.stringify({ hash, summary: response.text }, null, 2),
         "utf-8"
       );
+      generatedCount++;
+      console.log(`Успешно сгенерировано: ${slug}`);
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(`Ошибка при генерации для ${slug}`);
+  }
 }
 
 async function scanAndGenerate(dir, currentSlug = []) {
@@ -98,7 +111,15 @@ async function scanAndGenerate(dir, currentSlug = []) {
 }
 
 async function main() {
+  console.time("Общее время генерации");
+  console.log("Запуск процесса генерации AI-саммари...");
+  
   await scanAndGenerate(contentDir);
+  
+  console.log(`\nИтог:`);
+  console.log(`- Сгенерировано: ${generatedCount}`);
+  console.log(`- Пропущено: ${skippedCount}`);
+  console.timeEnd("Общее время генерации");
 }
 
 main();
