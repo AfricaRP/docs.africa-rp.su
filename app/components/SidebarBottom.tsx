@@ -1,9 +1,10 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { Moon, Sun, Type } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import { Moon, Sun, Type, Check } from "lucide-react";
 import { siteConfig } from "../../lib/config";
+import { motion, AnimatePresence } from "framer-motion";
 
 const FONTS = [
   { id: "minecraft", name: "Minecraft" },
@@ -16,6 +17,8 @@ export function SidebarBottom() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [currentFont, setCurrentFont] = useState("minecraft");
+  const [isFontOpen, setIsFontOpen] = useState(false);
+  const fontMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -23,18 +26,21 @@ export function SidebarBottom() {
     setCurrentFont(savedFont);
   }, []);
 
-  const cycleFont = () => {
-    const currentIndex = FONTS.findIndex((f) => f.id === currentFont);
-    const nextIndex = (currentIndex + 1) % FONTS.length;
-    const nextFont = FONTS[nextIndex].id;
-    setCurrentFont(nextFont);
-    // document.documentElement.setAttribute is handled by next-themes via storage event or we can just trigger it
-    // Wait, next-themes handles data-theme, but we have two providers.
-    // If we use useTheme, which context does it hook into? It hooks into the nearest ThemeProvider.
-    // We should probably just manage the font state manually or use a second context.
-    // Actually, managing `data-font` manually on `document.documentElement` is super easy.
-    document.documentElement.setAttribute("data-font", nextFont);
-    localStorage.setItem("docs-font", nextFont);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (fontMenuRef.current && !fontMenuRef.current.contains(event.target as Node)) {
+        setIsFontOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selectFont = (fontId: string) => {
+    setCurrentFont(fontId);
+    document.documentElement.setAttribute("data-font", fontId);
+    localStorage.setItem("docs-font", fontId);
+    setIsFontOpen(false);
   };
 
   if (!mounted) {
@@ -56,15 +62,46 @@ export function SidebarBottom() {
         <span>{isDark ? "Светлая тема" : "Темная тема"}</span>
       </button>
 
-      <button
-        onClick={cycleFont}
-        className="group flex items-center gap-3 px-2 py-2 text-sm font-semibold text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 rounded-md transition-all duration-300"
-      >
-        <span className="transition-transform duration-300 group-hover:scale-110">
-          <Type className="w-5 h-5" />
-        </span>
-        <span>Шрифт: {currentFontName}</span>
-      </button>
+      <div className="relative" ref={fontMenuRef}>
+        <button
+          onClick={() => setIsFontOpen(!isFontOpen)}
+          className="w-full group flex items-center gap-3 px-2 py-2 text-sm font-semibold text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 rounded-md transition-all duration-300"
+        >
+          <span className="transition-transform duration-300 group-hover:scale-110">
+            <Type className="w-5 h-5" />
+          </span>
+          <span>Шрифт: {currentFontName}</span>
+        </button>
+
+        <AnimatePresence>
+          {isFontOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
+              className="absolute left-0 bottom-full mb-2 w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl overflow-hidden z-50 p-1.5"
+            >
+              <div className="flex flex-col gap-0.5">
+                {FONTS.map((font) => (
+                  <button
+                    key={font.id}
+                    onClick={() => selectFont(font.id)}
+                    className={`flex items-center justify-between w-full px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                      currentFont === font.id
+                        ? "bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400"
+                        : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-100"
+                    }`}
+                  >
+                    <span>{font.name}</span>
+                    {currentFont === font.id && <Check className="w-4 h-4" />}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       <a
         href={siteConfig.discordUrl}

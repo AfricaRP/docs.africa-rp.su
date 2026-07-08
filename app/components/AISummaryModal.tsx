@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Sparkles, Loader2, AlertCircle } from "lucide-react";
+import { X, Sparkles, Loader2, AlertCircle, Info } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 interface AISummaryModalProps {
@@ -94,8 +94,16 @@ export function AISummaryModal({ isOpen, onClose, slug }: AISummaryModalProps) {
                   </p>
                 </div>
               ) : (
-                <div className="prose prose-zinc dark:prose-invert prose-sm md:prose-base max-w-none prose-p:leading-relaxed prose-li:marker:text-blue-500">
-                  <ReactMarkdown>{summary || ""}</ReactMarkdown>
+                <div className="flex flex-col h-full">
+                  <div className="prose prose-zinc dark:prose-invert prose-sm md:prose-base max-w-none prose-p:leading-relaxed prose-li:marker:text-blue-500 mb-8">
+                    <ReactMarkdown>{summary || ""}</ReactMarkdown>
+                  </div>
+                  <div className="mt-auto pt-4 border-t border-zinc-200 dark:border-zinc-800 flex items-start gap-3 text-zinc-400 dark:text-zinc-500 text-xs">
+                    <Info className="w-4 h-4 shrink-0 mt-0.5 opacity-70" />
+                    <p>
+                      Сводка сгенерирована искусственным интеллектом для быстрого ознакомления. Она может быть не на 100% достоверной. Пожалуйста, обращайтесь к тексту статьи за точной информацией.
+                    </p>
+                  </div>
                 </div>
               )}
             </div>

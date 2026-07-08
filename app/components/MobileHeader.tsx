@@ -39,7 +39,7 @@ export function MobileHeader({ children }: { children: React.ReactNode }) {
       </div>
 
       {isOpen && (
-        <div className="md:hidden fixed inset-0 top-[65px] z-50 bg-zinc-50 dark:bg-zinc-950 overflow-y-auto p-4 flex flex-col border-t border-zinc-200 dark:border-zinc-800">
+        <div className="md:hidden fixed inset-0 top-[81px] z-50 bg-zinc-50 dark:bg-zinc-950 overflow-y-auto p-4 flex flex-col border-t border-zinc-200 dark:border-zinc-800">
           {children}
         </div>
       )}

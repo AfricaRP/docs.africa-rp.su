@@ -145,13 +145,11 @@ export default async function Page({
 
   return (
     <article className="max-w-none pb-16 animate-fade-in-up relative">
-      <div className="flex items-center justify-between mb-2">
-        {breadcrumbItems.length > 0 ? (
-          <Breadcrumbs items={breadcrumbItems} />
-        ) : (
-          <div />
-        )}
-        <div className="flex items-center mb-6">
+      <div className="flex items-start sm:items-center justify-between gap-4 mb-2">
+        <div className="flex-1 min-w-0">
+          {breadcrumbItems.length > 0 && <Breadcrumbs items={breadcrumbItems} />}
+        </div>
+        <div className="flex items-center mb-6 shrink-0">
           <PageActions relativePath={relativePath} slugStr={slug.length > 0 ? slug.join("-") : "index"} />
         </div>
       </div>
