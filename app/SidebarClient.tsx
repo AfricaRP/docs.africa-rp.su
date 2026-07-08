@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as LucideIcons from "lucide-react";
 import { NavItem } from "../lib/content";
 import { SearchModal } from "./components/Search";
@@ -95,19 +95,28 @@ export function SidebarClient({ nav }: { nav: NavItem[] }) {
   const pathname = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <>
-      <button
+      <button 
         onClick={() => setIsSearchOpen(true)}
         className="group relative flex items-center gap-3 w-full mb-8 px-3 py-2.5 text-sm text-zinc-500 dark:text-zinc-400 bg-zinc-100/50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 hover:border-blue-300 dark:hover:border-blue-500/50 rounded-2xl hover:bg-white dark:hover:bg-zinc-900 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition-all duration-300 overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-blue-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
         <LucideIcons.Search className="w-4 h-4 shrink-0 transition-colors duration-300 group-hover:text-blue-500" />
-        <span className="flex-1 text-left font-medium transition-colors duration-300 group-hover:text-zinc-700 dark:group-hover:text-zinc-200">
-          Поиск...
-        </span>
+        <span className="flex-1 text-left font-medium transition-colors duration-300 group-hover:text-zinc-700 dark:group-hover:text-zinc-200">Поиск...</span>
         <kbd className="hidden sm:flex items-center justify-center px-2 py-0.5 text-[10px] uppercase font-sans font-bold text-zinc-400 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-md shadow-sm transition-all duration-300 group-hover:border-blue-200 dark:group-hover:border-blue-500/30 group-hover:text-blue-500">
-          Esc
+          Ctrl+K
         </kbd>
       </button>
 

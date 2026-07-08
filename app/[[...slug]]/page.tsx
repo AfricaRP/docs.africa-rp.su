@@ -1,11 +1,11 @@
 import fs from "fs";
 import { notFound } from "next/navigation";
 import { getAllMdxFiles, getSidebarNav, NavItem } from "../../lib/content";
+import { siteConfig } from "../../lib/config";
 import path from "path";
 import { PageNavigation } from "../components/PageNavigation";
-import { CopyLinkButton } from "../components/CopyLinkButton";
 import { Breadcrumbs } from "../components/Breadcrumbs";
-import { FocusToggle } from "../components/FocusToggle";
+import { PageActions } from "../components/PageActions";
 
 export async function generateStaticParams() {
   const files = getAllMdxFiles();
@@ -48,7 +48,12 @@ export default async function Page({
   params: Promise<{ slug?: string[] }>;
 }) {
   const resolvedParams = await params;
-  const slug = resolvedParams.slug || [];
+  let slug = resolvedParams.slug || [];
+  
+  if (slug.length === 0 && siteConfig.homePageSlug.length > 0) {
+    slug = siteConfig.homePageSlug;
+  }
+
   const files = getAllMdxFiles();
 
   const file = files.find((f) => {
@@ -104,8 +109,7 @@ export default async function Page({
           <div />
         )}
         <div className="flex items-center mb-6">
-          <CopyLinkButton />
-          <FocusToggle />
+          <PageActions relativePath={relativePath} />
         </div>
       </div>
       <Content />

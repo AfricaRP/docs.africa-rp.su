@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import { siteConfig } from "../../lib/config";
 
 export function SidebarBottom() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -31,7 +32,7 @@ export function SidebarBottom() {
       </button>
 
       <a
-        href="https://discord.gg/africarp"
+        href={siteConfig.discordUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="group flex items-center gap-3 px-2 py-2 text-sm font-semibold text-[#5865F2] hover:bg-[#5865F2]/10 dark:text-[#5865F2] dark:hover:bg-[#5865F2]/20 rounded-md transition-all duration-300"
