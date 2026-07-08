@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Inter, Lora } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import { Suspense } from "react";
-import { YandexMetrika } from "./components/YandexMetrika";
 import "./globals.css";
 import "katex/dist/katex.min.css";
 import Sidebar from "./Sidebar";
@@ -53,18 +51,38 @@ export default function RootLayout({
             `,
           }}
         />
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+              m[i].l=1*new Date();
+              for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+              k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+              (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+              ym(110510350, "init", {
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true,
+                    trackHash:true,
+                    ecommerce:"dataLayer"
+              });
+            `,
+          }}
+        />
       </head>
       <body
         className={`${minecraftFont.variable} ${interFont.variable} ${loraFont.variable} bg-transparent text-zinc-800 dark:text-zinc-100 min-h-screen selection:bg-blue-200 dark:selection:bg-blue-900 font-main`}
       >
+        <noscript>
+          <div>
+            <img src="https://mc.yandex.ru/watch/110510350" style={{ position: "absolute", left: "-9999px" }} alt="" />
+          </div>
+        </noscript>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Suspense fallback={null}>
-            <YandexMetrika />
-          </Suspense>
-          {}
           <div className="fixed inset-0 z-[-2] bg-gradient-to-bl from-zinc-200 via-zinc-50 to-zinc-50 dark:from-zinc-800 dark:via-zinc-950 dark:to-zinc-950" />
-          
-          {}
           <div className="absolute top-0 left-0 right-0 h-[600px] z-[-1] bg-grid-pattern text-zinc-900 dark:text-white opacity-[0.07] dark:opacity-[0.06] [mask-image:linear-gradient(to_bottom,black_10%,transparent_100%)] pointer-events-none" />
 
           <ScrollProgress />
