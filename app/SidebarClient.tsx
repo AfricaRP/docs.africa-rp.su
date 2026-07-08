@@ -61,9 +61,6 @@ function CollapsibleSection({
             const isItemActive = pathname === item.href;
             return (
               <li key={j} className="relative group/item">
-                {isItemActive && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-gradient-to-b from-blue-400 to-blue-600 rounded-r-full shadow-[0_0_12px_rgba(59,130,246,0.8)] z-10" />
-                )}
                 <Link
                   href={item.href}
                   className={`relative flex items-start py-2 px-3 rounded-xl transition-all duration-300 overflow-hidden ${
@@ -73,7 +70,10 @@ function CollapsibleSection({
                   }`}
                 >
                   {isItemActive && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent dark:from-blue-400/10 opacity-50" />
+                    <>
+                      <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-gradient-to-b from-blue-400 to-blue-600 shadow-[0_0_12px_rgba(59,130,246,0.8)] z-10" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent dark:from-blue-400/10 opacity-50" />
+                    </>
                   )}
                   <div className="relative mt-0.5 transition-transform duration-300 group-hover/item:translate-x-1">
                     <IconRenderer name={item.icon} isActive={isItemActive} />
@@ -135,9 +135,6 @@ export function SidebarClient({ nav }: { nav: NavItem[] }) {
           const isItemActive = pathname === section.href;
           return (
             <div key={i} className="mb-2 relative group/item">
-              {isItemActive && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-gradient-to-b from-blue-400 to-blue-600 rounded-r-full shadow-[0_0_12px_rgba(59,130,246,0.8)] z-10" />
-              )}
               <Link
                 href={section.href}
                 className={`relative flex items-start py-2 px-3 rounded-xl transition-all duration-300 overflow-hidden ${
@@ -147,7 +144,10 @@ export function SidebarClient({ nav }: { nav: NavItem[] }) {
                 }`}
               >
                 {isItemActive && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent dark:from-blue-400/10 opacity-50" />
+                  <>
+                    <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-gradient-to-b from-blue-400 to-blue-600 shadow-[0_0_12px_rgba(59,130,246,0.8)] z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent dark:from-blue-400/10 opacity-50" />
+                  </>
                 )}
                 <div className="relative mt-0.5 transition-transform duration-300 group-hover/item:translate-x-1">
                   <IconRenderer name={section.icon} isActive={isItemActive} />
