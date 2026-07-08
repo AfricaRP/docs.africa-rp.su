@@ -78,7 +78,7 @@ function CollapsibleSection({
                   <div className="relative mt-0.5 transition-transform duration-300 group-hover/item:translate-x-1">
                     <IconRenderer name={item.icon} isActive={isItemActive} />
                   </div>
-                  <span className="relative flex-1 min-w-0 leading-snug transition-transform duration-300 group-hover/item:translate-x-1">
+                  <span className="relative flex-1 min-w-0 text-sm leading-snug transition-transform duration-300 group-hover/item:translate-x-1">
                     {item.title}
                   </span>
                 </Link>
@@ -152,7 +152,7 @@ export function SidebarClient({ nav }: { nav: NavItem[] }) {
                 <div className="relative mt-0.5 transition-transform duration-300 group-hover/item:translate-x-1">
                   <IconRenderer name={section.icon} isActive={isItemActive} />
                 </div>
-                <span className="relative flex-1 min-w-0 leading-snug transition-transform duration-300 group-hover/item:translate-x-1">
+                <span className="relative flex-1 min-w-0 text-sm leading-snug transition-transform duration-300 group-hover/item:translate-x-1">
                   {section.title}
                 </span>
               </Link>
