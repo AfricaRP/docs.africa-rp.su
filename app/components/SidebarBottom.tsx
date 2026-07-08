@@ -24,6 +24,7 @@ export function SidebarBottom() {
     setMounted(true);
     const savedFont = localStorage.getItem("docs-font") || "minecraft";
     setCurrentFont(savedFont);
+    document.documentElement.setAttribute("data-font", savedFont);
   }, []);
 
   useEffect(() => {
