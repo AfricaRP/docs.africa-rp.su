@@ -1,0 +1,199 @@
+---
+icon: "MousePointerClick"
+title: "Интерактивные элементы"
+---
+
+# Интерактивные элементы
+
+Сделайте так, чтобы читатели не просто "глотали" текст, а взаимодействовали с ним! Эти блоки заставят вашу аудиторию вовлекаться в процесс чтения.
+
+## Дерево решений (Опросник)
+
+Вы можете создать мини-викторину или алгоритм помощи прямо в статье. Читатель отвечает на вопрос (нажимает кнопку), и перед ним плавно появляется следующий этап.
+
+**Как писать:**
+```mdx
+<DecisionTree initial="start">
+  <DecisionStep step="start">
+    ## 1. Какую кухню вы предпочитаете?
+    <DecisionButton target="italian">Итальянскую</DecisionButton>
+    <DecisionButton target="asian">Азиатскую</DecisionButton>
+  </DecisionStep>
+  
+  <DecisionStep step="italian">
+    ## 2. Отличный выбор! Готовим пасту?
+    <DecisionButton target="finish">Да, давайте рецепт!</DecisionButton>
+    <DecisionButton target="start">Нет, хочу поменять выбор</DecisionButton>
+  </DecisionStep>
+
+  <DecisionStep step="asian">
+    ## 2. Супер! Может быть роллы?
+    <DecisionButton target="finish">Да, давайте рецепт!</DecisionButton>
+    <DecisionButton target="start">Нет, хочу поменять выбор</DecisionButton>
+  </DecisionStep>
+
+  <DecisionStep step="finish">
+    ## 3. Рецепт готов!
+    Приятного аппетита.
+    <DecisionButton target="start">Начать заново</DecisionButton>
+  </DecisionStep>
+</DecisionTree>
+```
+
+**Как выглядит:**
+<DecisionTree initial="start">
+  <DecisionStep step="start">
+    ## 1. Какую кухню вы предпочитаете?
+    <DecisionButton target="italian">Итальянскую</DecisionButton>
+    <DecisionButton target="asian">Азиатскую</DecisionButton>
+  </DecisionStep>
+  
+  <DecisionStep step="italian">
+    ## 2. Отличный выбор! Готовим пасту?
+    <DecisionButton target="finish">Да, давайте рецепт!</DecisionButton>
+    <DecisionButton target="start">Нет, хочу поменять выбор</DecisionButton>
+  </DecisionStep>
+
+  <DecisionStep step="asian">
+    ## 2. Супер! Может быть роллы?
+    <DecisionButton target="finish">Да, давайте рецепт!</DecisionButton>
+    <DecisionButton target="start">Нет, хочу поменять выбор</DecisionButton>
+  </DecisionStep>
+
+  <DecisionStep step="finish">
+    ## 3. Рецепт готов!
+    Приятного аппетита.
+    <DecisionButton target="start">Начать заново</DecisionButton>
+  </DecisionStep>
+</DecisionTree>
+
+---
+
+## Чек-листы
+
+Создавайте списки дел с кликабельными галочками. Читатель может сам отмечать, что он уже выполнил.
+Если вы хотите, чтобы какая-то галочка стояла изначально и её нельзя было убрать, добавьте `defaultChecked={true}` и `disabled={true}`.
+
+**Как писать:**
+```mdx
+<Checklist>
+  <ChecklistItem defaultChecked={true} disabled={true}>
+    Подготовить сковороду (Обязательно)
+  </ChecklistItem>
+  <ChecklistItem>
+    Купить молоко и яйца
+  </ChecklistItem>
+  <ChecklistItem>
+    Сделать тесто
+  </ChecklistItem>
+</Checklist>
+```
+
+**Как выглядит:**
+<Checklist>
+  <ChecklistItem defaultChecked={true} disabled={true}>
+    Подготовить сковороду (Обязательно)
+  </ChecklistItem>
+  <ChecklistItem>
+    Купить молоко и яйца
+  </ChecklistItem>
+  <ChecklistItem>
+    Сделать тесто
+  </ChecklistItem>
+</Checklist>
+
+---
+
+## Кнопка копирования (Сниппет)
+
+Если вы указываете короткую ссылку, промокод, IP-адрес или номер телефона, оформите его в виде смарт-кнопки. При клике на неё текст мгновенно скопируется в буфер обмена читателя.
+
+**Как писать:**
+```mdx
+Подарочный промокод на скидку: <Snippet>PANCAKE2026</Snippet>.
+```
+
+**Как выглядит:**
+Подарочный промокод на скидку: <Snippet>PANCAKE2026</Snippet>.
+
+---
+
+## Информационная карточка при наведении
+
+Избавьте статью от лишней воды. Если вы используете сложный термин, не нужно писать его расшифровку в скобках. Спрячьте её в карточку, которая плавно всплывет, если читатель наведет курсор на это слово. Туда даже можно добавить поясняющую картинку!
+
+**Как писать:**
+```mdx
+Добавьте щепотку <HoverCard title="Мускатный орех" description="Пряность с теплым и сладковатым ароматом, которая идеально дополняет выпечку." image="https://images.unsplash.com/photo-1596647953287-25e24a5eb2ec?q=80&w=400">мускатного ореха</HoverCard> для аромата.
+```
+
+**Как выглядит:**
+Добавьте щепотку <HoverCard title="Мускатный орех" description="Пряность с теплым и сладковатым ароматом, которая идеально дополняет выпечку." image="https://images.unsplash.com/photo-1596647953287-25e24a5eb2ec?q=80&w=400">мускатного ореха</HoverCard> для аромата.
+
+---
+
+## Светящаяся неоновая сетка
+
+Выделите главные преимущества вашего продукта или правила в виде карточек. Их границы элегантно подсвечиваются неоновым светом, который следует за курсором мыши читателя.
+
+**Как писать:**
+```mdx
+<GlowGrid>
+  <GlowCard title="Быстро">
+    Готовится всего за 15 минут.
+  </GlowCard>
+  <GlowCard title="Вкусно">
+    Идеальный баланс сладости и текстуры.
+  </GlowCard>
+</GlowGrid>
+```
+
+**Как выглядит:**
+<GlowGrid>
+  <GlowCard title="Быстро">
+    Готовится всего за 15 минут.
+  </GlowCard>
+  <GlowCard title="Вкусно">
+    Идеальный баланс сладости и текстуры.
+  </GlowCard>
+</GlowGrid>
+
+---
+
+## 3D Голографическая Карточка
+
+Выделите что-то по-настоящему особенное. Карточка будет физически наклоняться за мышью и переливаться внутренним светом, словно коллекционный артефакт в видеоигре.
+
+**Как писать:**
+```mdx
+<HoloCard>
+  ## Секретный ингредиент
+  Это тот самый бабушкин рецепт, который передавался из поколения в поколение.
+</HoloCard>
+```
+
+**Как выглядит:**
+<HoloCard>
+  ## Секретный ингредиент
+  Это тот самый бабушкин рецепт, который передавался из поколения в поколение.
+</HoloCard>
+
+---
+
+## Окно с Параллаксом (Визуальная пауза)
+
+Длинные статьи сильно утомляют читателя. Используйте этот блок на всю ширину страницы, чтобы дать глазам отдохнуть. Картинка внутри него "приклеена" к фону, создавая красивую иллюзию объема при скролле (параллакс-эффект). Внутрь можно вписать красивую цитату или заголовок новой главы.
+
+**Как писать:**
+```mdx
+<ParallaxWindow src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" height="300px">
+  ## Новая Эра
+  Мы переходим к следующему этапу.
+</ParallaxWindow>
+```
+
+**Как выглядит:**
+<ParallaxWindow src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" height="300px">
+  ## Новая Эра
+  Мы переходим к следующему этапу.
+</ParallaxWindow>

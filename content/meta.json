@@ -1,6 +1,6 @@
 {
-  "technical": {
-    "title": "Техническое",
-    "icon": "Wrench"
+  "editors": {
+    "title": "Для редакторов",
+    "icon": "PenTool"
   }
 }
