@@ -161,7 +161,6 @@
   clear: both;
 }
 
-/* 404 Page Styles */
 body.is-404 {
   overflow: hidden !important;
 }
@@ -174,7 +173,6 @@ body.is-404 aside.xl\:block {
   display: none !important;
 }
 
-/* Global Button link underline fix */
 .prose a.no-underline,
 .prose a.\!no-underline,
 a[role="button"],
@@ -182,15 +180,12 @@ button a {
   text-decoration: none !important;
 }
 
-
 .bg-grid-pattern {
   background-size: 32px 32px;
   background-image: linear-gradient(to right, currentColor 1px, transparent 1px),
                     linear-gradient(to bottom, currentColor 1px, transparent 1px);
 }
 
-
-/* Font Switcher Styles */
 html[data-font='minecraft'] body {
   --font-main: var(--font-minecraft);
 }
@@ -207,4 +202,3 @@ html[data-font='system'] body {
 .font-main {
   font-family: var(--font-main, var(--font-minecraft)), sans-serif;
 }
-

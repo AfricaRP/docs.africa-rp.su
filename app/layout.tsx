@@ -56,10 +56,10 @@ export default function RootLayout({
         className={`${minecraftFont.variable} ${interFont.variable} ${loraFont.variable} bg-transparent text-zinc-800 dark:text-zinc-100 min-h-screen selection:bg-blue-200 dark:selection:bg-blue-900 font-main`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {/* Явный градиентный фон на весь экран */}
+          {}
           <div className="fixed inset-0 z-[-2] bg-gradient-to-bl from-zinc-200 via-zinc-50 to-zinc-50 dark:from-zinc-800 dark:via-zinc-950 dark:to-zinc-950" />
           
-          {/* Сетка, жестко привязанная к верхней части страницы (скроллится вместе с контентом) */}
+          {}
           <div className="absolute top-0 left-0 right-0 h-[600px] z-[-1] bg-grid-pattern text-zinc-900 dark:text-white opacity-[0.07] dark:opacity-[0.06] [mask-image:linear-gradient(to_bottom,black_10%,transparent_100%)] pointer-events-none" />
 
           <ScrollProgress />

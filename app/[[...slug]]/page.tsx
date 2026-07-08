@@ -57,8 +57,7 @@ export async function generateMetadata({
 
   const files = getAllMdxFiles();
   let file = files.find((f) => f.slug.length === slug.length && f.slug.every((s, i) => s === slug[i]));
-  
-  // Fallback if homePageSlug is ["index"] but index file has []
+
   if (!file && slug.length === 1 && slug[0] === "index") {
     slug = [];
     file = files.find((f) => f.slug.length === 0);

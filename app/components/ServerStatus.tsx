@@ -12,10 +12,9 @@ interface ServerData {
   };
 }
 
-// Глобальный кэш, чтобы при переходе между страницами статус не сбрасывался
 let cachedData: ServerData | null = null;
 let lastFetchTime: number = 0;
-const CACHE_TTL = 30000; // 30 секунд
+const CACHE_TTL = 30000; 
 
 export function ServerStatus() {
   const [data, setData] = useState<ServerData | null>(cachedData);
@@ -55,7 +54,7 @@ export function ServerStatus() {
     };
 
     fetchStatus();
-    const interval = setInterval(fetchStatus, 60000); // refresh every minute
+    const interval = setInterval(fetchStatus, 60000); 
     return () => clearInterval(interval);
   }, []);
 
