@@ -1,16 +1,21 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Link2, Maximize, FileCode, MoreHorizontal, Check } from "lucide-react";
+import { Link2, Maximize, FileCode, MoreHorizontal, Check, Minimize } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "../../lib/config";
+import { createPortal } from "react-dom";
 
 export function PageActions({ relativePath }: { relativePath: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [showZenToast, setShowZenToast] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleFocusChange = (e: CustomEvent) => {
@@ -56,11 +61,8 @@ export function PageActions({ relativePath }: { relativePath: string }) {
     
     if (newFocusState) {
       document.body.classList.add("zen-mode");
-      setShowZenToast(true);
-      setTimeout(() => setShowZenToast(false), 3000);
     } else {
       document.body.classList.remove("zen-mode");
-      setShowZenToast(false);
     }
     
     const event = new CustomEvent("focusModeChanged", {
@@ -84,10 +86,10 @@ export function PageActions({ relativePath }: { relativePath: string }) {
         <AnimatePresence>
           {copied && (
             <motion.div
-              initial={{ opacity: 0, y: 10, scale: 0.9 }}
+              initial={{ opacity: 0, y: -5, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 5, scale: 0.9 }}
-              className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs font-medium px-3 py-1.5 rounded-md shadow-lg pointer-events-none flex items-center gap-1.5 z-50"
+              exit={{ opacity: 0, y: -5, scale: 0.9 }}
+              className="absolute top-full mt-2 right-0 whitespace-nowrap bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs font-medium px-3 py-1.5 rounded-md shadow-lg pointer-events-none flex items-center gap-1.5 z-50"
             >
               <Check className="w-3.5 h-3.5" />
               Ссылка скопирована
@@ -121,8 +123,6 @@ export function PageActions({ relativePath }: { relativePath: string }) {
                   <span className="font-medium">{isFocused ? "Выключить Дзен" : "Режим Дзен"}</span>
                 </button>
 
-                <div className="h-px bg-zinc-200 dark:bg-zinc-800 my-1 mx-2" />
-
                 <a
                   href={`https://raw.githubusercontent.com/${siteConfig.githubRepo}/${siteConfig.githubBranch}/content/${relativePath}`}
                   target="_blank"
@@ -139,20 +139,26 @@ export function PageActions({ relativePath }: { relativePath: string }) {
         </AnimatePresence>
       </div>
 
-      {typeof document !== "undefined" && isFocused && (
+      {mounted && isFocused && createPortal(
         <AnimatePresence>
-          {showZenToast && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-zinc-900/90 dark:bg-zinc-100/90 backdrop-blur-sm text-white dark:text-zinc-900 px-6 py-3 rounded-full shadow-2xl z-[100] font-medium text-sm flex items-center gap-3"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[9999]"
+          >
+            <button
+              onClick={() => toggleFocus(false)}
+              className="bg-zinc-900/90 hover:bg-zinc-900 dark:bg-zinc-100/90 dark:hover:bg-zinc-100 backdrop-blur-sm text-white dark:text-zinc-900 px-6 py-3 rounded-full shadow-2xl font-medium text-sm flex items-center gap-3 transition-all hover:scale-105 active:scale-95"
             >
-              <Maximize className="w-4 h-4 opacity-80" />
-              <span>Режим Дзен активирован. Нажмите <kbd className="px-2 py-0.5 bg-zinc-800 dark:bg-zinc-200 rounded text-xs opacity-90 mx-1">Esc</kbd> или <kbd className="px-2 py-0.5 bg-zinc-800 dark:bg-zinc-200 rounded text-xs opacity-90 mx-1">Space</kbd> чтобы выйти.</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              <Minimize className="w-4 h-4 opacity-80" />
+              <span>
+                Выйти из Дзена <kbd className="px-2 py-0.5 bg-zinc-800 dark:bg-zinc-200 rounded text-xs opacity-90 mx-1">Esc</kbd>
+              </span>
+            </button>
+          </motion.div>
+        </AnimatePresence>,
+        document.body
       )}
     </>
   );
