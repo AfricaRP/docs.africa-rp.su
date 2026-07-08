@@ -13,9 +13,10 @@ export const siteConfig = {
     hotkey: "Ctrl+K",
   },
   footerLinks: [
-    { icon: "Discord", href: "https://discord.gg/africarp" },
-    { icon: "Send", href: "https://t.me/africarp" },
-    { icon: "Youtube", href: "https://youtube.com/@africarp" },
-    { icon: "Github", href: "https://github.com/AfricaRP" }
+    { icon: "Discord", href: "https://discord.gg/MydsqBKh8P" },
+    { icon: "Telegram", href: "https://t.me/africarp" },
+    { icon: "YouTube", href: "https://www.youtube.com/@SbornikServerov" },
+    { icon: "TikTok", href: "https://www.tiktok.com/@africarp.mc" },
+    { icon: "GitHub", href: "https://github.com/AfricaRP" }
   ]
 };

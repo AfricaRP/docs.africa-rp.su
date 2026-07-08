@@ -156,8 +156,8 @@ export default async function Page({
         </div>
       </div>
       <Content />
-      <SocialFooter />
       <PageNavigation prev={prevPage} next={nextPage} />
+      <SocialFooter />
     </article>
   );
 }
