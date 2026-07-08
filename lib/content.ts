@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
 export interface NavItem {
   title: string;
@@ -9,57 +9,65 @@ export interface NavItem {
   items?: NavItem[];
 }
 
-const contentDir = path.join(process.cwd(), 'content');
+const contentDir = path.join(process.cwd(), "content");
 
 export function getSidebarNav(): NavItem[] {
   if (!fs.existsSync(contentDir)) return [];
-  
-  function buildTree(dir: string, basePath: string = ''): NavItem[] {
+
+  function buildTree(dir: string, basePath: string = ""): NavItem[] {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
-    
-    let meta: Record<string, { title?: string, icon?: string }> = {};
-    const metaPath = path.join(dir, 'meta.json');
+
+    let meta: Record<string, { title?: string; icon?: string }> = {};
+    const metaPath = path.join(dir, "meta.json");
     if (fs.existsSync(metaPath)) {
       try {
-        meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8'));
+        meta = JSON.parse(fs.readFileSync(metaPath, "utf-8"));
       } catch (e) {
-        console.error('Error reading meta.json in', dir);
+        console.error("Error reading meta.json in", dir);
       }
     }
-    
+
     return entries
-      .filter(entry => entry.name !== 'meta.json')
+      .filter((entry) => entry.name !== "meta.json")
       .sort((a, b) => a.name.localeCompare(b.name))
-      .map(entry => {
+      .map((entry) => {
         const fullPath = path.join(dir, entry.name);
-        const nameWithoutNumber = entry.name.replace(/^\d+-/, '').replace(/\.mdx?$/, '');
-        let title = nameWithoutNumber.replace(/_/g, ' ');
-        const slug = nameWithoutNumber.toLowerCase().replace(/_/g, '-').replace(/ /g, '-');
+        const nameWithoutNumber = entry.name
+          .replace(/^\d+-/, "")
+          .replace(/\.mdx?$/, "");
+        let title = nameWithoutNumber.replace(/_/g, " ");
+        const slug = nameWithoutNumber
+          .toLowerCase()
+          .replace(/_/g, "-")
+          .replace(/ /g, "-");
         const href = `${basePath}/${slug}`;
-        
+
         let icon = meta[entry.name]?.icon || meta[nameWithoutNumber]?.icon;
-        
+
         if (entry.isDirectory()) {
           if (meta[entry.name]?.title) {
             title = meta[entry.name].title as string;
           } else if (meta[nameWithoutNumber]?.title) {
             title = meta[nameWithoutNumber].title as string;
           }
-          
+
           return {
             title,
             href,
             icon,
-            items: buildTree(fullPath, href)
+            items: buildTree(fullPath, href),
           };
-        } else if (entry.isFile() && entry.name.endsWith('.mdx')) {
-          if (dir === contentDir && (entry.name === 'index.mdx' || entry.name === '00-index.mdx')) {
+        } else if (entry.isFile() && entry.name.endsWith(".mdx")) {
+          if (
+            dir === contentDir &&
+            (entry.name === "index.mdx" || entry.name === "00-index.mdx")
+          ) {
             return null;
           }
-          
-          const fileContents = fs.readFileSync(fullPath, 'utf8');
+
+          const fileContents = fs.readFileSync(fullPath, "utf8");
           const { data, content } = matter(fileContents);
-          
+
           if (data.title) {
             title = data.title;
           } else {
@@ -68,48 +76,53 @@ export function getSidebarNav(): NavItem[] {
               title = h1Match[1].trim();
             }
           }
-          
+
           if (data.icon) icon = data.icon;
-          
+
           return {
             title,
             href,
-            icon
+            icon,
           };
         }
         return null;
       })
       .filter((item) => item !== null) as NavItem[];
   }
-  
+
   return buildTree(contentDir);
 }
 
-export function getAllMdxFiles(): { slug: string[], filePath: string }[] {
+export function getAllMdxFiles(): { slug: string[]; filePath: string }[] {
   if (!fs.existsSync(contentDir)) return [];
-  const files: { slug: string[], filePath: string }[] = [];
-  
+  const files: { slug: string[]; filePath: string }[] = [];
+
   function scan(dir: string, currentSlug: string[] = []) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
     for (const entry of entries) {
-      const nameWithoutNumber = entry.name.replace(/^\d+-/, '').replace(/\.mdx?$/, '');
-      const slugPart = nameWithoutNumber.toLowerCase().replace(/_/g, '-').replace(/ /g, '-');
-      
+      const nameWithoutNumber = entry.name
+        .replace(/^\d+-/, "")
+        .replace(/\.mdx?$/, "");
+      const slugPart = nameWithoutNumber
+        .toLowerCase()
+        .replace(/_/g, "-")
+        .replace(/ /g, "-");
+
       if (entry.isDirectory()) {
         scan(path.join(dir, entry.name), [...currentSlug, slugPart]);
-      } else if (entry.name.endsWith('.mdx')) {
+      } else if (entry.name.endsWith(".mdx")) {
         let finalSlug = [...currentSlug, slugPart];
-        if (entry.name === 'index.mdx' || entry.name === '00-index.mdx') {
+        if (entry.name === "index.mdx" || entry.name === "00-index.mdx") {
           finalSlug = currentSlug;
         }
         files.push({
           slug: finalSlug,
-          filePath: path.join(dir, entry.name)
+          filePath: path.join(dir, entry.name),
         });
       }
     }
   }
-  
+
   scan(contentDir);
   return files;
 }

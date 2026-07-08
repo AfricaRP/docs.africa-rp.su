@@ -2,17 +2,26 @@
 
 import { useRef, useEffect, useState, ReactNode } from "react";
 
-export function MarkerDraw({ color = "#facc15", children }: { color?: string; children: ReactNode }) {
+export function MarkerDraw({
+  color = "#facc15",
+  children,
+}: {
+  color?: string;
+  children: ReactNode;
+}) {
   const [drawn, setDrawn] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setDrawn(true);
-        observer.disconnect();
-      }
-    }, { threshold: 0.8 });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setDrawn(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.8 },
+    );
 
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -30,7 +39,7 @@ export function MarkerDraw({ color = "#facc15", children }: { color?: string; ch
       style={{
         backgroundImage: `linear-gradient(to right, ${rgba}, ${rgba})`,
         backgroundSize: drawn ? "100% 100%" : "0% 100%",
-        backgroundPosition: "0 100%"
+        backgroundPosition: "0 100%",
       }}
     >
       {children}

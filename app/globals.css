@@ -15,7 +15,7 @@
   .animate-fade-in {
     animation: fadeIn 0.2s ease-out forwards;
   }
-  
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -52,7 +52,9 @@
     font-size: 1.05rem;
     line-height: 1.8;
   }
-  .zen-mode main h1, .zen-mode main h2, .zen-mode main h3 {
+  .zen-mode main h1,
+  .zen-mode main h2,
+  .zen-mode main h3 {
     text-align: center;
   }
 }
@@ -78,15 +80,19 @@
 }
 
 @keyframes soundwave {
-  0%, 100% { height: 0.25rem; }
-  50% { height: 1rem; }
+  0%,
+  100% {
+    height: 0.25rem;
+  }
+  50% {
+    height: 1rem;
+  }
 }
 
 .animate-soundwave {
   animation: soundwave 0.8s ease-in-out infinite;
 }
 
-/* Переопределение стилей для inline code (Tailwind Typography) */
 .prose code {
   background-color: #f4f4f5 !important;
   color: #ef4444 !important;
@@ -103,7 +109,6 @@
   content: none !important;
 }
 
-/* Сбрасываем стили для кода внутри pre, чтобы не ломать Code Hike */
 .prose pre code {
   background-color: transparent !important;
   color: inherit !important;
@@ -112,7 +117,6 @@
   font-weight: inherit !important;
 }
 
-/* Стили для компонента Steps */
 .steps-container {
   counter-reset: step;
 }
@@ -143,13 +147,11 @@
   color: #a1a1aa;
 }
 
-/* Убираем автоматические кавычки Tailwind Typography в цитатах */
 .prose blockquote p:first-of-type::before,
 .prose blockquote p:last-of-type::after {
   content: none !important;
 }
 
-/* Очищаем обтекание для заголовков, чтобы MarginNote не наезжал на них */
 .prose h1,
 .prose h2,
 .prose h3,

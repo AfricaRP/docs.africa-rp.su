@@ -6,7 +6,15 @@ export function Timeline({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function TimelineItem({ date, title, children }: { date: string; title?: string; children: React.ReactNode }) {
+export function TimelineItem({
+  date,
+  title,
+  children,
+}: {
+  date: string;
+  title?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="relative pl-6 md:pl-8">
       <div className="absolute w-4 h-4 bg-zinc-200 dark:bg-zinc-700 border-4 border-white dark:border-zinc-950 rounded-full -left-[9px] top-1.5 shadow-sm" />

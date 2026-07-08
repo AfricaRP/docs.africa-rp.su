@@ -35,7 +35,10 @@ export function HoloCard({ children }: { children: ReactNode }) {
         onMouseLeave={handleMouseLeave}
         className="w-full max-w-sm min-h-[300px] bg-gradient-to-br from-zinc-800 to-zinc-950 border border-zinc-700 rounded-2xl relative overflow-hidden shadow-2xl flex flex-col p-6 cursor-pointer transition-transform duration-100 ease-out transform-style-3d"
       >
-        <div ref={glareRef} className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0" />
+        <div
+          ref={glareRef}
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0"
+        />
         <div className="relative z-10 h-full flex flex-col text-white prose prose-invert">
           {children}
         </div>

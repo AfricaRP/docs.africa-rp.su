@@ -12,8 +12,8 @@ export function LightboxImage({ src, alt }: { src: string; alt?: string }) {
 
   return (
     <div className="flex flex-col m-0 p-0">
-      <span 
-        className="relative group block w-full cursor-pointer shadow-md hover:shadow-xl rounded-xl overflow-hidden transition-shadow duration-500" 
+      <span
+        className="relative group block w-full cursor-pointer shadow-md hover:shadow-xl rounded-xl overflow-hidden transition-shadow duration-500"
         onClick={() => setOpen(true)}
       >
         <img
@@ -27,7 +27,9 @@ export function LightboxImage({ src, alt }: { src: string; alt?: string }) {
             <span className="bg-white/20 p-3 rounded-full mb-2 backdrop-blur-md border border-white/30 shadow-lg">
               <Maximize2 className="w-6 h-6" />
             </span>
-            <span className="font-medium text-sm tracking-wide drop-shadow-md">Нажмите, чтобы увеличить</span>
+            <span className="font-medium text-sm tracking-wide drop-shadow-md">
+              Нажмите, чтобы увеличить
+            </span>
           </span>
         </span>
       </span>
@@ -36,7 +38,7 @@ export function LightboxImage({ src, alt }: { src: string; alt?: string }) {
           {alt}
         </span>
       )}
-      
+
       <Lightbox
         open={open}
         close={() => setOpen(false)}
@@ -47,13 +49,13 @@ export function LightboxImage({ src, alt }: { src: string; alt?: string }) {
           maxZoomPixelRatio: 5,
         }}
         labels={{
-          "Close": "Закрыть",
-          "Previous": "Назад",
-          "Next": "Вперед",
+          Close: "Закрыть",
+          Previous: "Назад",
+          Next: "Вперед",
           "Zoom in": "Приблизить",
           "Zoom out": "Отдалить",
           "Enter Fullscreen": "На весь экран",
-          "Exit Fullscreen": "Обычный экран"
+          "Exit Fullscreen": "Обычный экран",
         }}
       />
     </div>

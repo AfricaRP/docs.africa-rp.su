@@ -1,7 +1,13 @@
 "use client";
 import { ChevronRight } from "lucide-react";
 
-export function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
+export function Accordion({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <details className="group border border-zinc-200 dark:border-zinc-800 rounded-xl mb-4 overflow-hidden [&_summary::-webkit-details-marker]:hidden bg-white dark:bg-zinc-900/50">
       <summary className="flex items-center justify-between px-4 py-3 cursor-pointer font-medium text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">

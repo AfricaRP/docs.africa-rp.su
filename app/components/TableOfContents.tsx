@@ -17,8 +17,10 @@ export function TableOfContents() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const elements = Array.from(document.querySelectorAll("article h1, article h2, article h3"))
-        .filter((elem) => !elem.closest('.not-in-toc'))
+      const elements = Array.from(
+        document.querySelectorAll("article h1, article h2, article h3"),
+      )
+        .filter((elem) => !elem.closest(".not-in-toc"))
         .map((elem) => ({
           id: elem.id,
           text: elem.textContent || "",
@@ -29,9 +31,10 @@ export function TableOfContents() {
       setHeadings(elements);
 
       const handleScroll = () => {
-        const headingElements = Array.from(document.querySelectorAll("article h1, article h2, article h3"))
-          .filter((elem) => !elem.closest('.not-in-toc') && elem.id);
-        
+        const headingElements = Array.from(
+          document.querySelectorAll("article h1, article h2, article h3"),
+        ).filter((elem) => !elem.closest(".not-in-toc") && elem.id);
+
         if (headingElements.length === 0) return;
 
         const scrollPosition = window.scrollY + 150;
@@ -45,7 +48,9 @@ export function TableOfContents() {
           }
         }
 
-        const isAtBottom = window.innerHeight + Math.round(window.scrollY) >= document.body.offsetHeight - 50;
+        const isAtBottom =
+          window.innerHeight + Math.round(window.scrollY) >=
+          document.body.offsetHeight - 50;
         if (isAtBottom && headingElements.length > 0) {
           currentActiveId = headingElements[headingElements.length - 1].id;
         }
@@ -74,20 +79,21 @@ export function TableOfContents() {
         <List className="w-4 h-4" />
         На этой странице
       </div>
-      
+
       <div className="relative border-l border-zinc-200 dark:border-zinc-800 flex flex-col">
         {headings.map((heading) => {
           const isActive = activeId === heading.id;
-          
+
           return (
             <a
               key={heading.id}
               href={`#${heading.id}`}
               className={`relative block py-1.5 pl-4 pr-2 transition-colors
                 ${heading.level === 3 ? "ml-4 text-xs" : ""}
-                ${isActive 
-                  ? "text-blue-600 dark:text-blue-400 font-medium bg-blue-500/10 dark:bg-blue-500/20 rounded-r-md" 
-                  : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200"
+                ${
+                  isActive
+                    ? "text-blue-600 dark:text-blue-400 font-medium bg-blue-500/10 dark:bg-blue-500/20 rounded-r-md"
+                    : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200"
                 }
               `}
             >
@@ -100,7 +106,7 @@ export function TableOfContents() {
         })}
       </div>
 
-      <button 
+      <button
         onClick={scrollToTop}
         className="group flex items-center gap-2 mt-4 text-zinc-500 hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-400 transition-colors duration-300"
       >

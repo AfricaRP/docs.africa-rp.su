@@ -1,24 +1,24 @@
-import { Pre, highlight } from "codehike/code"
-import { callout } from "./annotations/callout"
-import { lineEffects } from "./annotations/lineEffects"
-import { CopyCodeButton } from "./CopyCodeButton"
+import { Pre, highlight } from "codehike/code";
+import { callout } from "./annotations/callout";
+import { lineEffects } from "./annotations/lineEffects";
+import { CopyCodeButton } from "./CopyCodeButton";
 
 export async function Code(props: any) {
   const { codeblock } = props;
   if (!codeblock) {
     return <pre>{JSON.stringify(props, null, 2)}</pre>;
   }
-  
-  const highlighted = await highlight(codeblock, "github-dark")
-  
+
+  const highlighted = await highlight(codeblock, "github-dark");
+
   let title = "";
   if (codeblock.meta) {
     title = codeblock.meta.trim();
   }
 
-  const hasFocus = highlighted.annotations.some(a => a.name === "focus");
-  
-  highlighted.annotations.forEach(a => {
+  const hasFocus = highlighted.annotations.some((a) => a.name === "focus");
+
+  highlighted.annotations.forEach((a) => {
     if (a.name === "focus" || a.name === "mark") {
       a.data = { ...a.data, originalName: a.name };
       a.name = "lineEffects";
@@ -26,7 +26,9 @@ export async function Code(props: any) {
   });
 
   return (
-    <div className={`my-6 rounded-xl overflow-hidden shadow-md border border-zinc-200 dark:border-zinc-800 bg-zinc-800 dark:bg-[#0d1117] group relative ${hasFocus ? 'has-focus-block' : ''}`}>
+    <div
+      className={`my-6 rounded-xl overflow-hidden shadow-md border border-zinc-200 dark:border-zinc-800 bg-zinc-800 dark:bg-[#0d1117] group relative ${hasFocus ? "has-focus-block" : ""}`}
+    >
       {!title && (
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
           <CopyCodeButton text={codeblock.value} />
@@ -44,9 +46,9 @@ export async function Code(props: any) {
         <Pre
           code={highlighted}
           handlers={[callout, lineEffects]}
-          style={{ margin: 0, backgroundColor: 'transparent' }}
+          style={{ margin: 0, backgroundColor: "transparent" }}
         />
       </div>
     </div>
-  )
+  );
 }

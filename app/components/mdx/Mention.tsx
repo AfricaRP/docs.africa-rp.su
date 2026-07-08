@@ -1,6 +1,19 @@
-import { ShieldAlert, ShieldCheck, Crown, Wrench, User, Star } from "lucide-react";
+import {
+  ShieldAlert,
+  ShieldCheck,
+  Crown,
+  Wrench,
+  User,
+  Star,
+} from "lucide-react";
 
-export function Mention({ children, role = "user" }: { children: React.ReactNode; role?: "admin" | "moderator" | "developer" | "vip" | "user" }) {
+export function Mention({
+  children,
+  role = "user",
+}: {
+  children: React.ReactNode;
+  role?: "admin" | "moderator" | "developer" | "vip" | "user";
+}) {
   const styles = {
     admin: {
       bg: "bg-red-500/10 dark:bg-red-500/20",
@@ -31,13 +44,15 @@ export function Mention({ children, role = "user" }: { children: React.ReactNode
       text: "text-zinc-700 dark:text-zinc-300",
       border: "border-zinc-200 dark:border-zinc-700",
       icon: <User className="w-3.5 h-3.5" />,
-    }
+    },
   };
 
   const style = styles[role] || styles.user;
 
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-sm font-medium border ${style.bg} ${style.text} ${style.border} mx-0.5 align-baseline shadow-sm`}>
+    <span
+      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-sm font-medium border ${style.bg} ${style.text} ${style.border} mx-0.5 align-baseline shadow-sm`}
+    >
       {style.icon}
       {children}
     </span>

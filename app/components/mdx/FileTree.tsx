@@ -26,14 +26,20 @@ function TreeList({ children }: { children: React.ReactNode }) {
     if (element.type === "li") {
       let isFolder = false;
       const childArray = React.Children.toArray(element.props.children);
-      
+
       const hasSubList = childArray.some(
-        (child) => React.isValidElement(child) && child.type === "ul"
+        (child) => React.isValidElement(child) && child.type === "ul",
       );
-      
-      const textContent = childArray.find((child) => typeof child === "string" || (React.isValidElement(child) && child.type === "span"));
-      
-      isFolder = hasSubList || (typeof textContent === "string" && !textContent.includes("."));
+
+      const textContent = childArray.find(
+        (child) =>
+          typeof child === "string" ||
+          (React.isValidElement(child) && child.type === "span"),
+      );
+
+      isFolder =
+        hasSubList ||
+        (typeof textContent === "string" && !textContent.includes("."));
 
       return (
         <li className="relative py-1 flex flex-col">
@@ -44,10 +50,16 @@ function TreeList({ children }: { children: React.ReactNode }) {
               <FileIcon className="w-4 h-4 text-zinc-400" />
             )}
             <span className={isFolder ? "font-semibold" : ""}>
-              {childArray.filter(child => !React.isValidElement(child) || child.type !== "ul")}
+              {childArray.filter(
+                (child) => !React.isValidElement(child) || child.type !== "ul",
+              )}
             </span>
           </div>
-          {childArray.filter(child => React.isValidElement(child) && child.type === "ul").map(processNodes)}
+          {childArray
+            .filter(
+              (child) => React.isValidElement(child) && child.type === "ul",
+            )
+            .map(processNodes)}
         </li>
       );
     }
@@ -55,5 +67,9 @@ function TreeList({ children }: { children: React.ReactNode }) {
     return element;
   };
 
-  return <div className="[&>ul]:pl-0 [&>ul:before]:hidden">{processNodes(children)}</div>;
+  return (
+    <div className="[&>ul]:pl-0 [&>ul:before]:hidden">
+      {processNodes(children)}
+    </div>
+  );
 }

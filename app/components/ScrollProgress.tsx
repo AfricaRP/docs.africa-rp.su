@@ -8,7 +8,8 @@ export function ScrollProgress() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       if (scrollHeight > 0) {
         setProgress(Math.min((scrollY / scrollHeight) * 100, 100));
       } else {
@@ -24,7 +25,7 @@ export function ScrollProgress() {
 
   return (
     <div className="fixed top-0 left-0 right-0 h-1 z-50 pointer-events-none">
-      <div 
+      <div
         className="h-full bg-blue-500 dark:bg-blue-400 transition-all duration-150 ease-out"
         style={{ width: `${progress}%` }}
       />

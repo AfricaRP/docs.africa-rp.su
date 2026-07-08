@@ -18,7 +18,7 @@ export function PageNavigation({ prev, next }: PageNavigationProps) {
   return (
     <div className="mt-16 pt-8 border-t border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row gap-4 sm:justify-between items-stretch">
       {prev ? (
-        <Link 
+        <Link
           href={prev.href}
           className="!no-underline group flex flex-col justify-center items-start p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800/80 hover:border-blue-500/50 dark:hover:border-blue-500/50 bg-transparent hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-all duration-300 flex-1 min-w-0"
         >
@@ -40,7 +40,7 @@ export function PageNavigation({ prev, next }: PageNavigationProps) {
       )}
 
       {next ? (
-        <Link 
+        <Link
           href={next.href}
           className="!no-underline group flex flex-col justify-center items-end text-right p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800/80 hover:border-blue-500/50 dark:hover:border-blue-500/50 bg-transparent hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-all duration-300 flex-1 min-w-0"
         >

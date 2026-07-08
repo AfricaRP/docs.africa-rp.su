@@ -12,15 +12,24 @@ interface SearchResult {
   content: string;
 }
 
-function HighlightedText({ text, query, isContent = false }: { text: string; query: string; isContent?: boolean }) {
-  if (!query.trim()) return <>{isContent ? text.substring(0, 100) + '...' : text}</>;
+function HighlightedText({
+  text,
+  query,
+  isContent = false,
+}: {
+  text: string;
+  query: string;
+  isContent?: boolean;
+}) {
+  if (!query.trim())
+    return <>{isContent ? text.substring(0, 100) + "..." : text}</>;
 
   const lowerText = text.toLowerCase();
   const lowerQuery = query.toLowerCase();
   const index = lowerText.indexOf(lowerQuery);
 
   if (index === -1) {
-    return <>{isContent ? text.substring(0, 100) + '...' : text}</>;
+    return <>{isContent ? text.substring(0, 100) + "..." : text}</>;
   }
 
   let start = 0;
@@ -30,10 +39,9 @@ function HighlightedText({ text, query, isContent = false }: { text: string; que
     const windowSize = 50;
     start = Math.max(0, index - windowSize);
     end = Math.min(text.length, index + query.length + windowSize);
-    
-    // Adjust start to not cut a word in half if possible
+
     if (start > 0) {
-      const nextSpace = text.indexOf(' ', start);
+      const nextSpace = text.indexOf(" ", start);
       if (nextSpace !== -1 && nextSpace < index) {
         start = nextSpace + 1;
       }
@@ -57,7 +65,13 @@ function HighlightedText({ text, query, isContent = false }: { text: string; que
   );
 }
 
-export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+export function SearchModal({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [docs, setDocs] = useState<SearchResult[]>([]);
@@ -94,7 +108,7 @@ export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
       .filter(
         (doc) =>
           doc.title.toLowerCase().includes(lowerQuery) ||
-          doc.content.toLowerCase().includes(lowerQuery)
+          doc.content.toLowerCase().includes(lowerQuery),
       )
       .slice(0, 5);
     setResults(filtered);
@@ -112,7 +126,10 @@ export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
 
   const modalContent = (
     <div className="fixed inset-0 z-[9999] flex items-start justify-center pt-24 sm:pt-32 px-4 animate-in fade-in duration-200">
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
       <div className="relative w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden animate-in slide-in-from-bottom-4 duration-200">
         <div className="flex items-center px-4 py-3 border-b border-zinc-200 dark:border-zinc-800">
           <SearchIcon className="w-5 h-5 text-zinc-400 shrink-0" />
@@ -124,7 +141,10 @@ export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button onClick={onClose} className="p-1 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-400 transition-colors">
+          <button
+            onClick={onClose}
+            className="p-1 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-400 transition-colors"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -139,61 +159,77 @@ export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                   href={res.href}
                   onClick={(e) => {
                     onClose();
-                    
-                    // Custom scroll logic to handle both exact hash and text matching
-                    const hashIndex = res.href.indexOf('#');
+
+                    const hashIndex = res.href.indexOf("#");
                     if (hashIndex !== -1) {
                       const hash = res.href.substring(hashIndex + 1);
                       const pathname = res.href.substring(0, hashIndex);
-                      
-                      // If we are already on the target page, scroll manually
+
                       if (window.location.pathname === pathname) {
                         e.preventDefault();
-                        
+
                         setTimeout(() => {
                           let target = document.getElementById(hash);
-                          
-                          // Fallback: if hash not found, try to find heading by text
+
                           if (!target && res.title) {
-                            const headings = Array.from(document.querySelectorAll('article h1, article h2, article h3, article h4'));
-                            target = headings.find(h => h.textContent?.trim().toLowerCase() === res.title.toLowerCase()) as HTMLElement;
+                            const headings = Array.from(
+                              document.querySelectorAll(
+                                "article h1, article h2, article h3, article h4",
+                              ),
+                            );
+                            target = headings.find(
+                              (h) =>
+                                h.textContent?.trim().toLowerCase() ===
+                                res.title.toLowerCase(),
+                            ) as HTMLElement;
                           }
-                          
+
                           if (target) {
-                            // Add a small highlight animation class to the target
-                            target.classList.add('bg-blue-500/20', 'transition-colors', 'duration-1000', 'rounded', 'px-1');
+                            target.classList.add(
+                              "bg-blue-500/20",
+                              "transition-colors",
+                              "duration-1000",
+                              "rounded",
+                              "px-1",
+                            );
                             setTimeout(() => {
-                              target?.classList.remove('bg-blue-500/20');
+                              target?.classList.remove("bg-blue-500/20");
                             }, 2000);
-                            
-                            const offset = 100; // Account for mobile header / sticky elements
-                            const bodyRect = document.body.getBoundingClientRect().top;
-                            const elementRect = target.getBoundingClientRect().top;
+
+                            const offset = 100;
+                            const bodyRect =
+                              document.body.getBoundingClientRect().top;
+                            const elementRect =
+                              target.getBoundingClientRect().top;
                             const elementPosition = elementRect - bodyRect;
                             const offsetPosition = elementPosition - offset;
 
                             window.scrollTo({
                               top: offsetPosition,
-                              behavior: 'smooth'
+                              behavior: "smooth",
                             });
-                            
-                            // Update URL without full navigation
-                            window.history.pushState(null, '', res.href);
+
+                            window.history.pushState(null, "", res.href);
                           } else {
-                            // If still not found, just navigate normally
                             router.push(res.href);
                           }
                         }, 100);
                       } else {
-                        // Different page, store the target title in sessionStorage as a fallback
-                        sessionStorage.setItem('search-target-title', res.title);
+                        sessionStorage.setItem(
+                          "search-target-title",
+                          res.title,
+                        );
                       }
                     }
                   }}
                   className="flex items-start gap-3 p-3 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors group"
                 >
                   <div className="mt-0.5 bg-blue-100 dark:bg-blue-900/30 p-2 rounded-md text-blue-600 dark:text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors shrink-0">
-                    {isSection ? <Hash className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
+                    {isSection ? (
+                      <Hash className="w-4 h-4" />
+                    ) : (
+                      <FileText className="w-4 h-4" />
+                    )}
                   </div>
                   <div>
                     <div className="font-medium text-zinc-900 dark:text-zinc-100">
@@ -205,7 +241,11 @@ export function SearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                       </div>
                     )}
                     <div className="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-1 mt-0.5">
-                      <HighlightedText text={res.content} query={query} isContent={true} />
+                      <HighlightedText
+                        text={res.content}
+                        query={query}
+                        isContent={true}
+                      />
                     </div>
                   </div>
                 </Link>

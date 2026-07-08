@@ -1,33 +1,35 @@
-import type { Metadata } from "next"
-import localFont from "next/font/local"
-import { ThemeProvider } from "next-themes"
-import "./globals.css"
-import "katex/dist/katex.min.css"
-import Sidebar from "./Sidebar"
-import { TableOfContents } from "./components/TableOfContents"
-import { SidebarBottom } from "./components/SidebarBottom"
-import { MobileHeader } from "./components/MobileHeader"
-import { ScrollProgress } from "./components/ScrollProgress"
-import { ScrollHandler } from "./components/ScrollHandler"
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import { ThemeProvider } from "next-themes";
+import "./globals.css";
+import "katex/dist/katex.min.css";
+import Sidebar from "./Sidebar";
+import { TableOfContents } from "./components/TableOfContents";
+import { SidebarBottom } from "./components/SidebarBottom";
+import { MobileHeader } from "./components/MobileHeader";
+import { ScrollProgress } from "./components/ScrollProgress";
+import { ScrollHandler } from "./components/ScrollHandler";
 
 const minecraftFont = localFont({
   src: "./fonts/minecraft.ttf",
   variable: "--font-minecraft",
-})
+});
 
 export const metadata: Metadata = {
   title: "Документация AfricaRP",
   description: "Официальная документация проекта AfricaRP",
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className={`${minecraftFont.className} bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100`}>
+      <body
+        className={`${minecraftFont.className} bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100`}
+      >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ScrollProgress />
           <ScrollHandler />
@@ -38,7 +40,11 @@ export default function RootLayout({
             </MobileHeader>
             <aside className="hidden md:flex w-64 border-r border-zinc-200 dark:border-zinc-800 p-4 shrink-0 overflow-y-auto sticky top-0 h-screen flex-col">
               <a href="/" className="block mb-8 flex justify-center shrink-0">
-                <img src="/media/logo.png" alt="AfricaRP Logo" className="w-full h-auto object-contain" />
+                <img
+                  src="/media/logo.png"
+                  alt="AfricaRP Logo"
+                  className="w-full h-auto object-contain"
+                />
               </a>
               <Sidebar />
               <SidebarBottom />
@@ -55,5 +61,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

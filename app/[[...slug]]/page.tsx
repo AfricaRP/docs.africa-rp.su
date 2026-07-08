@@ -1,17 +1,17 @@
-import fs from "fs"
-import { notFound } from "next/navigation"
-import { getAllMdxFiles, getSidebarNav, NavItem } from "../../lib/content"
-import path from "path"
-import { PageNavigation } from "../components/PageNavigation"
-import { CopyLinkButton } from "../components/CopyLinkButton"
-import { Breadcrumbs } from "../components/Breadcrumbs"
-import { FocusToggle } from "../components/FocusToggle"
+import fs from "fs";
+import { notFound } from "next/navigation";
+import { getAllMdxFiles, getSidebarNav, NavItem } from "../../lib/content";
+import path from "path";
+import { PageNavigation } from "../components/PageNavigation";
+import { CopyLinkButton } from "../components/CopyLinkButton";
+import { Breadcrumbs } from "../components/Breadcrumbs";
+import { FocusToggle } from "../components/FocusToggle";
 
 export async function generateStaticParams() {
-  const files = getAllMdxFiles()
-  return files.map(file => ({
+  const files = getAllMdxFiles();
+  return files.map((file) => ({
     slug: file.slug.length === 0 ? [] : file.slug,
-  }))
+  }));
 }
 
 interface FlatNavItem {
@@ -21,7 +21,11 @@ interface FlatNavItem {
   categoryHref: string | null;
 }
 
-function getFlatNav(nav: NavItem[], currentCategory: string | null = null, currentCategoryHref: string | null = null): FlatNavItem[] {
+function getFlatNav(
+  nav: NavItem[],
+  currentCategory: string | null = null,
+  currentCategoryHref: string | null = null,
+): FlatNavItem[] {
   let flat: FlatNavItem[] = [];
   for (const item of nav) {
     if (item.items) {
@@ -38,43 +42,52 @@ function getFlatNav(nav: NavItem[], currentCategory: string | null = null, curre
   return flat;
 }
 
-export default async function Page({ params }: { params: Promise<{ slug?: string[] }> }) {
-  const resolvedParams = await params
-  const slug = resolvedParams.slug || []
-  const files = getAllMdxFiles()
-  
-  const file = files.find(f => {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug || [];
+  const files = getAllMdxFiles();
+
+  const file = files.find((f) => {
     if (f.slug.length !== slug.length) return false;
     return f.slug.every((s, i) => s === slug[i]);
   });
 
   if (!file) {
-    notFound()
+    notFound();
   }
 
-  const contentDir = path.join(process.cwd(), 'content')
-  const relativePath = path.relative(contentDir, file.filePath).replace(/\\/g, '/')
+  const contentDir = path.join(process.cwd(), "content");
+  const relativePath = path
+    .relative(contentDir, file.filePath)
+    .replace(/\\/g, "/");
 
   let Content;
   try {
-    Content = (await import(`../../content/${relativePath}`)).default
+    Content = (await import(`../../content/${relativePath}`)).default;
   } catch (e) {
-    console.error("Failed to load MDX file", relativePath, e)
-    notFound()
+    console.error("Failed to load MDX file", relativePath, e);
+    notFound();
   }
 
-  const nav = getSidebarNav()
-  const currentPath = slug.length > 0 ? '/' + slug.join('/') : '/'
-  
-  const flatNav = getFlatNav(nav)
-  const currentIndex = flatNav.findIndex(item => item.href === currentPath)
-  
-  const prevPage = currentIndex > 0 ? flatNav[currentIndex - 1] : null
-  const nextPage = currentIndex !== -1 && currentIndex < flatNav.length - 1 ? flatNav[currentIndex + 1] : null
-  
+  const nav = getSidebarNav();
+  const currentPath = slug.length > 0 ? "/" + slug.join("/") : "/";
+
+  const flatNav = getFlatNav(nav);
+  const currentIndex = flatNav.findIndex((item) => item.href === currentPath);
+
+  const prevPage = currentIndex > 0 ? flatNav[currentIndex - 1] : null;
+  const nextPage =
+    currentIndex !== -1 && currentIndex < flatNav.length - 1
+      ? flatNav[currentIndex + 1]
+      : null;
+
   const currentItem = currentIndex !== -1 ? flatNav[currentIndex] : null;
   const breadcrumbItems = [];
-  
+
   if (currentItem && currentItem.category) {
     breadcrumbItems.push({ title: currentItem.category });
   }
@@ -98,5 +111,5 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
       <Content />
       <PageNavigation prev={prevPage} next={nextPage} />
     </article>
-  )
+  );
 }

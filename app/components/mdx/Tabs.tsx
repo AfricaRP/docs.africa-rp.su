@@ -4,7 +4,9 @@ import React, { useState } from "react";
 
 export function Tabs({ children }: { children: React.ReactNode }) {
   const tabs = React.Children.toArray(children).filter(
-    (child) => React.isValidElement(child) && (child as React.ReactElement<any>).props.title
+    (child) =>
+      React.isValidElement(child) &&
+      (child as React.ReactElement<any>).props.title,
   ) as React.ReactElement<any>[];
 
   const [activeTab, setActiveTab] = useState(0);
@@ -35,6 +37,12 @@ export function Tabs({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function Tab({ title, children }: { title: string; children: React.ReactNode }) {
+export function Tab({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return <>{children}</>;
 }

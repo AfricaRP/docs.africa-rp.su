@@ -42,11 +42,17 @@ export function Callout({ type = "note", title, children }: CalloutProps) {
   const Icon = config.icon;
 
   return (
-    <div className={`my-6 flex gap-3 rounded-xl border p-4 ${config.bg} ${config.border}`}>
+    <div
+      className={`my-6 flex gap-3 rounded-xl border p-4 ${config.bg} ${config.border}`}
+    >
       <Icon className={`w-5 h-5 shrink-0 mt-0.5 ${config.iconColor}`} />
       <div className="flex-1 min-w-0">
-        {title && <div className={`font-semibold mb-1 ${config.text}`}>{title}</div>}
-        <div className={`prose-sm ${config.text} [&>p:first-child]:mt-0 [&>p:last-child]:mb-0 leading-relaxed [&_strong]:text-current [&_li]:text-current [&_p]:text-current [&_ol]:text-current [&_ul]:text-current [&_li::marker]:text-current`}>
+        {title && (
+          <div className={`font-semibold mb-1 ${config.text}`}>{title}</div>
+        )}
+        <div
+          className={`prose-sm ${config.text} [&>p:first-child]:mt-0 [&>p:last-child]:mb-0 leading-relaxed [&_strong]:text-current [&_li]:text-current [&_p]:text-current [&_ol]:text-current [&_ul]:text-current [&_li::marker]:text-current`}
+        >
           {children}
         </div>
       </div>

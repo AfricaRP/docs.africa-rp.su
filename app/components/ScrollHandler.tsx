@@ -9,14 +9,21 @@ function ScrollHandlerInner() {
   useEffect(() => {
     const hash = window.location.hash.substring(1);
     const targetTitle = sessionStorage.getItem("search-target-title");
-    
+
     if (hash || targetTitle) {
       setTimeout(() => {
         let target = hash ? document.getElementById(hash) : null;
-        
+
         if (!target && targetTitle) {
-          const headings = Array.from(document.querySelectorAll("article h1, article h2, article h3, article h4"));
-          target = headings.find(h => h.textContent?.trim().toLowerCase() === targetTitle.toLowerCase()) as HTMLElement;
+          const headings = Array.from(
+            document.querySelectorAll(
+              "article h1, article h2, article h3, article h4",
+            ),
+          );
+          target = headings.find(
+            (h) =>
+              h.textContent?.trim().toLowerCase() === targetTitle.toLowerCase(),
+          ) as HTMLElement;
         }
 
         if (target) {
@@ -28,17 +35,23 @@ function ScrollHandlerInner() {
 
           window.scrollTo({
             top: offsetPosition,
-            behavior: "smooth"
+            behavior: "smooth",
           });
-          
-          target.classList.add("bg-blue-500/20", "transition-colors", "duration-1000", "rounded", "px-1");
+
+          target.classList.add(
+            "bg-blue-500/20",
+            "transition-colors",
+            "duration-1000",
+            "rounded",
+            "px-1",
+          );
           setTimeout(() => {
             target?.classList.remove("bg-blue-500/20");
           }, 2000);
         }
-        
+
         sessionStorage.removeItem("search-target-title");
-      }, 500); // Wait for MDX content to fully render
+      }, 500);
     }
   }, [pathname, searchParams]);
 
