@@ -25,7 +25,7 @@ export function MobileHeader({ children }: { children: React.ReactNode }) {
       <div className="md:hidden flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 sticky top-0 z-40">
         <a href="/" className="block">
           <img
-            src="/media/logo.svg"
+            src="/media/logo.png"
             alt="AfricaRP Logo"
             className="h-12 w-auto object-contain"
           />

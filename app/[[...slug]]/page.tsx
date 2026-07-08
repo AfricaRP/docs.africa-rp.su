@@ -152,7 +152,7 @@ export default async function Page({
           <div />
         )}
         <div className="flex items-center mb-6">
-          <PageActions relativePath={relativePath} />
+          <PageActions relativePath={relativePath} slugStr={slug.length > 0 ? slug.join("-") : "index"} />
         </div>
       </div>
       <Content />

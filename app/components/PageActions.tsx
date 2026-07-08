@@ -7,7 +7,7 @@ import { siteConfig } from "../../lib/config";
 import { createPortal } from "react-dom";
 import { AISummaryModal } from "./AISummaryModal";
 
-export function PageActions({ relativePath }: { relativePath: string }) {
+export function PageActions({ relativePath, slugStr }: { relativePath: string, slugStr: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -121,8 +121,8 @@ export function PageActions({ relativePath }: { relativePath: string }) {
                   onClick={() => { setIsOpen(false); setIsSummaryOpen(true); }}
                   className="group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors whitespace-nowrap"
                 >
-                  <Sparkles className="w-4 h-4 text-blue-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
-                  <span className="font-medium text-blue-600 dark:text-blue-400">Кратко с ИИ</span>
+                  <Sparkles className="w-4 h-4 text-zinc-400 group-hover:text-blue-500 transition-colors" />
+                  <span className="font-medium">Кратко с ИИ</span>
                 </button>
 
                 <button
@@ -140,7 +140,7 @@ export function PageActions({ relativePath }: { relativePath: string }) {
                   onClick={() => setIsOpen(false)}
                   className="!no-underline group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors whitespace-nowrap"
                 >
-                  <FileCode className="w-4 h-4 text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors" />
+                  <FileCode className="w-4 h-4 text-zinc-400 group-hover:text-blue-500 transition-colors" />
                   <span className="font-medium !no-underline">Открыть в MDX</span>
                 </a>
               </div>
@@ -176,7 +176,7 @@ export function PageActions({ relativePath }: { relativePath: string }) {
         <AISummaryModal
           isOpen={isSummaryOpen}
           onClose={() => setIsSummaryOpen(false)}
-          slug={relativePath.replace(/\.mdx?$/, "")}
+          slug={slugStr}
         />,
         document.body
       )}

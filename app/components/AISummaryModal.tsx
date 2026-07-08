@@ -25,8 +25,7 @@ export function AISummaryModal({ isOpen, onClose, slug }: AISummaryModalProps) {
       setLoading(true);
       setError(false);
       try {
-        const slugStr = slug.replace(/\//g, "-") || "index";
-        const res = await fetch(`/summaries/${slugStr}.json`);
+        const res = await fetch(`/summaries/${slug}.json`);
         if (!res.ok) throw new Error();
         const data = await res.json();
         setSummary(data.summary);
