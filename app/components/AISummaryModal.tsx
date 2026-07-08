@@ -19,7 +19,6 @@ export function AISummaryModal({ isOpen, onClose, slug }: AISummaryModalProps) {
   useEffect(() => {
     if (!isOpen) return;
 
-    // Prevent body scroll when modal is open
     document.body.style.overflow = "hidden";
 
     const fetchSummary = async () => {
@@ -28,11 +27,10 @@ export function AISummaryModal({ isOpen, onClose, slug }: AISummaryModalProps) {
       try {
         const slugStr = slug.replace(/\//g, "-") || "index";
         const res = await fetch(`/summaries/${slugStr}.json`);
-        if (!res.ok) throw new Error("Summary not found");
+        if (!res.ok) throw new Error();
         const data = await res.json();
         setSummary(data.summary);
       } catch (err) {
-        console.error(err);
         setError(true);
       } finally {
         setLoading(false);
@@ -66,7 +64,6 @@ export function AISummaryModal({ isOpen, onClose, slug }: AISummaryModalProps) {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="relative w-full max-w-2xl max-h-[85vh] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden"
           >
-            {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/50">
               <div className="flex items-center gap-3">
                 <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400">
@@ -84,7 +81,6 @@ export function AISummaryModal({ isOpen, onClose, slug }: AISummaryModalProps) {
               </button>
             </div>
 
-            {/* Content */}
             <div className="flex-1 overflow-y-auto p-6 md:p-8">
               {loading ? (
                 <div className="flex flex-col items-center justify-center py-12 text-zinc-500 dark:text-zinc-400">
@@ -94,11 +90,8 @@ export function AISummaryModal({ isOpen, onClose, slug }: AISummaryModalProps) {
               ) : error ? (
                 <div className="flex flex-col items-center justify-center py-12 text-red-500 dark:text-red-400 text-center">
                   <AlertCircle className="w-12 h-12 mb-4 opacity-50" />
-                  <h4 className="text-lg font-bold mb-2 text-zinc-900 dark:text-zinc-100">
-                    Ошибка генерации
-                  </h4>
-                  <p className="max-w-sm">
-                    К сожалению, нам не удалось получить краткую выжимку для этой статьи. ИИ мог быть недоступен во время сборки.
+                  <p className="max-w-sm font-medium">
+                    Не удалось получить данные от ИИ.
                   </p>
                 </div>
               ) : (
