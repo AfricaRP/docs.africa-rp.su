@@ -160,3 +160,25 @@
 .prose h6 {
   clear: both;
 }
+
+/* 404 Page Styles */
+body.is-404 {
+  overflow: hidden !important;
+}
+
+body.is-404 #scroll-progress {
+  display: none !important;
+}
+
+body.is-404 aside.xl\:block {
+  display: none !important;
+}
+
+/* Global Button link underline fix */
+.prose a.no-underline,
+.prose a.\!no-underline,
+a[role="button"],
+button a {
+  text-decoration: none !important;
+}
+
