@@ -14,6 +14,10 @@ const nextConfig = {
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
+  productionBrowserSourceMaps: false,
+  experimental: {
+    optimizePackageImports: ["lucide-react", "framer-motion", "codehike"],
+  },
   webpack: (config) => {
     config.infrastructureLogging = { level: 'error' };
     config.watchOptions = {

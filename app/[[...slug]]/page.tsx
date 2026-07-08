@@ -1,6 +1,6 @@
 import fs from "fs";
 import { notFound } from "next/navigation";
-import { getAllMdxFiles, getSidebarNav, NavItem } from "../../lib/content";
+import { getAllMdxFiles, getSidebarNav, getFlatNav, NavItem, FlatNavItem } from "../../lib/content";
 import { siteConfig } from "../../lib/config";
 import path from "path";
 import { PageNavigation } from "../components/PageNavigation";
@@ -13,34 +13,6 @@ export async function generateStaticParams() {
   return files.map((file) => ({
     slug: file.slug.length === 0 ? [] : file.slug,
   }));
-}
-
-interface FlatNavItem {
-  title: string;
-  href: string;
-  category: string | null;
-  categoryHref: string | null;
-}
-
-function getFlatNav(
-  nav: NavItem[],
-  currentCategory: string | null = null,
-  currentCategoryHref: string | null = null,
-): FlatNavItem[] {
-  let flat: FlatNavItem[] = [];
-  for (const item of nav) {
-    if (item.items) {
-      flat = flat.concat(getFlatNav(item.items, item.title, item.href));
-    } else {
-      flat.push({
-        title: item.title,
-        href: item.href,
-        category: currentCategory,
-        categoryHref: currentCategoryHref,
-      });
-    }
-  }
-  return flat;
 }
 
 export async function generateMetadata({

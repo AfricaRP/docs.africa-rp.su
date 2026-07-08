@@ -9,9 +9,21 @@ export interface NavItem {
   items?: NavItem[];
 }
 
+export interface FlatNavItem {
+  title: string;
+  href: string;
+  category: string | null;
+  categoryHref: string | null;
+}
+
 const contentDir = path.join(process.cwd(), "content");
 
+let cachedNav: NavItem[] | null = null;
+let cachedFlatNav: FlatNavItem[] | null = null;
+let cachedMdxFiles: { slug: string[]; filePath: string }[] | null = null;
+
 export function getSidebarNav(): NavItem[] {
+  if (cachedNav) return cachedNav;
   if (!fs.existsSync(contentDir)) return [];
 
   function buildTree(dir: string, basePath: string = ""): NavItem[] {
@@ -22,9 +34,7 @@ export function getSidebarNav(): NavItem[] {
     if (fs.existsSync(metaPath)) {
       try {
         meta = JSON.parse(fs.readFileSync(metaPath, "utf-8"));
-      } catch (e) {
-        console.error("Error reading meta.json in", dir);
-      }
+      } catch (e) {}
     }
 
     return entries
@@ -90,10 +100,39 @@ export function getSidebarNav(): NavItem[] {
       .filter((item) => item !== null) as NavItem[];
   }
 
-  return buildTree(contentDir);
+  cachedNav = buildTree(contentDir);
+  return cachedNav;
+}
+
+export function getFlatNav(
+  nav?: NavItem[],
+  currentCategory: string | null = null,
+  currentCategoryHref: string | null = null,
+): FlatNavItem[] {
+  if (!nav && cachedFlatNav) return cachedFlatNav;
+  
+  const navSource = nav || getSidebarNav();
+  let flat: FlatNavItem[] = [];
+  
+  for (const item of navSource) {
+    if (item.items) {
+      flat = flat.concat(getFlatNav(item.items, item.title, item.href));
+    } else {
+      flat.push({
+        title: item.title,
+        href: item.href,
+        category: currentCategory,
+        categoryHref: currentCategoryHref,
+      });
+    }
+  }
+  
+  if (!nav) cachedFlatNav = flat;
+  return flat;
 }
 
 export function getAllMdxFiles(): { slug: string[]; filePath: string }[] {
+  if (cachedMdxFiles) return cachedMdxFiles;
   if (!fs.existsSync(contentDir)) return [];
   const files: { slug: string[]; filePath: string }[] = [];
 
@@ -124,5 +163,6 @@ export function getAllMdxFiles(): { slug: string[]; filePath: string }[] {
   }
 
   scan(contentDir);
-  return files;
+  cachedMdxFiles = files;
+  return cachedMdxFiles;
 }
