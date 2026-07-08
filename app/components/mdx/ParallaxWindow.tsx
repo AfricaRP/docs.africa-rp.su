@@ -11,15 +11,17 @@ export function ParallaxWindow({ src, height = "400px", children }: { src: strin
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
+  // Идеальный параллакс: масштабируем картинку и двигаем по оси Y
+  const y = useTransform(scrollYProgress, [0, 1], ["-100px", "100px"]);
 
   return (
     <div ref={ref} className="not-in-toc relative overflow-hidden rounded-2xl my-8 border border-zinc-200 dark:border-zinc-800" style={{ height }}>
       <motion.div 
-        className="absolute inset-0 w-full h-[130%] -top-[15%] bg-cover bg-center pointer-events-none" 
+        className="absolute inset-0 w-full h-full bg-cover bg-center pointer-events-none" 
         style={{ 
           backgroundImage: `url(${src})`,
-          y 
+          y,
+          scale: 1.3
         }} 
       />
       <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-6 text-center">
