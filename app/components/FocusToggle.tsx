@@ -18,7 +18,7 @@ export function FocusToggle() {
   return (
     <button
       onClick={() => setIsZen(!isZen)}
-      className="p-2 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800 ml-2"
+      className="p-1.5 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors ml-2"
       title={isZen ? "Выйти из режима Дзен" : "Режим Дзен (Скрыть панели)"}
     >
       {isZen ? (
