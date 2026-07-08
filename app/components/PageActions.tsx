@@ -131,7 +131,7 @@ export function PageActions({ relativePath }: { relativePath: string }) {
                   className="!no-underline group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors whitespace-nowrap"
                 >
                   <FileCode className="w-4 h-4 text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors" />
-                  <span className="font-medium !no-underline">Открыть в MDX (Raw)</span>
+                  <span className="font-medium !no-underline">Открыть в MDX</span>
                 </a>
               </div>
             </motion.div>

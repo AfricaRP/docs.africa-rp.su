@@ -28,9 +28,14 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <body
-        className={`${minecraftFont.className} bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100`}
+        className={`${minecraftFont.className} bg-transparent text-zinc-800 dark:text-zinc-100 min-h-screen selection:bg-blue-200 dark:selection:bg-blue-900`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {/* Файныи градиентный фон с сеткой (от правого верхнего в левый нижний) */}
+          <div className="fixed inset-0 z-[-1] bg-gradient-to-bl from-zinc-50 via-zinc-100/50 to-zinc-100 dark:from-[#18181b] dark:via-[#09090b] dark:to-[#000000]">
+            <div className="absolute inset-0 bg-grid-pattern text-zinc-900 dark:text-white opacity-[0.04] dark:opacity-[0.03] [mask-image:linear-gradient(to_bottom_left,black_10%,transparent_70%)]" />
+          </div>
+
           <ScrollProgress />
           <ScrollHandler />
           <div className="flex flex-col md:flex-row min-h-screen">
