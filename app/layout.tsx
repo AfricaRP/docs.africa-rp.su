@@ -31,10 +31,11 @@ export default function RootLayout({
         className={`${minecraftFont.className} bg-transparent text-zinc-800 dark:text-zinc-100 min-h-screen selection:bg-blue-200 dark:selection:bg-blue-900`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {/* Файныи градиентный фон с сеткой (от правого верхнего в левый нижний) */}
-          <div className="fixed inset-0 z-[-1] bg-gradient-to-bl from-zinc-50 via-zinc-100/50 to-zinc-100 dark:from-[#18181b] dark:via-[#09090b] dark:to-[#000000]">
-            <div className="absolute inset-0 bg-grid-pattern text-zinc-900 dark:text-white opacity-[0.04] dark:opacity-[0.03] [mask-image:linear-gradient(to_bottom_left,black_10%,transparent_70%)]" />
-          </div>
+          {/* Явный градиентный фон на весь экран */}
+          <div className="fixed inset-0 z-[-2] bg-gradient-to-bl from-zinc-200 via-zinc-50 to-zinc-50 dark:from-zinc-800 dark:via-zinc-950 dark:to-zinc-950" />
+          
+          {/* Сетка, жестко привязанная к верхней части страницы (скроллится вместе с контентом) */}
+          <div className="absolute top-0 left-0 right-0 h-[600px] z-[-1] bg-grid-pattern text-zinc-900 dark:text-white opacity-[0.07] dark:opacity-[0.06] [mask-image:linear-gradient(to_bottom,black_10%,transparent_100%)] pointer-events-none" />
 
           <ScrollProgress />
           <ScrollHandler />
