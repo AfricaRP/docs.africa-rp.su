@@ -49,6 +49,10 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Generate AI Summaries
+        run: node scripts/generate-summaries.mjs
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.manager }} run build
       - name: Upload artifact

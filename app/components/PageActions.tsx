@@ -1,16 +1,18 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Link2, Maximize, FileCode, MoreHorizontal, Check, Minimize } from "lucide-react";
+import { Link2, Maximize, FileCode, MoreHorizontal, Check, Minimize, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "../../lib/config";
 import { createPortal } from "react-dom";
+import { AISummaryModal } from "./AISummaryModal";
 
 export function PageActions({ relativePath }: { relativePath: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -116,6 +118,14 @@ export function PageActions({ relativePath }: { relativePath: string }) {
                 </button>
 
                 <button
+                  onClick={() => { setIsOpen(false); setIsSummaryOpen(true); }}
+                  className="group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors whitespace-nowrap"
+                >
+                  <Sparkles className="w-4 h-4 text-blue-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
+                  <span className="font-medium text-blue-600 dark:text-blue-400">Кратко с ИИ</span>
+                </button>
+
+                <button
                   onClick={() => toggleFocus()}
                   className="group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors whitespace-nowrap"
                 >
@@ -159,6 +169,15 @@ export function PageActions({ relativePath }: { relativePath: string }) {
             </button>
           </motion.div>
         </AnimatePresence>,
+        document.body
+      )}
+
+      {mounted && createPortal(
+        <AISummaryModal
+          isOpen={isSummaryOpen}
+          onClose={() => setIsSummaryOpen(false)}
+          slug={relativePath.replace(/\.mdx?$/, "")}
+        />,
         document.body
       )}
     </>

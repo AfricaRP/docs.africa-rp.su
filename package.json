@@ -5,15 +5,18 @@
   "scripts": {
     "dev": "node scripts/build-search.js && next dev",
     "build": "node scripts/build-search.js && next build",
+    "generate-summaries": "node scripts/generate-summaries.mjs",
     "start": "next start",
     "lint": "next lint",
     "new": "node scripts/new-page.js"
   },
   "dependencies": {
+    "@google/genai": "^2.10.0",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "15.1.7",
     "codehike": "^1.0.4",
+    "dotenv": "^17.4.2",
     "framer-motion": "^12.42.2",
     "gray-matter": "^4.0.3",
     "katex": "^0.17.0",
@@ -25,6 +28,7 @@
     "plyr-react": "^6.0.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-markdown": "^10.1.0",
     "rehype-katex": "^7.0.1",
     "rehype-slug": "^6.0.0",
     "remark-frontmatter": "^5.0.0",
