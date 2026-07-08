@@ -145,15 +145,15 @@ export function PageActions({ relativePath }: { relativePath: string }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[9999]"
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999]"
           >
             <button
               onClick={() => toggleFocus(false)}
-              className="bg-zinc-900/90 hover:bg-zinc-900 dark:bg-zinc-100/90 dark:hover:bg-zinc-100 backdrop-blur-sm text-white dark:text-zinc-900 px-6 py-3 rounded-full shadow-2xl font-medium text-sm flex items-center gap-3 transition-all hover:scale-105 active:scale-95"
+              className="bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 px-5 py-2.5 rounded-full shadow-lg font-medium text-sm flex items-center gap-2 transition-all opacity-20 hover:opacity-100 hover:scale-105 active:scale-95"
             >
-              <Minimize className="w-4 h-4 opacity-80" />
+              <Minimize className="w-4 h-4" />
               <span>
-                Выйти из Дзена <kbd className="px-2 py-0.5 bg-zinc-800 dark:bg-zinc-200 rounded text-xs opacity-90 mx-1">Esc</kbd>
+                Выйти из Дзена <kbd className="px-1.5 py-0.5 bg-zinc-800 dark:bg-zinc-200 rounded text-[10px] opacity-80 ml-1">Esc</kbd>
               </span>
             </button>
           </motion.div>
