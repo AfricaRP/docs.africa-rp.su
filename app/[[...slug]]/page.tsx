@@ -42,6 +42,43 @@ function getFlatNav(
   return flat;
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const resolvedParams = await params;
+  let slug = resolvedParams.slug || [];
+  
+  if (slug.length === 0 && siteConfig.homePageSlug.length > 0) {
+    slug = siteConfig.homePageSlug;
+  }
+
+  const files = getAllMdxFiles();
+  let file = files.find((f) => f.slug.length === slug.length && f.slug.every((s, i) => s === slug[i]));
+  
+  // Fallback if homePageSlug is ["index"] but index file has []
+  if (!file && slug.length === 1 && slug[0] === "index") {
+    slug = [];
+    file = files.find((f) => f.slug.length === 0);
+  }
+
+  if (!file) return {};
+
+  const nav = getSidebarNav();
+  const currentPath = slug.length > 0 ? "/" + slug.join("/") : "/";
+  const flatNav = getFlatNav(nav);
+  const currentItem = flatNav.find((item) => item.href === currentPath);
+
+  if (currentItem) {
+    return {
+      title: `${currentItem.title} | Документация ${siteConfig.projectName}`,
+    };
+  }
+
+  return {};
+}
+
 export default async function Page({
   params,
 }: {
@@ -56,10 +93,15 @@ export default async function Page({
 
   const files = getAllMdxFiles();
 
-  const file = files.find((f) => {
+  let file = files.find((f) => {
     if (f.slug.length !== slug.length) return false;
     return f.slug.every((s, i) => s === slug[i]);
   });
+
+  if (!file && slug.length === 1 && slug[0] === "index") {
+    slug = [];
+    file = files.find((f) => f.slug.length === 0);
+  }
 
   if (!file) {
     notFound();

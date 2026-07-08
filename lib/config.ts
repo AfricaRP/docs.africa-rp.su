@@ -2,7 +2,7 @@ export const siteConfig = {
   projectName: "AfricaRP",
   githubRepo: "AfricaRP/docs.africa-rp.su",
   githubBranch: "main",
-  homePageSlug: [],
+  homePageSlug: ["index"],
   discordUrl: "https://discord.gg/africarp",
   theme: {
     default: "system",
