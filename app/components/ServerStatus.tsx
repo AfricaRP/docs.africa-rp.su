@@ -88,11 +88,11 @@ export function ServerStatus() {
           )}
         </div>
 
-        <div className="flex flex-col items-start leading-none">
-          <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-400 dark:text-zinc-500 mb-0.5">
+        <div className="flex flex-col items-start leading-none gap-1">
+          <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors duration-300">
             IP: {siteConfig.serverIp.split(":")[0]}
           </span>
-          <span className="text-[13px] font-medium text-zinc-600 dark:text-zinc-300">
+          <span className="text-[13px] font-medium text-zinc-600 dark:text-zinc-300 group-hover:text-zinc-800 dark:group-hover:text-zinc-100 transition-colors duration-300">
             {loading
               ? "Загрузка..."
               : data?.online
