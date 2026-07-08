@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Home } from "lucide-react";
 
 export default function NotFound() {
   const { theme, resolvedTheme } = useTheme();
@@ -21,14 +22,6 @@ export default function NotFound() {
 
   return (
     <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] text-center px-4 !m-0 !max-w-none">
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 20 }}
-      >
-        <h1 className="text-8xl md:text-9xl font-bold mb-4 tracking-widest text-zinc-800 dark:text-zinc-100 drop-shadow-sm">404</h1>
-      </motion.div>
-      
       {mounted ? (
         <motion.div
           initial={{ y: 10, opacity: 0 }}
@@ -52,14 +45,20 @@ export default function NotFound() {
         transition={{ delay: 0.2 }}
         className="flex flex-col items-center gap-6"
       >
-        <h2 className="text-xl md:text-2xl font-bold tracking-wide text-zinc-800 dark:text-zinc-100">
-          Упс! Страница не найдена.
-        </h2>
+        <div className="space-y-2">
+          <h1 className="text-xl md:text-2xl font-bold tracking-wide text-zinc-800 dark:text-zinc-100" style={{ fontFamily: 'var(--font-minecraft)' }}>
+            404
+          </h1>
+          <h2 className="text-xl md:text-2xl font-bold tracking-wide text-zinc-800 dark:text-zinc-100" style={{ fontFamily: 'var(--font-minecraft)' }}>
+            Упс! Страница не найдена.
+          </h2>
+        </div>
         
         <Link 
           href="/" 
-          className="!no-underline inline-flex items-center justify-center px-8 py-3 rounded-lg text-lg font-bold text-white bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white transition-all shadow-lg hover:shadow-xl active:scale-95"
+          className="!no-underline flex items-center gap-2 px-8 py-3 rounded-lg text-lg font-bold text-white bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white transition-all shadow-lg hover:shadow-xl active:scale-95"
         >
+          <Home className="w-5 h-5 text-white dark:text-zinc-900" />
           Вернуться домой
         </Link>
       </motion.div>
