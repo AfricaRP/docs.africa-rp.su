@@ -48,6 +48,8 @@ import { Magnifier } from "./app/components/mdx/Magnifier";
 import { GlowGrid, GlowCard } from "./app/components/mdx/GlowGrid";
 import { MarkerDraw } from "./app/components/mdx/MarkerDraw";
 import { Heading } from "./app/components/mdx/Heading";
+import { Columns, Column } from "./app/components/mdx/Columns";
+import { AudienceSwitch, Audience } from "./app/components/mdx/AudienceSwitch";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -123,5 +125,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     GlowGrid,
     GlowCard,
     MarkerDraw,
+    Columns,
+    Column,
+    AudienceSwitch,
+    Audience,
   };
 }
