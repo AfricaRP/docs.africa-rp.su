@@ -44,7 +44,7 @@ export default function RootLayout({
               <SidebarBottom />
             </aside>
             <div className="flex-1 flex justify-between min-w-0">
-              <main className="flex-1 px-4 sm:px-8 lg:px-16 py-8 overflow-y-auto prose prose-zinc dark:prose-invert max-w-4xl min-w-0 mx-auto">
+              <main className="flex-1 px-4 sm:px-8 lg:px-16 py-8 prose prose-zinc dark:prose-invert max-w-4xl min-w-0 mx-auto">
                 {children}
               </main>
               <aside className="py-8 pr-8 hidden xl:block w-64 shrink-0 sticky top-0 h-screen overflow-y-auto">
