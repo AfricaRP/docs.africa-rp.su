@@ -10,6 +10,8 @@ import { MobileHeader } from "./components/MobileHeader";
 import { ScrollProgress } from "./components/ScrollProgress";
 import { ScrollHandler } from "./components/ScrollHandler";
 
+import { ServerStatus } from "./components/ServerStatus";
+
 const minecraftFont = localFont({
   src: "./fonts/minecraft.ttf",
   variable: "--font-minecraft",
@@ -41,17 +43,19 @@ export default function RootLayout({
           <ScrollHandler />
           <div className="flex flex-col md:flex-row min-h-screen">
             <MobileHeader>
+              <ServerStatus />
               <Sidebar />
               <SidebarBottom />
             </MobileHeader>
             <aside className="hidden md:flex w-64 border-r border-zinc-200 dark:border-zinc-800 p-4 shrink-0 overflow-y-auto sticky top-0 h-screen flex-col">
-              <a href="/" className="block mb-8 flex justify-center shrink-0">
+              <a href="/" className="block mb-4 flex justify-center shrink-0">
                 <img
                   src="/media/logo.png"
                   alt="AfricaRP Logo"
                   className="w-full h-auto object-contain"
                 />
               </a>
+              <ServerStatus />
               <Sidebar />
               <SidebarBottom />
             </aside>

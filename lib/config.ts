@@ -3,7 +3,8 @@ export const siteConfig = {
   githubRepo: "AfricaRP/docs.africa-rp.su",
   githubBranch: "main",
   homePageSlug: ["index"],
-  discordUrl: "https://discord.gg/africarp",
+  discordUrl: "https://discord.gg/MydsqBKh8P",
+  serverIp: "87.251.74.84:25575",
   theme: {
     default: "system",
     accentColor: "blue",
