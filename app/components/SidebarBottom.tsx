@@ -2,22 +2,47 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Type } from "lucide-react";
 import { siteConfig } from "../../lib/config";
+
+const FONTS = [
+  { id: "minecraft", name: "Minecraft" },
+  { id: "inter", name: "Inter (Модерн)" },
+  { id: "lora", name: "Lora (Книжный)" },
+  { id: "system", name: "Системный" },
+];
 
 export function SidebarBottom() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [currentFont, setCurrentFont] = useState("minecraft");
 
   useEffect(() => {
     setMounted(true);
+    const savedFont = localStorage.getItem("docs-font") || "minecraft";
+    setCurrentFont(savedFont);
   }, []);
 
+  const cycleFont = () => {
+    const currentIndex = FONTS.findIndex((f) => f.id === currentFont);
+    const nextIndex = (currentIndex + 1) % FONTS.length;
+    const nextFont = FONTS[nextIndex].id;
+    setCurrentFont(nextFont);
+    // document.documentElement.setAttribute is handled by next-themes via storage event or we can just trigger it
+    // Wait, next-themes handles data-theme, but we have two providers.
+    // If we use useTheme, which context does it hook into? It hooks into the nearest ThemeProvider.
+    // We should probably just manage the font state manually or use a second context.
+    // Actually, managing `data-font` manually on `document.documentElement` is super easy.
+    document.documentElement.setAttribute("data-font", nextFont);
+    localStorage.setItem("docs-font", nextFont);
+  };
+
   if (!mounted) {
-    return <div className="h-[100px]" />;
+    return <div className="h-[140px]" />;
   }
 
   const isDark = resolvedTheme === "dark";
+  const currentFontName = FONTS.find((f) => f.id === currentFont)?.name || "Minecraft";
 
   return (
     <div className="mt-auto pt-6 pb-2 flex flex-col gap-3 border-t border-zinc-200 dark:border-zinc-800">
@@ -29,6 +54,16 @@ export function SidebarBottom() {
           {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
         </span>
         <span>{isDark ? "Светлая тема" : "Темная тема"}</span>
+      </button>
+
+      <button
+        onClick={cycleFont}
+        className="group flex items-center gap-3 px-2 py-2 text-sm font-semibold text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 rounded-md transition-all duration-300"
+      >
+        <span className="transition-transform duration-300 group-hover:scale-110">
+          <Type className="w-5 h-5" />
+        </span>
+        <span>Шрифт: {currentFontName}</span>
       </button>
 
       <a
