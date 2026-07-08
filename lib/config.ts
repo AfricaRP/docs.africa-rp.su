@@ -11,5 +11,11 @@ export const siteConfig = {
   search: {
     placeholder: "Поиск...",
     hotkey: "Ctrl+K",
-  }
+  },
+  footerLinks: [
+    { icon: "Discord", href: "https://discord.gg/africarp" },
+    { icon: "Send", href: "https://t.me/africarp" },
+    { icon: "Youtube", href: "https://youtube.com/@africarp" },
+    { icon: "Github", href: "https://github.com/AfricaRP" }
+  ]
 };

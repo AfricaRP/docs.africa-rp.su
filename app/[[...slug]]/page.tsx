@@ -6,6 +6,7 @@ import path from "path";
 import { PageNavigation } from "../components/PageNavigation";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { PageActions } from "../components/PageActions";
+import { SocialFooter } from "../components/SocialFooter";
 
 export async function generateStaticParams() {
   const files = getAllMdxFiles();
@@ -155,6 +156,7 @@ export default async function Page({
         </div>
       </div>
       <Content />
+      <SocialFooter />
       <PageNavigation prev={prevPage} next={nextPage} />
     </article>
   );

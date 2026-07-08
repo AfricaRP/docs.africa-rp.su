@@ -47,6 +47,7 @@ import { MarginNote } from "./app/components/mdx/MarginNote";
 import { Magnifier } from "./app/components/mdx/Magnifier";
 import { GlowGrid, GlowCard } from "./app/components/mdx/GlowGrid";
 import { MarkerDraw } from "./app/components/mdx/MarkerDraw";
+import { Heading } from "./app/components/mdx/Heading";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -54,6 +55,25 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Code,
     VideoPlayer,
     img: (props) => <LightboxImage src={props.src as string} alt={props.alt} />,
+    a: ({ href, children, ...props }) => {
+      const isExternal = href?.startsWith("http") || href?.startsWith("//");
+      return (
+        <a 
+          href={href} 
+          target={isExternal ? "_blank" : undefined} 
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          {...props}
+        >
+          {children}
+        </a>
+      );
+    },
+    h1: (props) => <Heading as="h1" {...props} />,
+    h2: (props) => <Heading as="h2" {...props} />,
+    h3: (props) => <Heading as="h3" {...props} />,
+    h4: (props) => <Heading as="h4" {...props} />,
+    h5: (props) => <Heading as="h5" {...props} />,
+    h6: (props) => <Heading as="h6" {...props} />,
     Kbd,
     Callout,
     Tooltip,
