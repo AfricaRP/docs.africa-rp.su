@@ -7,8 +7,8 @@ import { siteConfig } from "../../lib/config";
 
 const FONTS = [
   { id: "minecraft", name: "Minecraft" },
-  { id: "inter", name: "Inter (Модерн)" },
-  { id: "lora", name: "Lora (Книжный)" },
+  { id: "inter", name: "Модерн" },
+  { id: "lora", name: "Книжный" },
   { id: "system", name: "Системный" },
 ];
 
