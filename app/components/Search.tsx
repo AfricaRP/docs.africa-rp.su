@@ -5,11 +5,67 @@ import { Search as SearchIcon, X, FileText, Hash } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
+import { create, insertMultiple, search, AnyOrama } from "@orama/orama";
+
+interface OramaDocument {
+  title: string;
+  section: string;
+  content: string;
+  path: string;
+}
 
 interface SearchResult {
   title: string;
-  href: string;
+  section: string;
   content: string;
+  path: string;
+  href: string;
+  pageTitle: string | null;
+}
+
+let oramaDbInstance: AnyOrama | null = null;
+let oramaInitPromise: Promise<AnyOrama> | null = null;
+
+async function getOramaDB(): Promise<AnyOrama> {
+  if (oramaDbInstance) return oramaDbInstance;
+  if (oramaInitPromise) return oramaInitPromise;
+
+  oramaInitPromise = (async () => {
+    try {
+      const res = await fetch("/search.json");
+      const data = await res.json();
+
+      const db = await create({
+        schema: {
+          title: "string",
+          section: "string",
+          content: "string",
+          path: "string",
+        },
+        components: {
+          tokenizer: {
+            language: "russian",
+          },
+        },
+      });
+
+      const docsToInsert: OramaDocument[] = data.map((doc: any) => ({
+        title: doc.title || "",
+        section: doc.pageTitle || doc.title || "",
+        content: doc.content || "",
+        path: doc.href || "",
+      }));
+
+      await insertMultiple(db, docsToInsert);
+      oramaDbInstance = db;
+      return db;
+    } catch (err) {
+      oramaInitPromise = null;
+      throw err;
+    }
+  })();
+
+  return oramaInitPromise;
 }
 
 function HighlightedText({
@@ -74,7 +130,6 @@ export function SearchModal({
 }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
-  const [docs, setDocs] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
@@ -86,12 +141,7 @@ export function SearchModal({
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 100);
-      if (docs.length === 0) {
-        fetch("/search.json")
-          .then((res) => res.json())
-          .then((data) => setDocs(data))
-          .catch(console.error);
-      }
+      getOramaDB().catch(console.error);
     } else {
       setQuery("");
       setResults([]);
@@ -99,20 +149,46 @@ export function SearchModal({
   }, [isOpen]);
 
   useEffect(() => {
+    let isCancelled = false;
+
     if (query.trim().length < 2) {
       setResults([]);
       return;
     }
-    const lowerQuery = query.toLowerCase();
-    const filtered = docs
-      .filter(
-        (doc) =>
-          doc.title.toLowerCase().includes(lowerQuery) ||
-          doc.content.toLowerCase().includes(lowerQuery),
-      )
-      .slice(0, 5);
-    setResults(filtered);
-  }, [query, docs]);
+
+    getOramaDB()
+      .then(async (db) => {
+        if (!db || isCancelled) return;
+        const searchResult = await search(db, {
+          term: query.trim(),
+          limit: 10,
+          tolerance: 1,
+        });
+        if (isCancelled) return;
+
+        const mappedResults: SearchResult[] = searchResult.hits.map((hit) => {
+          const doc = hit.document as unknown as OramaDocument;
+          return {
+            title: doc.title,
+            section: doc.section,
+            content: doc.content,
+            path: doc.path,
+            href: doc.path,
+            pageTitle:
+              doc.section && doc.section !== doc.title ? doc.section : null,
+          };
+        });
+
+        setResults(mappedResults);
+      })
+      .catch((err) => {
+        console.error("Orama search error:", err);
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [query]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -151,7 +227,7 @@ export function SearchModal({
 
         <div className="max-h-[60vh] overflow-y-auto p-2">
           {results.length > 0 ? (
-            results.map((res: any) => {
+            results.map((res: SearchResult) => {
               const isSection = !!res.pageTitle;
               return (
                 <Link
@@ -267,3 +343,4 @@ export function SearchModal({
 
   return createPortal(modalContent, document.body);
 }
+

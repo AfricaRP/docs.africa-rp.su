@@ -3,13 +3,13 @@
 import { motion } from "framer-motion";
 
 export function StatsRadar({
-  data,
+  data = {},
   color = "#3B82F6",
 }: {
-  data: Record<string, number>;
+  data?: Record<string, number>;
   color?: string;
 }) {
-  const keys = Object.keys(data);
+  const keys = Object.keys(data || {});
   const max = 100;
   const size = 450;
   const center = size / 2;

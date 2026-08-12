@@ -5,7 +5,7 @@ import { useState } from "react";
 
 type Node = { id: string; title: string; desc: string };
 
-export function FlowMap({ nodes }: { nodes: Node[] }) {
+export function FlowMap({ nodes = [] }: { nodes?: Node[] }) {
   const [active, setActive] = useState<string | null>(null);
 
   return (

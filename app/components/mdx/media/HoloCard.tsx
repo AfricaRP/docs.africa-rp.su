@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, ReactNode } from "react";
-import { HeadingProvider } from "./HeadingContext";
+import { HeadingProvider } from "../typography/HeadingContext";
 
 export function HoloCard({ children }: { children: ReactNode }) {
   const cardRef = useRef<HTMLDivElement>(null);

@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
-import { HeadingProvider } from "./HeadingContext";
+import { HeadingProvider } from "../typography/HeadingContext";
 
 const DecisionContext = createContext<{
   current: string;

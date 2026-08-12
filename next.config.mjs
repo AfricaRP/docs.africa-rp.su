@@ -16,7 +16,7 @@ const nextConfig = {
   typescript: { ignoreBuildErrors: true },
   productionBrowserSourceMaps: false,
   experimental: {
-    optimizePackageImports: ["lucide-react", "framer-motion", "codehike"],
+    optimizePackageImports: ["lucide-react", "framer-motion"],
   },
   webpack: (config) => {
     config.infrastructureLogging = { level: 'error' };

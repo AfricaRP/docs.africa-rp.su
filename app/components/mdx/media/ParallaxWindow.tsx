@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { HeadingProvider } from "./HeadingContext";
+import { HeadingProvider } from "../typography/HeadingContext";
 
 export function ParallaxWindow({
   src,

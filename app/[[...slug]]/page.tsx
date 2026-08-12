@@ -1,12 +1,24 @@
 import fs from "fs";
+import path from "path";
 import { notFound } from "next/navigation";
+import { compileMDX } from "next-mdx-remote/rsc";
+import { remarkCodeHike, recmaCodeHike } from "codehike/mdx";
+import remarkGfm from "remark-gfm";
+import remarkFrontmatter from "remark-frontmatter";
+import rehypeSlug from "rehype-slug";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import { useMDXComponents } from "../../mdx-components";
 import { getAllMdxFiles, getSidebarNav, getFlatNav, NavItem, FlatNavItem } from "../../lib/content";
 import { siteConfig } from "../../lib/config";
-import path from "path";
 import { PageNavigation } from "../components/PageNavigation";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { PageActions } from "../components/PageActions";
 import { SocialFooter } from "../components/SocialFooter";
+
+const chConfig = {
+  components: { code: "Code" },
+};
 
 export async function generateStaticParams() {
   const files = getAllMdxFiles();
@@ -84,13 +96,33 @@ export default async function Page({
     .relative(contentDir, file.filePath)
     .replace(/\\/g, "/");
 
-  let Content;
+  let rawContent: string;
   try {
-    Content = (await import(`../../content/${relativePath}`)).default;
+    rawContent = fs.readFileSync(file.filePath, "utf8");
   } catch (e) {
-    console.error("Failed to load MDX file", relativePath, e);
+    console.error("Failed to read MDX file", file.filePath, e);
     notFound();
   }
+
+  const mdxComponents = useMDXComponents({});
+
+  const { content } = await compileMDX({
+    source: rawContent,
+    components: mdxComponents,
+    options: {
+      parseFrontmatter: true,
+      mdxOptions: {
+        remarkPlugins: [
+          remarkFrontmatter,
+          remarkGfm,
+          [remarkCodeHike, chConfig],
+          remarkMath,
+        ],
+        rehypePlugins: [rehypeSlug, rehypeKatex],
+        recmaPlugins: [[recmaCodeHike, chConfig]],
+      },
+    },
+  });
 
   const nav = getSidebarNav();
   const currentPath = slug.length > 0 ? "/" + slug.join("/") : "/";
@@ -124,9 +156,10 @@ export default async function Page({
           <PageActions relativePath={relativePath} slugStr={slug.length > 0 ? slug.join("-") : "index"} />
         </div>
       </div>
-      <Content />
+      {content}
       <PageNavigation prev={prevPage} next={nextPage} />
       <SocialFooter />
     </article>
   );
 }
+
