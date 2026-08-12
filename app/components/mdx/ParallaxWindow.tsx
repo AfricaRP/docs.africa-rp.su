@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { HeadingProvider } from "./HeadingContext";
 
 export function ParallaxWindow({
   src,
@@ -68,7 +69,7 @@ export function ParallaxWindow({
       />
       <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-6 text-center">
         <div className="text-white drop-shadow-lg max-w-2xl prose prose-invert">
-          {children}
+          <HeadingProvider hideCopyLink={true}>{children}</HeadingProvider>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, ReactNode } from "react";
+import { HeadingProvider } from "./HeadingContext";
 
 export function HoloCard({ children }: { children: ReactNode }) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -40,7 +41,7 @@ export function HoloCard({ children }: { children: ReactNode }) {
           className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0"
         />
         <div className="relative z-10 h-full flex flex-col text-white prose prose-invert">
-          {children}
+          <HeadingProvider hideCopyLink={true}>{children}</HeadingProvider>
         </div>
       </div>
     </div>

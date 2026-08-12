@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, ReactNode } from "react";
+import { HeadingProvider } from "./HeadingContext";
 
 export function GlowGrid({ children }: { children: ReactNode }) {
   const gridRef = useRef<HTMLDivElement>(null);
@@ -55,7 +56,7 @@ export function GlowCard({
           </h3>
         )}
         <div className="text-zinc-600 dark:text-zinc-400 text-sm prose-sm m-0 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
-          {children}
+          <HeadingProvider hideCopyLink={true}>{children}</HeadingProvider>
         </div>
       </div>
     </div>
