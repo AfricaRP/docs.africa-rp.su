@@ -111,6 +111,8 @@ export default async function Page({
     components: mdxComponents,
     options: {
       parseFrontmatter: true,
+      blockJS: false,
+      blockDangerousJS: false,
       mdxOptions: {
         remarkPlugins: [
           remarkFrontmatter,
