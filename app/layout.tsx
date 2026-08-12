@@ -31,6 +31,9 @@ const loraFont = Lora({
 export const metadata: Metadata = {
   title: "Документация AfricaRP",
   description: "Официальная документация проекта AfricaRP",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({
