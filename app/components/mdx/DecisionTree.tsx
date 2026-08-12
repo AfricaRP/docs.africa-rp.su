@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
+import { HeadingProvider } from "./HeadingContext";
 
 const DecisionContext = createContext<{
   current: string;
@@ -17,7 +18,7 @@ export function DecisionTree({
   return (
     <DecisionContext.Provider value={{ current, setStep }}>
       <div className="not-in-toc border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 my-6 bg-white dark:bg-zinc-900/30 shadow-sm relative overflow-hidden">
-        {children}
+        <HeadingProvider hideCopyLink={true}>{children}</HeadingProvider>
       </div>
     </DecisionContext.Provider>
   );

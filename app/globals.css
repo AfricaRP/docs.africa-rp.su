@@ -146,6 +146,14 @@
   background-color: #27272a;
   color: #a1a1aa;
 }
+.steps-container > h3 button {
+  left: -75px !important;
+}
+@media (max-width: 768px) {
+  .steps-container > h3 button {
+    left: -65px !important;
+  }
+}
 
 .prose blockquote p:first-of-type::before,
 .prose blockquote p:last-of-type::after {
